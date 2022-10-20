@@ -1,4 +1,5 @@
-﻿using Shaa.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Persistence.Data;
 
@@ -8,5 +9,10 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
 {
     public EquipmentRepository(ShaaDbContext context) : base(context)
     {
+    }
+
+    public async Task<bool> IsExistEquipmentByTitle(string title)
+    {
+        return await _dbSet.AnyAsync(p => p.Title == title);
     }
 }

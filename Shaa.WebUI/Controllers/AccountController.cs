@@ -47,8 +47,8 @@ namespace Shaa.WebUI.Controllers
                     TempData[ErrorMessage] = $"کاربر مورد نظر با شماره ملی {register.NationalNo} قبلا ثبت شده است.";
                     break;
                 case RegisterResult.Success:
-                    TempData[InfoMessage] = "عملیات با موفقیت انجام شد. لطفا ایمیل خود را  تایید کنید";
-                    return RedirectToAction("Login","Account");
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("Login", "Account");
             }
 
             return View(register);

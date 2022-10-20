@@ -14,6 +14,7 @@ public static class DependencyContainer
         #region Repositories
 
         services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+        services.AddScoped<IBaseInfoTypeRepository, BaseInfoTypeRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
         #endregion
@@ -21,6 +22,7 @@ public static class DependencyContainer
         #region Services
 
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IBaseInfoTypeService, BaseInfoTypeService>();
 
         #endregion
     }

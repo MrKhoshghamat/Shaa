@@ -1,4 +1,5 @@
-﻿using Shaa.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Persistence.Data;
 
@@ -8,5 +9,10 @@ public class AbilityRepository : Repository<Ability, Guid>, IAbilityRepository
 {
     public AbilityRepository(ShaaDbContext context) : base(context)
     {
+    }
+
+    public async Task<bool> IsExistAbilityByTitle(string title)
+    {
+        return await _dbSet.AnyAsync(p => p.Title == title);
     }
 }

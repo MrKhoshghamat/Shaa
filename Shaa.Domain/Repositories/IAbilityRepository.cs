@@ -5,5 +5,5 @@ namespace Shaa.Domain.Repositories;
 
 public interface IAbilityRepository : IRepository<Ability, Guid>
 {
-    
+    Task<bool> IsExistAbilityByTitle(string title);
 }

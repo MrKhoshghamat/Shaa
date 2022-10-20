@@ -1,26 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shaa.Domain.ViewModels;
 using Shaa.WebUI.ActionFilters;
 
-namespace Shaa.WebUI.Controllers
-{
-    public class LaboratoryController : BaseController
-    {
-        [HttpGet("Laboratory-Wizard")]
-        public IActionResult LaboratoryWizard()
-        {
-            return View();
-        }
+namespace Shaa.WebUI.Controllers;
 
-        [HttpPost("Register-Laboratory")]
-        [RedirectHomeIfLoggedInActionFilter]
-        public Task<IActionResult> RegisterLaboratory(LaboratoryViewModel laboratory)
-        {
-            return null;
-        }
+public class LaboratoryController : BaseController
+{
+    [HttpGet("Laboratory-Wizard")]
+    [Authorize]
+    public IActionResult LaboratoryWizard()
+    {
+        return View();
+    }
+
+    [HttpPost("Register-Laboratory")]
+    [RedirectHomeIfLoggedInActionFilter]
+    public async Task<IActionResult> RegisterLaboratory(LaboratoryViewModel laboratory)
+    {
+        TempData[SuccessMessage] = "ثبت آزمایشگاه با موفقیت انجام شد";
+        return Redirect("/");
     }
 }

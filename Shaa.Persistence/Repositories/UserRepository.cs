@@ -9,17 +9,16 @@ public class UserRepository : Repository<User, Guid>, IUserRepository
 {
     #region Ctor
 
-    private ShaaDbContext _context;
     public UserRepository(ShaaDbContext context) : base(context)
     {
-        _context = context;
+       
     }
 
     #endregion
 
     public async Task<bool> IsExistUserByEmail(string email)
     {
-        return await _dbSet.AnyAsync(p => p.Email.Equals(email));
+        return await _dbSet.AnyAsync(p => p.Email == email);
     }
 
     public async Task<bool> IsExistByNationalNo(string nationalNo)
@@ -29,17 +28,16 @@ public class UserRepository : Repository<User, Guid>, IUserRepository
 
     public async Task<User> GetUserByEmail(string email)
     {
-        return await _dbSet.FirstOrDefaultAsync(p => p.Email.Equals(email));
+        return await _dbSet.FirstOrDefaultAsync(p => p.Email== email);
     }
 
     public async Task<User?> GetUserByNationNo(string? nationalNo)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(p => p.NationalNo == nationalNo);
-        return user;
+        return await _dbSet.FirstOrDefaultAsync(p => p.NationalNo == nationalNo);
     }
 
     public async Task<User> GetUserByActivationCode(string activationCode)
     {
-        return await _dbSet.FirstOrDefaultAsync(p => p.EmailActivationCode.Equals(activationCode));
+        return await _dbSet.FirstOrDefaultAsync(p => p.EmailActivationCode == activationCode);
     }
 }

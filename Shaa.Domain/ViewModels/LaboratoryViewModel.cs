@@ -60,9 +60,10 @@ public class LaboratoryViewModel
 
 public enum LaboratoryResult
 {
-    LaboratoryNotFound,
-    WardNotFound,
-    EquipmentNotFound,
-    AbilityNotFound,
+    
+    LaboratoryExists,
+    WardExists,
+    EquipmentExist,
+    AbilityExist,
     Success
 }

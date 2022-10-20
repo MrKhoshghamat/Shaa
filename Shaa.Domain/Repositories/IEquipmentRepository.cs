@@ -5,5 +5,5 @@ namespace Shaa.Domain.Repositories;
 
 public interface IEquipmentRepository : IRepository<Equipment, Guid>
 {
-    
+    Task<bool> IsExistEquipmentByTitle(string title);
 }
