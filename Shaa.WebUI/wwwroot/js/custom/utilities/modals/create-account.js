@@ -4,7 +4,6 @@ var KTCreateAccount = function () {
     return {
         init: function () {
             (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e), t = document.querySelector("#kt_create_account_stepper"), i = t.querySelector("#kt_create_account_form"), o = t.querySelector('[data-kt-stepper-action="submit"]'), s = t.querySelector('[data-kt-stepper-action="next"]'), (r = new KTStepper(t)).on("kt.stepper.changed", (function (e) {
-                i.submit();
                 4 === r.getCurrentStepIndex() ? (o.classList.remove("d-none"), o.classList.add("d-inline-block"), s.classList.add("d-none")) : 5 === r.getCurrentStepIndex() ? (o.classList.add("d-none"), s.classList.add("d-none")) : (o.classList.remove("d-inline-block"), o.classList.remove("d-none"), s.classList.remove("d-none"))
             })), r.on("kt.stepper.next", (function (e) {
                 console.log("stepper.next");
@@ -80,18 +79,25 @@ var KTCreateAccount = function () {
                 }
             })), o.addEventListener("click", (function (e) {
                 a[2].validate().then((function (t) {
+                    i.submit();
                     console.log("validated!"), "Valid" == t ? (e.preventDefault(), o.disabled = !0, o.setAttribute("data-kt-indicator", "on"), setTimeout((function () {
                         o.removeAttribute("data-kt-indicator"), o.disabled = !1, r.goNext()
                     }), 2e3)) : Swal.fire({
-                        text: "متاسفانه در روند عملیات مشکلی بوجود آمده است. مجددا تلاش کنید",
+                        text: "Sorry, looks like there are some errors detected, please try again.",
                         icon: "error",
                         buttonsStyling: !1,
-                        confirmButtonText: "باشه",
+                        confirmButtonText: "Ok, got it!",
                         customClass: {confirmButton: "btn btn-light"}
                     }).then((function () {
                         KTUtil.scrollTop()
                     }))
                 }))
+            })), $(i.querySelector('[name="card_expiry_month"]')).on("change", (function () {
+                a[3].revalidateField("card_expiry_month")
+            })), $(i.querySelector('[name="card_expiry_year"]')).on("change", (function () {
+                a[3].revalidateField("card_expiry_year")
+            })), $(i.querySelector('[name="business_type"]')).on("change", (function () {
+                a[2].revalidateField("business_type")
             }))
         }
     }

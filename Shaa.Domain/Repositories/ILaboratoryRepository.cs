@@ -7,4 +7,6 @@ public interface ILaboratoryRepository : IRepository<Laboratory, Guid>
 {
     Task<bool> IsExistLaboratoryByPhoneNumber(string phoneNumber);
     Task<bool> IsExistLaboratoryByTitle(string title);
+    Task<Laboratory> GetLaboratoryByPhoneNumber(string phoneNumber);
+    Task<Laboratory> GetLaboratoryByTitle(string title);
 }

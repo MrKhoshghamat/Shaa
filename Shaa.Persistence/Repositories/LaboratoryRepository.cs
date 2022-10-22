@@ -24,4 +24,14 @@ public class LaboratoryRepository : Repository<Laboratory, Guid>, ILaboratoryRep
     {
         return await _dbSet.AnyAsync(p => p.Title == title);
     }
+
+    public async Task<Laboratory> GetLaboratoryByPhoneNumber(string phoneNumber)
+    {
+        return await _dbSet.FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber);
+    }
+
+    public async Task<Laboratory> GetLaboratoryByTitle(string title)
+    {
+        return await _dbSet.FirstOrDefaultAsync(p => p.Title == title);
+    }
 }

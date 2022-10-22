@@ -5,31 +5,18 @@ using Shaa.Persistence.Data;
 
 namespace Shaa.Persistence.Repositories;
 
-public class BaseInfoTypeRepository : IBaseInfoTypeRepository
+public class BaseInfoTypeRepository : Repository<BaseTableType, int>, IBaseInfoTypeRepository
 {
     #region Ctor
 
-    private readonly ShaaDbContext _context;
-
-    public BaseInfoTypeRepository(ShaaDbContext context)
+    public BaseInfoTypeRepository(ShaaDbContext context) : base(context)
     {
-        _context = context;
     }
 
     #endregion
 
-    public async Task<bool> IsExistBaseInfoTypeByTitle(string title)
+    public async Task<IEnumerable<BaseTableType>> GetAllBaseTableType()
     {
-        return await _context.BaseTableTypes.AnyAsync(p => p.Title == title);
-    }
-
-    public async Task AddAsync(BaseTableType baseTableType)
-    {
-        await _context.AddAsync(baseTableType);
-    }
-
-    public async Task SaveAsync()
-    {
-        await _context.SaveChangesAsync();
+        return await _dbSet.ToListAsync();
     }
 }

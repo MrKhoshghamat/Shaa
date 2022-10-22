@@ -15,4 +15,9 @@ public class WardRepository : Repository<Ward, Guid>, IWardRepository
     {
         return await _dbSet.AnyAsync(p => p.Title == title);
     }
+
+    public async Task<Ward> GetWardByLaboratoryId(Guid laboratoryId)
+    {
+        return await _dbSet.FirstOrDefaultAsync(p => p.LaboratoryId == laboratoryId);
+    }
 }

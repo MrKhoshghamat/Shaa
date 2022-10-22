@@ -8,4 +8,7 @@ namespace Shaa.Domain.Entities
     public partial class Laboratory : IIdentityObject<Guid> { }
     public partial class Ward : IIdentityObject<Guid> { }
     public partial class User : IIdentityObject<Guid> { }
+    public partial class BaseTableType : IIdentityObject<int> { }
+    public partial class BaseInfo : IIdentityObject<int> { }
+    
 }

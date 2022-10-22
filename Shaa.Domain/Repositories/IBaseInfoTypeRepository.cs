@@ -1,10 +1,9 @@
 ﻿using Shaa.Domain.Entities;
+using Shaa.Domain.Repositories.Base;
 
 namespace Shaa.Domain.Repositories;
 
-public interface IBaseInfoTypeRepository 
+public interface IBaseInfoTypeRepository : IRepository<BaseTableType, int>
 {
-    Task<bool> IsExistBaseInfoTypeByTitle(string title);
-    Task AddAsync(BaseTableType baseTableType);
-    Task SaveAsync();
+    Task<IEnumerable<BaseTableType>> GetAllBaseTableType();
 }

@@ -1,4 +1,6 @@
-﻿namespace Shaa.Domain.ViewModels;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shaa.Domain.ViewModels;
 
 public class LaboratoryViewModel
 {
@@ -35,10 +37,14 @@ public class LaboratoryViewModel
     public string? CompanyName { get; set; }
     public string? Model { get; set; }
     public string? SerialNumber { get; set; }
-    public DateTime? InstallationDate { get; set; }
-    public DateTime? ExploitationDate { get; set; }
+    
+    [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$", ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
+    public string? InstallationDate { get; set; }
+    
+    [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$", ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
+    public string? ExploitationDate { get; set; }
     public int? SupplyTypeId { get; set; }
-    public long? EquipmentCost { get; set; }
+    public string? EquipmentCost { get; set; }
 
     #endregion
 
@@ -48,11 +54,13 @@ public class LaboratoryViewModel
     public string AbilityTitle { get; set; } = null!;
     public string? FurtherDetailsAndProcedure { get; set; }
     public string? DescriptionOfConsumables { get; set; }
-    public long? ConsumableCost { get; set; }
-    public long? HumanResourceCost { get; set; }
-    public long? OtherCost { get; set; }
-    public long? ImplementationCost { get; set; }
-    public DateTime? ImplementationTime { get; set; }
+    public string? ConsumableCost { get; set; }
+    public string? HumanResourceCost { get; set; }
+    public string? OtherCost { get; set; }
+    public string? ImplementationCost { get; set; }
+    
+    [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$", ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
+    public string? ImplementationTime { get; set; }
     public string? FileAttachment { get; set; }
 
     #endregion
@@ -60,9 +68,7 @@ public class LaboratoryViewModel
 
 public enum LaboratoryResult
 {
-    
     LaboratoryExists,
-    WardExists,
     EquipmentExist,
     AbilityExist,
     Success

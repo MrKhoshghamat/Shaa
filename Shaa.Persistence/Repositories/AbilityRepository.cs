@@ -15,4 +15,9 @@ public class AbilityRepository : Repository<Ability, Guid>, IAbilityRepository
     {
         return await _dbSet.AnyAsync(p => p.Title == title);
     }
+
+    public async Task<Ability> GetAbilityByTitle(string title)
+    {
+        return await _dbSet.FirstOrDefaultAsync(p => p.Title == title);
+    }
 }

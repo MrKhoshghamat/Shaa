@@ -2,6 +2,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Shaa.Business.Statics;
 using Shaa.Persistence;
 using Shaa.Persistence.Data;
 
@@ -50,6 +51,21 @@ DependencyContainer.RegisterDependency(builder.Services);
 
 #endregion
 
+#region Cors
+
+// builder.Services.AddCors(options =>
+// {
+//     options.AddDefaultPolicy(
+//         build =>
+//         {
+//             build.WithOrigins(PathTools.SiteAddress, "http://localhost:4200")
+//                 .AllowAnyHeader()
+//                 .AllowAnyMethod();
+//         });
+// });
+
+#endregion
+
 #endregion
 
 #region Middlewares
@@ -63,6 +79,14 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// app.UseCors(build =>
+// {
+//     build
+//         .AllowAnyOrigin()
+//         .AllowAnyMethod()
+//         .AllowAnyHeader();
+// });
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Shaa.Business.Services.Interfaces
+@inject IBaseInfoTypeService _BaseInfoTypeService
+
+@{
     ViewData["Title"] = "آزمایشگاه";
 }
 
@@ -58,7 +61,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" asp-action="LaboratoryWizard" asp-controller="Laboratory">
+                            <a class="menu-link" asp-action="RegisterLaboratory" asp-controller="Laboratory">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -119,23 +122,19 @@
                             <span class="menu-title">اطلاعات پایه</span>
                             <span class="menu-arrow"></span>
                         </span>
+
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
-                            <div class="menu-item">
-                                <a asp-action="BaseInfoType" asp-controller="BaseInfo" class="menu-link">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">ثبت نوع اطلاعات پایه</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="#">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">ثبت اطلاعات پایه بر اساس نوع اطلاعات پایه</span>
-                                </a>
-                            </div>
+                            @foreach (var item in _BaseInfoTypeService.ShowBaseTableTypeSubMenu().Result)
+                            {
+                                <div class="menu-item">
+                                    <a asp-action="BaseInfoList" asp-controller="Home" class="menu-link">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@item.Title</span>
+                                    </a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

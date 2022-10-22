@@ -15,4 +15,21 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
     {
         return await _dbSet.AnyAsync(p => p.Title == title);
     }
+
+    public async Task<bool> IsExistEquipmentBySerialNumber(string serialNumber)
+    {
+        return await _dbSet.AnyAsync(p => p.SerialNumber == serialNumber);
+    }
+
+    public async Task<Equipment> GetEquipmentBySerialNumber(string serialnumber)
+    {
+        return await _dbSet.FirstOrDefaultAsync(p => p.SerialNumber == serialnumber);
+    }
+
+    public async Task<Guid> GetLaboratoryIdByEquipmentLaboratoryId(Guid laboratoryId)
+    {
+        var equipment = await _dbSet.FirstOrDefaultAsync(p => p.LaboratoryId == laboratoryId);
+        var labId = equipment.LaboratoryId;
+        return labId;
+    }
 }

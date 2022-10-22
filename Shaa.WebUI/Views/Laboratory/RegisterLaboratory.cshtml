@@ -1,7 +1,18 @@
-﻿@model Shaa.Domain.ViewModels.LaboratoryViewModel
+﻿@using Shaa.Domain.ViewModels.Common
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Shaa.Domain.ViewModels.LaboratoryViewModel
 
 @{
     ViewData["Title"] = "ثبت آزمایشگاه";
+    var passiveDefences = ViewData["PassiveDefences"] as List<SelectListViewModel>;
+    var approvalAuthorities = ViewData["ApprovalAuthorities"] as List<SelectListViewModel>;
+    var researchCenters = ViewData["ResearchCenters"] as List<SelectListViewModel>;
+    var laboratoryTypes = ViewData["LaboratoryTypes"] as List<SelectListViewModel>;
+    var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
+    var equipmentTypes = ViewData["EquipmentTypes"] as List<SelectListViewModel>;
+    var usageTypes = ViewData["UsageTypes"] as List<SelectListViewModel>;
+    var countries = ViewData["Countries"] as List<SelectListViewModel>;
+    var abilityTitles = ViewData["AbilityTitles"] as List<SelectListViewModel>;
 }
 
 <!--begin::Content-->
@@ -22,111 +33,15 @@
             <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                 <!--begin::Item-->
                 <li class="breadcrumb-item text-muted" itemtype="http://schema.org/ListItem" itemscope itemprop="itemListElement">
-                    <a href="javascript:void(0)" class="text-muted text-hover-primary" itemprop="item">@ViewData["Title"]</a>
+                    <a href="javascript:void(0)" class="text-muted text-hover-primary" itemprop="item">
+                        @ViewData["Title"]
+                    </a>
                 </li>
             </ul>
             <!--end::Breadcrumb-->
         </div>
         <!--end::Page title-->
         <!--begin::Actions-->
-        <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <!--begin::فیلتر menu-->
-            <div class="m-0">
-                <!--begin::Menu toggle-->
-                <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
-                    <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="currentColor"/>
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->فیلتر
-                </a>
-                <!--end::Menu toggle-->
-                <!--begin::Menu 1-->
-                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_6244763195a89">
-                    <!--begin::Header-->
-                    <div class="px-7 py-5">
-                        <div class="fs-5 text-dark fw-bolder">فیلتر تنظیمات</div>
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Menu separator-->
-                    <div class="separator border-gray-200"></div>
-                    <!--end::Menu separator-->
-                    <!--begin::Form-->
-                    <div class="px-7 py-5">
-                        <!--begin::Input group-->
-                        <div class="mb-10">
-                            <!--begin::Tags-->
-                            <label class="form-label fw-bold">وضعیت:</label>
-                            <!--end::Tags-->
-                            <!--begin::Input-->
-                            <div>
-                                <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="انتخاب گزینه" data-dropdown-parent="#kt_menu_6244763195a89" data-allow-clear="true">
-                                    <option></option>
-                                    <option value="1">تایید شده</option>
-                                    <option value="2">در انتظار</option>
-                                    <option value="2">در حال پردازش</option>
-                                    <option value="2">رد شد</option>
-                                </select>
-                            </div>
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="mb-10">
-                            <!--begin::Tags-->
-                            <label class="form-label fw-bold">نوع عضویت:</label>
-                            <!--end::Tags-->
-                            <!--begin::تنظیمات-->
-                            <div class="d-flex">
-                                <!--begin::تنظیمات-->
-                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                    <span class="form-check-label">نویسنده</span>
-                                </label>
-                                <!--end::تنظیمات-->
-                                <!--begin::تنظیمات-->
-                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                    <span class="form-check-label">مشتری</span>
-                                </label>
-                                <!--end::تنظیمات-->
-                            </div>
-                            <!--end::تنظیمات-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="mb-10">
-                            <!--begin::Tags-->
-                            <label class="form-label fw-bold">اعلان ها:</label>
-                            <!--end::Tags-->
-                            <!--begin::Switch-->
-                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked"/>
-                                <label class="form-check-label">فعال</label>
-                            </div>
-                            <!--end::Switch-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Actions-->
-                        <div class="d-flex justify-content-end">
-                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">ریست</button>
-                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">تایید</button>
-                        </div>
-                        <!--end::Actions-->
-                    </div>
-                    <!--end::Form-->
-                </div>
-                <!--end::Menu 1-->
-            </div>
-            <!--end::فیلتر menu-->
-            <!--begin::Secondary button-->
-            <!--end::Secondary button-->
-            <!--begin::اصلی button-->
-            <a href="../../demo1/dist/.html" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">ساختن</a>
-            <!--end::اصلی button-->
-        </div>
         <!--end::Actions-->
     </div>
     <!--end::Container-->
@@ -248,7 +163,7 @@
 <!--begin::Content-->
 <div class="card d-flex flex-row-fluid flex-center">
 <!--begin::Form-->
-<form asp-action="RegisterLaboratory" asp-controller="Laboratory" class="card-body py-20 w-100 w-xl-700px px-9" novalidate="novalidate" id="kt_create_account_form">
+<form asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="card-body py-20 w-100 w-xl-700px px-9" novalidate="novalidate" id="kt_create_account_form">
 @* <input asp-for="LaboratoryId" type="hidden"/> *@
 @* <input asp-for="WardId" type="hidden"/> *@
 @* <input asp-for="EquipmentId" type="hidden"/> *@
@@ -286,12 +201,13 @@
             <!--begin::Input-->
             <select asp-for="PassiveDefenceId" name="PassiveDefenceId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (passiveDefences != null && passiveDefences.Any())
+                {
+                    foreach (var passiveDefence in passiveDefences)
+                    {
+                        <option value="@passiveDefence.Id">@passiveDefence.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -302,12 +218,13 @@
             <!--begin::Input-->
             <select asp-for="ApprovalAuthorityId" name="ApprovalAuthorityId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (approvalAuthorities != null && approvalAuthorities.Any())
+                {
+                    foreach (var approvalAuthority in approvalAuthorities)
+                    {
+                        <option value="@approvalAuthority.Id">@approvalAuthority.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -318,12 +235,13 @@
             <!--begin::Input-->
             <select asp-for="ResearchCenterId" name="ResearchCenterId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (researchCenters != null && researchCenters.Any())
+                {
+                    foreach (var researchCenter in researchCenters)
+                    {
+                        <option value="@researchCenter.Id">@researchCenter.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -334,12 +252,13 @@
             <!--begin::Input-->
             <select asp-for="LaboratoryTypeId" name="LaboratoryTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (laboratoryTypes != null && laboratoryTypes.Any())
+                {
+                    foreach (var laboratoryType in laboratoryTypes)
+                    {
+                        <option value="@laboratoryType.Id">@laboratoryType.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -350,27 +269,28 @@
             <!--begin::Input-->
             <select asp-for="StandardStatusId" name="StandardStatusId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (standardStatus != null && standardStatus.Any())
+                {
+                    foreach (var standardStatusItem in standardStatus)
+                    {
+                        <option value="@standardStatusItem.Id">@standardStatusItem.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
             <!--begin::Tags-->
-            <label class="form-label required">شماره تماس</label>
+            <label class="form-label required">شماره تماس <span style="font-size: 9px"> (لطفا شماره تماس را با پیش شماره وارد کنید) </span></label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="PhoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
+            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
             <!--begin::Tags-->
             <label class="d-block fw-bold fs-6 mb-5">
-                <span class="required">تصویر آزمایشگاه</span>
+                <span>تصویر آزمایشگاه</span>
                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="E.g. انتخاب a logo to represent the company that's running the campaign."></i>
             </label>
             <!--end::Tags-->
@@ -408,7 +328,7 @@
         <!--begin::Input group-->
         <div class="fv-row mb-10">
             <!--end::Tags-->
-            <label class="form-label">آدرس</label>
+            <label class="form-label required">آدرس</label>
             <!--end::Tags-->
             <!--begin::Input-->
             <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="2"></textarea>
@@ -662,12 +582,13 @@
             <!--begin::Input-->
             <select asp-for="EquipmentTypeId" name="EquipmentTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (equipmentTypes != null && equipmentTypes.Any())
+                {
+                    foreach (var equipmentType in equipmentTypes)
+                    {
+                        <option value="@equipmentType.Id">@equipmentType.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -676,7 +597,7 @@
             <label class="form-label required">نام تجهیز</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="EquipmentTitle" name="EquipmentTitle" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="EquipmentTitle" name="EquipmentTitle" class="form-control form-control-lg form-control-solid"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
@@ -684,7 +605,7 @@
             <label class="form-label required">شماره بیت المال</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input class="form-control form-control-lg form-control-solid"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
@@ -694,12 +615,13 @@
             <!--begin::Input-->
             <select asp-for="UsageTypeId" name="UsageTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (usageTypes != null && usageTypes.Any())
+                {
+                    foreach (var usageType in usageTypes)
+                    {
+                        <option value="@usageType.Id">@usageType.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -710,12 +632,13 @@
             <!--begin::Input-->
             <select asp-for="CountryId" name="CountryId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (countries != null && countries.Any())
+                {
+                    foreach (var country in countries)
+                    {
+                        <option value="@country.Id">@country.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -758,8 +681,7 @@
                 <!--end::Svg Icon-->
                 <!--end::Icon-->
                 <!--begin::تاریخpicker-->
-                <input asp-for="InstallationDate" name="InstallationDate" class="form-control form-control-solid ps-12" placeholder="انتخاب تاریخ "/>
-                <!--end::تاریخpicker-->
+                <input asp-for="InstallationDate" type="text" name="InstallationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
             </div>
         </div>
         <div class="fv-row mb-8">
@@ -777,7 +699,7 @@
                 <!--end::Svg Icon-->
                 <!--end::Icon-->
                 <!--begin::تاریخpicker-->
-                <input asp-for="ExploitationDate" name="ExploitationDate" class="form-control form-control-solid ps-12" placeholder="انتخاب تاریخ "/>
+                <input asp-for="ExploitationDate" type="text" name="ExploitationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
                 <!--end::تاریخpicker-->
             </div>
         </div>
@@ -811,12 +733,13 @@
             <!--begin::Input-->
             <select asp-for="AbilityTitle" name="AbilityTitle" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                 <option></option>
-                <option value="1">S Corporation</option>
-                <option value="1">C Corporation</option>
-                <option value="2">Sole حرفه ایprietorship</option>
-                <option value="3">Non-profit</option>
-                <option value="4">Limited Liability</option>
-                <option value="5">عمومی شراکت</option>
+                @if (abilityTitles != null && abilityTitles.Any())
+                {
+                    foreach (var abilityTitle in abilityTitles)
+                    {
+                        <option value="@abilityTitle.Id">@abilityTitle.Title</option>
+                    }
+                }
             </select>
             <!--end::Input-->
         </div>
@@ -833,7 +756,7 @@
             <label class="form-label required">شرح مواد مصرفی</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="DescriptionOfConsumables" name="DescriptionOfConsumables" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="DescriptionOfConsumables" name="DescriptionOfConsumables" class="form-control form-control-lg form-control-solid"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
@@ -841,7 +764,7 @@
             <label class="form-label required">هزینه مواد مصرفی</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="ConsumableCost" name="ConsumableCost" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="ConsumableCost" name="ConsumableCost" class="form-control form-control-lg form-control-solid number-separator"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
@@ -849,7 +772,7 @@
             <label class="form-label required">هزینه نیروی انسانی</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="HumanResourceCost" name="HumanResourceCost" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="HumanResourceCost" name="HumanResourceCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
@@ -857,7 +780,7 @@
             <label class="form-label required">هزینه تجهیزات</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="EquipmentCost" name="EquipmentCost" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="EquipmentCost" name="EquipmentCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
@@ -865,15 +788,15 @@
             <label class="form-label required">سایر هزینه ها</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="OtherCost" name="OtherCost" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="OtherCost" name="OtherCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-10">
             <!--begin::Tags-->
-            <label class="form-label required">قیمت اجرا / تست</label>
+            <label class="form-label required">هزینه اجرا / تست</label>
             <!--end::Tags-->
             <!--begin::Input-->
-            <input asp-for="ImplementationCost" name="ImplementationCost" class="form-control form-control-lg form-control-solid" value="ساتراس وب Inc."/>
+            <input asp-for="ImplementationCost" name="ImplementationCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
             <!--end::Input-->
         </div>
         <div class="fv-row mb-8">
@@ -891,7 +814,7 @@
                 <!--end::Svg Icon-->
                 <!--end::Icon-->
                 <!--begin::تاریخpicker-->
-                <input asp-for="ImplementationTime" name="ImplementationTime" class="form-control form-control-solid ps-12" placeholder="انتخاب تاریخ "/>
+                <input asp-for="ImplementationTime" type="text" name="ImplementationTime" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
                 <!--end::تاریخpicker-->
             </div>
         </div>
@@ -1025,8 +948,8 @@
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
             <span class="svg-icon svg-icon-4 ms-1 me-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor"/>
-                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor"/>
+                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor"></rect>
+                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor"></path>
                 </svg>
             </span>
             <!--end::Svg Icon-->
@@ -1050,11 +973,12 @@
 
 @section Scripts
 {
+    <partial name="_JQueryValidation"/>
     <script src="/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="/js/custom/utilities/modals/create-account.js"></script>
     <script src="/js/widgets.bundle.js"></script>
     <script src="/js/custom/widgets.js"></script>
-    <script src="/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="/js/custom/utilities/modals/create-app.js"></script>
-    <script src="/js/custom/utilities/modals/users-search.js"></script>
+    <script src="/common/easynumberseparator/easy-number-separator.js"></script>
+    <script src="/common/custom/custom.js"></script>
+    <script src="/js/custom/apps/ecommerce/settings/settings.js"></script>
 }
