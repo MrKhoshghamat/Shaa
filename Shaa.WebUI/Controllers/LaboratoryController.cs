@@ -89,4 +89,10 @@ public class LaboratoryController : BaseController
 
         return View(laboratory);
     }
+    
+    [HttpGet("RegisterLaboratoryPrepare")]
+    public IActionResult RegisterLaboratoryPrepare()
+    {
+        return View();
+    }
 }

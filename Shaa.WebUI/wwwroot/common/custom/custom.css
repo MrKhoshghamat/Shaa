@@ -1,3 +1,7 @@
 .datepicker {
     width: 100% !important;
 }
+
+.mb-12 {
+    margin-bottom: 1rem!important;
+}
