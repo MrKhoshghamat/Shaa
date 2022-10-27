@@ -16,4 +16,8 @@ public interface IBaseInfoService
     Task<List<SelectListViewModel>> GetAllUsageTypes(int? baseTableTypeId);
     Task<List<SelectListViewModel>> GetAllCountries(int? baseTableTypeId);
     Task<List<SelectListViewModel>> GetAllAbilityTitles(int? baseTableTypeId);
+    Task<List<SelectListViewModel>> GetAllEquipmentSupplyTypes(int? baseTableTypeId);
+    Task<List<SelectListViewModel>> GetAllRelatedSections(int? baseTableTypeId);
+    Task<List<SelectListViewModel>> GetAllEquipmentsStatus(int? baseTableTypeId);
+    Task<List<SelectListViewModel>> GetAllEmploymentsStatus(int? baseTableTypeId);
 }

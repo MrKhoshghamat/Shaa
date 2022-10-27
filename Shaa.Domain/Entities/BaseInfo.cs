@@ -9,7 +9,10 @@ namespace Shaa.Domain.Entities
         {
             Departments = new HashSet<Department>();
             EquipmentCountries = new HashSet<Equipment>();
+            EquipmentEmploymentStatuses = new HashSet<Equipment>();
+            EquipmentEquipmentStatuses = new HashSet<Equipment>();
             EquipmentEquipmentTypes = new HashSet<Equipment>();
+            EquipmentRelatedSections = new HashSet<Equipment>();
             EquipmentSupplyTypes = new HashSet<Equipment>();
             EquipmentUsageTypes = new HashSet<Equipment>();
             LaboratoryApprovalAuthorities = new HashSet<Laboratory>();
@@ -26,7 +29,10 @@ namespace Shaa.Domain.Entities
         public virtual BaseTableType BaseTableType { get; set; } = null!;
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Equipment> EquipmentCountries { get; set; }
+        public virtual ICollection<Equipment> EquipmentEmploymentStatuses { get; set; }
+        public virtual ICollection<Equipment> EquipmentEquipmentStatuses { get; set; }
         public virtual ICollection<Equipment> EquipmentEquipmentTypes { get; set; }
+        public virtual ICollection<Equipment> EquipmentRelatedSections { get; set; }
         public virtual ICollection<Equipment> EquipmentSupplyTypes { get; set; }
         public virtual ICollection<Equipment> EquipmentUsageTypes { get; set; }
         public virtual ICollection<Laboratory> LaboratoryApprovalAuthorities { get; set; }

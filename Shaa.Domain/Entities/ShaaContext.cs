@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Shaa.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Shaa.Persistence.Data
+namespace Shaa.Domain.Entities
 {
-    public partial class ShaaDbContext : DbContext
+    public partial class ShaaContext : DbContext
     {
-        public ShaaDbContext()
+        public ShaaContext()
         {
         }
 
-        public ShaaDbContext(DbContextOptions<ShaaDbContext> options)
+        public ShaaContext(DbContextOptions<ShaaContext> options)
             : base(options)
         {
         }
@@ -152,6 +154,8 @@ namespace Shaa.Persistence.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.TitlesAttachedToEquipment).HasMaxLength(255);
+
+                entity.Property(e => e.WarrantyExpirationDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.EquipmentCountries)

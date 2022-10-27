@@ -2,7 +2,6 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Shaa.Business.Statics;
 using Shaa.Persistence;
 using Shaa.Persistence.Data;
 

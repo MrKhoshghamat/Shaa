@@ -54,6 +54,10 @@ public class BaseInfoService : IBaseInfoService
         return filter;
     }
 
+    #endregion
+
+    #region BaseInfo
+
     public async Task<int> GetBaseTableTypeId(int baseTableTypeId)
     {
         return await _baseInfoRepository.GetBaseTableTypeId(baseTableTypeId);
@@ -72,9 +76,9 @@ public class BaseInfoService : IBaseInfoService
 
     public async Task<List<SelectListViewModel>> GetAllApprovalAuthorities(int? baseTableTypeId)
     {
-        var approvalAuthority = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var approvalAuthorites = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return approvalAuthority.Select(s => new SelectListViewModel()
+        return approvalAuthorites.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title
@@ -105,9 +109,9 @@ public class BaseInfoService : IBaseInfoService
     
     public async Task<List<SelectListViewModel>> GetAllStandardStatus(int? baseTableTypeId)
     {
-        var standardStatus = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var standardsStatus = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return standardStatus.Select(s => new SelectListViewModel()
+        return standardsStatus.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title
@@ -116,9 +120,9 @@ public class BaseInfoService : IBaseInfoService
     
     public async Task<List<SelectListViewModel>> GetAllEquipmentTypes(int? baseTableTypeId)
     {
-        var equiomentType = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var equipmentTypes = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return equiomentType.Select(s => new SelectListViewModel()
+        return equipmentTypes.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title
@@ -127,9 +131,9 @@ public class BaseInfoService : IBaseInfoService
     
     public async Task<List<SelectListViewModel>> GetAllUsageTypes(int? baseTableTypeId)
     {
-        var usageType = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var usageTypes = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return usageType.Select(s => new SelectListViewModel()
+        return usageTypes.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title
@@ -138,9 +142,9 @@ public class BaseInfoService : IBaseInfoService
     
     public async Task<List<SelectListViewModel>> GetAllCountries(int? baseTableTypeId)
     {
-        var country = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var countries = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return country.Select(s => new SelectListViewModel()
+        return countries.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title
@@ -149,20 +153,58 @@ public class BaseInfoService : IBaseInfoService
     
     public async Task<List<SelectListViewModel>> GetAllAbilityTitles(int? baseTableTypeId)
     {
-        var abilityTitle = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var abilityTitles = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return abilityTitle.Select(s => new SelectListViewModel()
+        return abilityTitles.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title
         }).ToList();
     }
 
-    #endregion
+    public async Task<List<SelectListViewModel>> GetAllEquipmentSupplyTypes(int? baseTableTypeId)
+    {
+        var equipmentSupplyTypes = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-    #region Passive Defence
+        return equipmentSupplyTypes.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
 
-    
+    public async Task<List<SelectListViewModel>> GetAllRelatedSections(int? baseTableTypeId)
+    {
+        var RelatedSections = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+
+        return RelatedSections.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
+
+    public async Task<List<SelectListViewModel>> GetAllEquipmentsStatus(int? baseTableTypeId)
+    {
+        var EquipmentsStatus = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+
+        return EquipmentsStatus.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
+
+    public async Task<List<SelectListViewModel>> GetAllEmploymentsStatus(int? baseTableTypeId)
+    {
+        var EmploymentsStatus = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+
+        return EmploymentsStatus.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
 
     #endregion
 }

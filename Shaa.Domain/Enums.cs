@@ -10,5 +10,9 @@ public enum BaseTableTypeId
     EquipmentType = 6,
     UsageType = 7,
     CountryId = 8,
-    AbilityTitle = 9
+    AbilityTitle = 9,
+    EquipmentSupplyType = 10,
+    RelatedSection = 11,
+    EquipmentStatus = 12,
+    EmploymentStatus = 13
 }

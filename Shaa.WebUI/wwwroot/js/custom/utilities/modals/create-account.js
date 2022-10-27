@@ -42,15 +42,7 @@ var KTCreateAccount = function () {
                 }
             })), a.push(FormValidation.formValidation(i, {
                 fields: {
-                    EquipmentTypeId: {validators: {notEmpty: {message: "لطفا نوع تجهیز را وارد کنید"}}},
-                    EquipmentTitle: {validators: {notEmpty: {message: "لطفا عنوان تجهیز را وارد کنید"}}},
-                    UsageTypeId: {validators: {notEmpty: {message: "لطفا نوع کاربری را وارد کنید"}}},
-                    CountryId: {validators: {notEmpty: {message: "لطفا کشور سازنده را وارد کنید"}}},
-                    CompanyName: {validators: {notEmpty: {message: "لطفا کمپانی سازنده را وارد کنید"}}},
-                    Model: {validators: {notEmpty: {message: "لطفا مدل را وارد کنید"}}},
-                    SerialNumber: {validators: {notEmpty: {message: "لطفا شماره سریال را وارد کنید"}}},
-                    InstallationDate: {validators: {notEmpty: {message: "لطفا تاریخ نصب را وارد کنید"}}},
-                    ExploitationDate: {validators: {notEmpty: {message: "لطفا تاریخ بهره برداری را وارد کنید"}}}
+                    WardTitle: {validators: false}
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger,
@@ -62,12 +54,26 @@ var KTCreateAccount = function () {
                 }
             })), a.push(FormValidation.formValidation(i, {
                 fields: {
-                    AbilityTitle: {validators: {notEmpty: {message: "لطفا عنوان توانمندی را وارد کنید"}}},
-                    ConsumableCost: {validators: {notEmpty: {message: "لطفا هزینه مواد مصرفی را وارد کنید"}}},
-                    HumanResourceCost: {validators: {notEmpty: {message: "لطفا هزینه نیروی انسانی را وارد کنید"}}},
-                    EquipmentCost: {validators: {notEmpty: {message: "لطفا هزینه تجهیزات را وارد کنید"}}},
-                    ImplementationCost: {validators: {notEmpty: {message: "لطفا هزینه اجرا وپیاده سازی را وارد کنید"}}},
-                    ImplementationTime: {validators: {notEmpty: {message: "لطفا تاریخ زمان اجرا را وارد کنید"}}}
+                    EquipmentTypeId: {validators: {notEmpty: {message: "لطفا نوع تجهیز را وارد کنید"}}},
+                    GeneralTechnicalSpecification: {validators: {notEmpty: {message: "لطفا مشخصات کلی را وارد کنید"}}},
+                    PersianTitle: {validators: {notEmpty: {message: "لطفا عنوان فارسی را وارد کنید"}}},
+                    EquipmentTitle: {validators: {notEmpty: {message: "لطفا عنوان تجهیز را وارد کنید"}}},
+                    UsageTypeId: {validators: {notEmpty: {message: "لطفا نوع کاربری را وارد کنید"}}},
+                    CountryId: {validators: {notEmpty: {message: "لطفا کشور سازنده را وارد کنید"}}},
+                    CompanyName: {validators: {notEmpty: {message: "لطفا کمپانی سازنده را وارد کنید"}}},
+                    EquipmentUsage: {validators: {notEmpty: {message: "لطفا کاربرد تجهیز را وارد کنید"}}},
+                    RelatedSectionId: {validators: {notEmpty: {message: "لطفا بخش مرتبط را وارد کنید"}}},
+                    Model: {validators: {notEmpty: {message: "لطفا مدل را وارد کنید"}}},
+                    SerialNumber: {validators: {notEmpty: {message: "لطفا شماره سریال را وارد کنید"}}},
+                    InstallationDate: {validators: {notEmpty: {message: "لطفا تاریخ نصب را وارد کنید"}}},
+                    ExploitationDate: {validators: {notEmpty: {message: "لطفا تاریخ بهره برداری را وارد کنید"}}},
+                    EmploymentStatusId: {validators: {notEmpty: {message: "لطفا وضعیت بکارگیری را وارد کنید"}}},
+                    SupplyTypeId: {validators: {notEmpty: {message: "لطفا نوع تامین را وارد کنید"}}},
+                    PurchasePriceConstruction: {validators: {notEmpty: {message: "لطفا قیمت خرید یا ساخت را وارد کنید"}}},
+                    WarrantyExpirationDate: {validators: {notEmpty: {message: "لطفا تاریخ انقضا گارانتی را وارد کنید"}}},
+                    InsuranceExpirationDate: {validators: {notEmpty: {message: "لطفا تاریخ انقضا بیمه را وارد کنید"}}},
+                    SpecialCharacteristic: {validators: {notEmpty: {message: "لطفا ویژگی خاص را وارد کنید"}}},
+                    BaitulMalNo: {validators: {notEmpty: {message: "لطفا شماره بیت المال را وارد کنید"}}}
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger,
@@ -78,7 +84,7 @@ var KTCreateAccount = function () {
                     })
                 }
             })), o.addEventListener("click", (function (e) {
-                a[2].validate().then((function (t) {
+                a[3].validate().then((function (t) {
                     i.submit();
                     console.log("validated!"), "Valid" == t ? (e.preventDefault(), o.disabled = !0, o.setAttribute("data-kt-indicator", "on"), setTimeout((function () {
                         o.removeAttribute("data-kt-indicator"), o.disabled = !1, r.goNext()
@@ -92,12 +98,6 @@ var KTCreateAccount = function () {
                         KTUtil.scrollTop()
                     }))
                 }))
-            })), $(i.querySelector('[name="card_expiry_month"]')).on("change", (function () {
-                a[3].revalidateField("card_expiry_month")
-            })), $(i.querySelector('[name="card_expiry_year"]')).on("change", (function () {
-                a[3].revalidateField("card_expiry_year")
-            })), $(i.querySelector('[name="business_type"]')).on("change", (function () {
-                a[2].revalidateField("business_type")
             }))
         }
     }

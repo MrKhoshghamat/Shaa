@@ -38,25 +38,37 @@ public class LaboratoryController : BaseController
             await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.ApprovalAuthority);
 
         ViewData["ResearchCenters"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.ResearchCenter);
+            await _baseInfoService.GetAllResearchCenters((int)BaseTableTypeId.ResearchCenter);
 
         ViewData["LaboratoryTypes"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.LaboratoryType);
+            await _baseInfoService.GetAllLaboratoryTypes((int)BaseTableTypeId.LaboratoryType);
 
         ViewData["StandardStatus"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.StandardStatus);
+            await _baseInfoService.GetAllStandardStatus((int)BaseTableTypeId.StandardStatus);
 
         ViewData["EquipmentTypes"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.EquipmentType);
+            await _baseInfoService.GetAllEquipmentTypes((int)BaseTableTypeId.EquipmentType);
 
         ViewData["UsageTypes"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.UsageType);
+            await _baseInfoService.GetAllUsageTypes((int)BaseTableTypeId.UsageType);
 
         ViewData["Countries"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.CountryId);
+            await _baseInfoService.GetAllCountries((int)BaseTableTypeId.CountryId);
 
         ViewData["AbilityTitles"] =
-            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.AbilityTitle);
+            await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
+
+        ViewData["EquipmentSupplyTypes"] =
+            await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
+        
+        ViewData["RelatedSection"] =
+            await _baseInfoService.GetAllRelatedSections((int)BaseTableTypeId.RelatedSection);
+        
+        ViewData["EquipmentsStatus"] =
+            await _baseInfoService.GetAllEquipmentsStatus((int)BaseTableTypeId.EquipmentStatus);
+        
+        ViewData["EmploymentsStatus"] =
+            await _baseInfoService.GetAllEmploymentsStatus((int)BaseTableTypeId.EmploymentStatus);
 
         return View();
     }
@@ -90,9 +102,9 @@ public class LaboratoryController : BaseController
         return View(laboratory);
     }
     
-    [HttpGet("RegisterLaboratoryPrepare")]
-    public IActionResult RegisterLaboratoryPrepare()
-    {
-        return View();
-    }
+    // [HttpGet("RegisterLaboratoryPrepare")]
+    // public IActionResult RegisterLaboratoryPrepare()
+    // {
+    //     return View();
+    // }
 }

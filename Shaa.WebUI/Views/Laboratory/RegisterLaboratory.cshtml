@@ -13,699 +13,433 @@
     var usageTypes = ViewData["UsageTypes"] as List<SelectListViewModel>;
     var countries = ViewData["Countries"] as List<SelectListViewModel>;
     var abilityTitles = ViewData["AbilityTitles"] as List<SelectListViewModel>;
+    var equipmentSupplyTypes = ViewData["EquipmentSupplyTypes"] as List<SelectListViewModel>;
+    var relatedSections = ViewData["RelatedSection"] as List<SelectListViewModel>;
+    var equipmentsStatus = ViewData["EquipmentsStatus"] as List<SelectListViewModel>;
+    var employmentsStatus = ViewData["EmploymentsStatus"] as List<SelectListViewModel>;
 }
 
-<!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-<!--begin::Toolbar-->
 <div class="toolbar" id="kt_toolbar">
-    <!--begin::Container-->
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-        <!--begin::Page title-->
         <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-            <!--begin::Title-->
             <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">ثبت اطلاعات آزمایشگاه</h1>
-            <!--end::Title-->
-            <!--begin::Separator-->
             <span class="h-20px border-gray-300 border-start mx-4"></span>
-            <!--end::Separator-->
-            <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-                <!--begin::Item-->
                 <li class="breadcrumb-item text-muted" itemtype="http://schema.org/ListItem" itemscope itemprop="itemListElement">
                     <a href="javascript:void(0)" class="text-muted text-hover-primary" itemprop="item">
                         @ViewData["Title"]
                     </a>
                 </li>
             </ul>
-            <!--end::Breadcrumb-->
         </div>
-        <!--end::Page title-->
-        <!--begin::Actions-->
-        <!--end::Actions-->
     </div>
-    <!--end::Container-->
 </div>
-<!--end::Toolbar-->
-<!--begin::Post-->
 <div class="post d-flex flex-column-fluid" id="kt_post">
-<!--begin::Container-->
 <div id="kt_content_container" class="container-xxl">
-<!--begin::Stepper-->
-<div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid" id="kt_create_account_stepper">
-<!--begin::کناری-->
-<div class="card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px me-9">
-    <!--begin::Wrapper-->
-    <div class="card-body px-6 px-lg-10 px-xxl-15 py-20">
-        <!--begin::Nav-->
-        <div class="stepper-nav">
-            <!--begin::Step 1-->
-            <div class="stepper-item current" data-kt-stepper-element="nav">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                    <i class="stepper-check fas fa-check"></i>
-                    <span class="stepper-number">1</span>
-                </div>
-                <!--end::Icon-->
-                <!--begin::Tags-->
-                <div class="stepper-label">
-                    <h3 class="stepper-title">اطلاعات اصلی</h3>
-                    <div class="stepper-desc fw-bold">ثبت اطلاعات اصلی آزمایشگاه</div>
-                </div>
-                <!--end::Tags-->
-            </div>
-            <!--end::Step 1-->
-            <!--begin::Step 2-->
-            @* <div class="stepper-item" data-kt-stepper-element="nav"> *@
-            @*     <!--begin::Line--> *@
-            @*     <div class="stepper-line w-40px"></div> *@
-            @*     <!--end::Line--> *@
-            @*     <!--begin::Icon--> *@
-            @*     <div class="stepper-icon w-40px h-40px"> *@
-            @*         <i class="stepper-check fas fa-check"></i> *@
-            @*         <span class="stepper-number">2</span> *@
-            @*     </div> *@
-            @*     <!--end::Icon--> *@
-            @*     <!--begin::Tags--> *@
-            @*     <div class="stepper-label"> *@
-            @*         <h3 class="stepper-title">بخش ها</h3> *@
-            @*         <div class="stepper-desc fw-bold">ثبت بخش های آزمایشگاه</div> *@
-            @*     </div> *@
-            @*     <!--end::Tags--> *@
-            @* </div> *@
-            <!--end::Step 2-->
-            <!--begin::Step 3-->
-            <div class="stepper-item" data-kt-stepper-element="nav">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                    <i class="stepper-check fas fa-check"></i>
-                    <span class="stepper-number">2</span>
-                </div>
-                <!--end::Icon-->
-                <!--begin::Tags-->
-                <div class="stepper-label">
-                    <h3 class="stepper-title">تجهیزات</h3>
-                    <div class="stepper-desc fw-bold">ثبت تجهیزات آزمایشگاه</div>
-                </div>
-                <!--end::Tags-->
-            </div>
-            <!--end::Step 3-->
-            <!--begin::Step 4-->
-            <div class="stepper-item" data-kt-stepper-element="nav">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                    <i class="stepper-check fas fa-check"></i>
-                    <span class="stepper-number">3</span>
-                </div>
-                <!--end::Icon-->
-                <!--begin::Tags-->
-                <div class="stepper-label">
-                    <h3 class="stepper-title">توانمندیها</h3>
-                    <div class="stepper-desc fw-bold">ثبت توانمندیهای آزمایشگاه</div>
-                </div>
-                <!--end::Tags-->
-            </div>
-            <!--end::Step 4-->
-            <!--begin::Step 5-->
-            <div class="stepper-item" data-kt-stepper-element="nav">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                    <i class="stepper-check fas fa-check"></i>
-                    <span class="stepper-number">4</span>
-                </div>
-                <!--end::Icon-->
-                <!--begin::Tags-->
-                <div class="stepper-label">
-                    <h3 class="stepper-title">کامل شد</h3>
-                    <div class="stepper-desc fw-bold">نتیجه فرایند ثبت اطلاعات آزمایشگاه</div>
-                </div>
-                <!--end::Tags-->
-            </div>
-            <!--end::Step 5-->
-        </div>
-        <!--end::Nav-->
+<div class="card">
+<div class="card-body">
+<div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
+<div class="stepper-nav mb-5">
+    <div class="stepper-item current" data-kt-stepper-element="nav">
+        <h3 class="stepper-title"> اطلاعات اصلی</h3>
     </div>
-    <!--end::Wrapper-->
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">بخش ها</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">تجهیزات</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">توانمندیها</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">کامل شد</h3>
+    </div>
 </div>
-<!--begin::کناری-->
-<!--begin::Content-->
-<div class="card d-flex flex-row-fluid flex-center">
-<!--begin::Form-->
-<form asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="card-body py-20 w-100 w-xl-700px px-9" novalidate="novalidate" id="kt_create_account_form">
-@* <input asp-for="LaboratoryId" type="hidden"/> *@
-@* <input asp-for="WardId" type="hidden"/> *@
-@* <input asp-for="EquipmentId" type="hidden"/> *@
-@* <input asp-for="AbilityId" type="hidden"/> *@
-<!--begin::Step 1-->
+<form asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="mx-auto mw-600px w-100 pt-15 pb-10" novalidate="novalidate" id="kt_create_account_form">
 <div class="current" data-kt-stepper-element="content">
-    <!--begin::Wrapper-->
     <div class="w-100">
-        <!--begin::Heading-->
-        <div class="pb-10 pb-lg-12">
-            <!--begin::Title-->
-            <h2 class="fw-bolder text-dark">اطلاعات اصلی</h2>
-            <!--end::Title-->
-            <!--begin::Notice-->
+        <div class="pb-10 pb-lg-15">
+            <h2 class="fw-bolder d-flex align-items-center text-dark">
+                اطلاعات اصلی
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="اطلاعات اصلی آزمایشگاه"></i>
+            </h2>
             <div class="text-muted fw-bold fs-6">
-                اگر به اطلاعات بیشتری نیاز دارید ، لطفاً این مورد را بررسی کنید
-                <a href="#" class="link-primary fw-bolder">صفحه راهنما</a>.
+                در این بخش اطلاعات اصلی آزمایشگاه را وارد نمایید
             </div>
-            <!--end::Notice-->
         </div>
-        <!--end::Heading-->
-        <!--begin::Input group-->
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">عنوان آزمایشگاه</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">پدافند غیرعامل</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="PassiveDefenceId" name="PassiveDefenceId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (passiveDefences != null && passiveDefences.Any())
-                {
-                    foreach (var passiveDefence in passiveDefences)
+        <div class="row mb-12">
+            <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">عنوان آزمایشگاه</label>
+                <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
+            </div>
+            <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">پدافند غیرعامل</label>
+                <select asp-for="PassiveDefenceId" name="PassiveDefenceId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                    <option></option>
+                    @if (passiveDefences != null && passiveDefences.Any())
                     {
-                        <option value="@passiveDefence.Id">@passiveDefence.Title</option>
+                        foreach (var passiveDefence in passiveDefences)
+                        {
+                            <option value="@passiveDefence.Id">@passiveDefence.Title</option>
+                        }
                     }
-                }
-            </select>
-            <!--end::Input-->
+                </select>
+            </div>
         </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">مرجع تصویب</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="ApprovalAuthorityId" name="ApprovalAuthorityId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (approvalAuthorities != null && approvalAuthorities.Any())
-                {
-                    foreach (var approvalAuthority in approvalAuthorities)
+        <div class="row mb-12">
+            <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">مرجع تصویب</label>
+                <select asp-for="ApprovalAuthorityId" name="ApprovalAuthorityId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                    <option></option>
+                    @if (approvalAuthorities != null && approvalAuthorities.Any())
                     {
-                        <option value="@approvalAuthority.Id">@approvalAuthority.Title</option>
+                        foreach (var approvalAuthority in approvalAuthorities)
+                        {
+                            <option value="@approvalAuthority.Id">@approvalAuthority.Title</option>
+                        }
                     }
-                }
-            </select>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">مرکز تحقیقاتی</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="ResearchCenterId" name="ResearchCenterId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (researchCenters != null && researchCenters.Any())
-                {
-                    foreach (var researchCenter in researchCenters)
+                </select>
+            </div>
+            <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">مرکز تحقیقاتی</label>
+                <select asp-for="ResearchCenterId" name="ResearchCenterId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                    <option></option>
+                    @if (researchCenters != null && researchCenters.Any())
                     {
-                        <option value="@researchCenter.Id">@researchCenter.Title</option>
+                        foreach (var researchCenter in researchCenters)
+                        {
+                            <option value="@researchCenter.Id">@researchCenter.Title</option>
+                        }
                     }
-                }
-            </select>
-            <!--end::Input-->
+                </select>
+            </div>
         </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">نوع آزمایشگاه / کارگاه</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="LaboratoryTypeId" name="LaboratoryTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (laboratoryTypes != null && laboratoryTypes.Any())
-                {
-                    foreach (var laboratoryType in laboratoryTypes)
+        <div class="row mb-12">
+            <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">نوع آزمایشگاه / کارگاه</label>
+                <select asp-for="LaboratoryTypeId" name="LaboratoryTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                    <option></option>
+                    @if (laboratoryTypes != null && laboratoryTypes.Any())
                     {
-                        <option value="@laboratoryType.Id">@laboratoryType.Title</option>
+                        foreach (var laboratoryType in laboratoryTypes)
+                        {
+                            <option value="@laboratoryType.Id">@laboratoryType.Title</option>
+                        }
                     }
-                }
-            </select>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">وضعیت استاندارد</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="StandardStatusId" name="StandardStatusId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (standardStatus != null && standardStatus.Any())
-                {
-                    foreach (var standardStatusItem in standardStatus)
+                </select>
+            </div>
+            <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">وضعیت استاندارد</label>
+                <select asp-for="StandardStatusId" name="StandardStatusId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                    <option></option>
+                    @if (standardStatus != null && standardStatus.Any())
                     {
-                        <option value="@standardStatusItem.Id">@standardStatusItem.Title</option>
+                        foreach (var standardStatusItem in standardStatus)
+                        {
+                            <option value="@standardStatusItem.Id">@standardStatusItem.Title</option>
+                        }
                     }
-                }
-            </select>
-            <!--end::Input-->
+                </select>
+            </div>
         </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">شماره تماس <span style="font-size: 9px"> (لطفا شماره تماس را با پیش شماره وارد کنید) </span></label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
+        <div class="row mb-12">
+            <div class="col-md-12 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">شماره تماس <span style="font-size: 9px"> (لطفا شماره تماس را با پیش شماره وارد کنید) </span></label>
+                <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
+            </div>
         </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="d-block fw-bold fs-6 mb-5">
-                <span>تصویر آزمایشگاه</span>
-                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="E.g. انتخاب a logo to represent the company that's running the campaign."></i>
-            </label>
-            <!--end::Tags-->
-            <!--begin::Image input-->
-            <div class="image-input image-input-empty image-input-outline" data-kt-image-input="true" style="background-image: url(media/svg/files/blank-image.svg)">
-                <!--begin::نمایش existing avatar-->
-                <div class="image-input-wrapper w-125px h-125px"></div>
-                <!--end::نمایش existing avatar-->
-                <!--begin::Tags-->
-                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تعویض آواتار">
-                    <i class="bi bi-pencil-fill fs-7"></i>
-                    <!--begin::Inputs-->
-                    <input asp-for="LaboratoryImagePath" name="LaboratoryImagePath" type="file" accept=".png, .jpg, .jpeg"/>
-                    <input type="hidden" name="avatar_remove"/>
-                    <!--end::Inputs-->
+        <div class="row mb-12">
+            <div class="col-md-4 fv-row">
+                <label class="d-block fw-bold fs-6 mb-5">
+                    <span>تصویر آزمایشگاه</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="تصویز آزمایشگاه"></i>
                 </label>
-                <!--end::Tags-->
-                <!--begin::انصراف-->
-                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف avatar">
-                    <i class="bi bi-x fs-2"></i>
-                </span>
-                <!--end::انصراف-->
-                <!--begin::حذف-->
-                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف آواتار">
-                    <i class="bi bi-x fs-2"></i>
-                </span>
-                <!--end::حذف-->
+                <div class="image-input image-input-empty image-input-outline" data-kt-image-input="true" style="background-image: url(media/svg/files/blank-image.svg)">
+                    <div class="image-input-wrapper w-125px h-125px"></div>
+                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تعویض آواتار">
+                        <i class="bi bi-pencil-fill fs-7"></i>
+                        <input asp-for="LaboratoryImagePath" name="LaboratoryImagePath" type="file" accept=".png, .jpg, .jpeg"/>
+                        <input type="hidden" name="avatar_remove"/>
+                    </label>
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف avatar">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف آواتار">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                </div>
             </div>
-            <!--end::Image input-->
-            <!--begin::Hint-->
-            <div class="form-text">فرمتهای file types: png, jpg, jpeg.</div>
-            <!--end::Hint-->
+            <div class="col-md-8 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">آدرس</label>
+                <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
+            </div>
         </div>
-        <!--end::Input group-->
-        <!--begin::Input group-->
-        <div class="fv-row mb-10">
-            <!--end::Tags-->
-            <label class="form-label required">آدرس</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="2"></textarea>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--end::Tags-->
-            <label class="form-label">توضیحات</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <textarea asp-for="LaboratoryDescription" name="LaboratoryDescription" class="form-control form-control-lg form-control-solid" rows="3"></textarea>
-            <!--end::Input-->
-        </div>
-        <!--end::Input group-->
-        <!--begin::Input group-->
-        <!--end::Input group-->
     </div>
-    <!--end::Wrapper-->
 </div>
-<!--end::Step 1-->
-<!--begin::Step 2-->
-@* <div data-kt-stepper-element="content"> *@
-@* <!--begin::Wrapper--> *@
-@* <div class="card mb-5 mb-xl-8"> *@
-@* <!--begin::Header--> *@
-@* <div class="card-header border-0 pt-5"> *@
-@*     <h3 class="card-title align-items-start flex-column"> *@
-@*         <span class="card-label fw-bolder fs-3 mb-1">بخش ها</span> *@
-@*         <span class="text-muted mt-1 fw-bold fs-7">افزودن بخش</span> *@
-@*     </h3> *@
-@*     <div class="card-toolbar"> *@
-@*         <a href="#" class="btn btn-sm btn-light-primary"> *@
-@*             <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg--> *@
-@*             <span class="svg-icon svg-icon-2"> *@
-@*                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                     <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor"/> *@
-@*                     <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"/> *@
-@*                 </svg> *@
-@*             </span> *@
-@*             <!--end::Svg Icon-->افزودن *@
-@*         </a> *@
-@*     </div> *@
-@* </div> *@
-@* <!--end::Header--> *@
-@* <!--begin::Body--> *@
-@* <div class="card-body py-3"> *@
-@*     <!--begin::Table container--> *@
-@*     <div class="table-responsive"> *@
-@*         <!--begin::Table--> *@
-@*         <table class="table align-middle gs-0 gy-4"> *@
-@*             <!--begin::Table head--> *@
-@*             <thead> *@
-@*             <tr class="fw-bolder text-muted bg-light"> *@
-@*                 <th class="min-w-400px">عنوان بخش</th> *@
-@*                 <th class="min-w-190px text-end rounded-end"></th> *@
-@*             </tr> *@
-@*             </thead> *@
-@*             <!--end::Table head--> *@
-@*             <!--begin::Table body--> *@
-@*             <tbody> *@
-@*             <tr> *@
-@*                 <td> *@
-@*                     <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">بردلی بیل</a> *@
-@*                     <span class="text-muted fw-bold text-muted d-block fs-7">بیمه</span> *@
-@*                 </td> *@
-@*                 <td class="text-end"> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"/> *@
-@*                                 <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                 </td> *@
-@*             </tr> *@
-@*             <tr> *@
-@*                 <td> *@
-@*                     <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">بردلی بیل</a> *@
-@*                     <span class="text-muted fw-bold text-muted d-block fs-7">بیمه</span> *@
-@*                 </td> *@
-@*                 <td class="text-end"> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"/> *@
-@*                                 <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                 </td> *@
-@*             </tr> *@
-@*             <tr> *@
-@*                 <td> *@
-@*                     <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">بردلی بیل</a> *@
-@*                     <span class="text-muted fw-bold text-muted d-block fs-7">بیمه</span> *@
-@*                 </td> *@
-@*                 <td class="text-end"> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"/> *@
-@*                                 <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                 </td> *@
-@*             </tr> *@
-@*             <tr> *@
-@*                 <td> *@
-@*                     <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">بردلی بیل</a> *@
-@*                     <span class="text-muted fw-bold text-muted d-block fs-7">بیمه</span> *@
-@*                 </td> *@
-@*                 <td class="text-end"> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"/> *@
-@*                                 <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                     <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"> *@
-@*                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg--> *@
-@*                         <span class="svg-icon svg-icon-3"> *@
-@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
-@*                                 <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"/> *@
-@*                                 <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"/> *@
-@*                             </svg> *@
-@*                         </span> *@
-@*                         <!--end::Svg Icon--> *@
-@*                     </a> *@
-@*                 </td> *@
-@*             </tr> *@
-@*             </tbody> *@
-@*             <!--end::Table body--> *@
-@*         </table> *@
-@*         <!--end::Table--> *@
-@*     </div> *@
-@*     <!--end::Table container--> *@
-@* </div> *@
-@* <!--begin::Body--> *@
-@* </div> *@
-@* <!--end::Wrapper--> *@
-@* </div> *@
-<!--end::Step 2-->
-<!--begin::Step 3-->
 <div data-kt-stepper-element="content">
-    <!--begin::Wrapper-->
     <div class="w-100">
-        <!--begin::Heading-->
-        <div class="pb-10 pb-lg-12">
-            <!--begin::Title-->
-            <h2 class="fw-bolder text-dark">تجهیزات</h2>
-            <!--end::Title-->
-            <!--begin::Notice-->
-            <div class="text-muted fw-bold fs-6">
-                اگر به اطلاعات بیشتری نیاز دارید ، لطفاً این مورد را بررسی کنید
-                <a href="#" class="link-primary fw-bolder">صفحه راهنما</a>.
-            </div>
-            <!--end::Notice-->
-        </div>
-        <!--end::Heading-->
-        <!--begin::Input group-->
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">نوع تجهیز</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="EquipmentTypeId" name="EquipmentTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (equipmentTypes != null && equipmentTypes.Any())
-                {
-                    foreach (var equipmentType in equipmentTypes)
-                    {
-                        <option value="@equipmentType.Id">@equipmentType.Title</option>
-                    }
-                }
-            </select>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">نام تجهیز</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="EquipmentTitle" name="EquipmentTitle" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">شماره بیت المال</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">نوع کاربری</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="UsageTypeId" name="UsageTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (usageTypes != null && usageTypes.Any())
-                {
-                    foreach (var usageType in usageTypes)
-                    {
-                        <option value="@usageType.Id">@usageType.Title</option>
-                    }
-                }
-            </select>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">کشور سازنده</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="CountryId" name="CountryId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (countries != null && countries.Any())
-                {
-                    foreach (var country in countries)
-                    {
-                        <option value="@country.Id">@country.Title</option>
-                    }
-                }
-            </select>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">نام کارخانه سازنده</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="CompanyName" name="CompanyName" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">مدل</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="Model" name="Model" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">شماره سریال</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="SerialNumber" name="SerialNumber" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-8">
-            <label class="required fs-6 fw-bold mb-2">تاریخ نصب</label>
-            <div class="position-relative d-flex align-items-center">
-                <!--begin::Icon-->
-                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
-                        <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
-                        <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-                <!--end::Icon-->
-                <!--begin::تاریخpicker-->
-                <input asp-for="InstallationDate" type="text" name="InstallationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
+        <div class="row mb-12">
+            <div class="col-md-12 fv-row">
+                <label class="fs-6 fw-bold form-label mb-2">عنوان بخش</label>
+                <input asp-for="WardTitle" name="WardTitle" class="form-control form-control-lg form-control-solid"/>
             </div>
         </div>
-        <div class="fv-row mb-8">
-            <label class="required fs-6 fw-bold mb-2">تاریخ بهره برداری</label>
-            <div class="position-relative d-flex align-items-center">
-                <!--begin::Icon-->
-                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
-                        <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
-                        <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-                <!--end::Icon-->
-                <!--begin::تاریخpicker-->
-                <input asp-for="ExploitationDate" type="text" name="ExploitationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
-                <!--end::تاریخpicker-->
-            </div>
-        </div>
-        <!--end::Input group-->
     </div>
-    <!--end::Wrapper-->
+</div>
+<div data-kt-stepper-element="content">
+<div class="w-100">
+<div class="pb-10 pb-lg-15">
+    <h2 class="fw-bolder d-flex align-items-center text-dark">
+        تجهیزات
+        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="تجهیزات آزمایشگاه"></i>
+    </h2>
+    <div class="text-muted fw-bold fs-6">
+        در این بخش تجهیزات آزمایشگاه را وارد نمایید
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">نوع تجهیز</label>
+        <select asp-for="EquipmentTypeId" name="EquipmentTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+            <option></option>
+            @if (equipmentTypes != null && equipmentTypes.Any())
+            {
+                foreach (var equipmentType in equipmentTypes)
+                {
+                    <option value="@equipmentType.Id">@equipmentType.Title</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">مشخصات فنی کلی</label>
+        <input asp-for="GeneralTechnicalSpecification" name="GeneralTechnicalSpecification" class="form-control form-control-lg form-control-solid"/>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">عنوان فارسی</label>
+        <input asp-for="PersianTitle" name="PersianTitle" class="form-control form-control-lg form-control-solid"/>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">عنوان انگلیسی</label>
+        <input asp-for="EquipmentTitle" name="EquipmentTitle" class="form-control form-control-lg form-control-solid"/>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">مدل</label>
+        <input asp-for="Model" name="Model" class="form-control form-control-lg form-control-solid"/>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">کاربرد تجهیز</label>
+        <input asp-for="EquipmentUsage" name="EquipmentUsage" class="form-control form-control-lg form-control-solid"/>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">کشور سازنده</label>
+        <select asp-for="CountryId" name="CountryId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+            <option></option>
+            @if (countries != null && countries.Any())
+            {
+                foreach (var country in countries)
+                {
+                    <option value="@country.Id">@country.Title</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">نام کارخانه سازنده</label>
+        <input asp-for="CompanyName" name="CompanyName" class="form-control form-control-lg form-control-solid"/>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-4 fv-row">
+        <label class="d-block fw-bold fs-6 mb-5">
+            <span>تصویر تجهیز</span>
+            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="تصویر آزمایشگاه"></i>
+        </label>
+        <div class="image-input image-input-empty image-input-outline" data-kt-image-input="true" style="background-image: url(media/svg/files/blank-image.svg)">
+            <div class="image-input-wrapper w-125px h-125px"></div>
+            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تعویض آواتار">
+                <i class="bi bi-pencil-fill fs-7"></i>
+                <input asp-for="EquipmentImage" name="EquipmentImage" type="file" accept=".png, .jpg, .jpeg"/>
+                <input type="hidden" name="avatar_remove"/>
+            </label>
+            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف avatar">
+                <i class="bi bi-x fs-2"></i>
+            </span>
+            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف آواتار">
+                <i class="bi bi-x fs-2"></i>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-8 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">بخش مرتبط</label>
+        <select asp-for="RelatedSectionId" name="RelatedSectionId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+            <option></option>
+            @if (relatedSections != null && relatedSections.Any())
+            {
+                foreach (var relatedSection in relatedSections)
+                {
+                    <option value="@relatedSection.Id">@relatedSection.Title</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">شماره بیت المال</label>
+        <input asp-for="BaitulMalNo" name="BaitulMalNo" class="form-control form-control-lg form-control-solid"/>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">شماره سریال</label>
+        <input asp-for="SerialNumber" name="SerialNumber" class="form-control form-control-lg form-control-solid"/>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold mb-2">تاریخ نصب</label>
+        <div class="position-relative d-flex align-items-center">
+            <span class="svg-icon svg-icon-2 position-absolute mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
+                    <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
+                    <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <input asp-for="InstallationDate" type="text" name="InstallationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
+        </div>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold mb-2">تاریخ بهره برداری</label>
+        <div class="position-relative d-flex align-items-center">
+            <span class="svg-icon svg-icon-2 position-absolute mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
+                    <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
+                    <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <input asp-for="ExploitationDate" type="text" name="ExploitationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
+        </div>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">وضعیت تجهیز</label>
+        <select asp-for="EquipmentStatusId" name="EquipmentStatusId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+            <option></option>
+            @if (equipmentsStatus != null && equipmentsStatus.Any())
+            {
+                foreach (var equipmentStatus in equipmentsStatus)
+                {
+                    <option value="@equipmentStatus.Id">@equipmentStatus.Title</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">وضعیت بکارگیری</label>
+        <select asp-for="EmploymentStatusId" name="EmploymentStatusId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+            <option></option>
+            @if (employmentsStatus != null && employmentsStatus.Any())
+            {
+                foreach (var employmentStatus in employmentsStatus)
+                {
+                    <option value="@employmentStatus.Id">@employmentStatus.Title</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">نوع تامین دستگاه</label>
+        <select asp-for="SupplyTypeId" name="SupplyTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+            <option></option>
+            @if (equipmentSupplyTypes != null && equipmentSupplyTypes.Any())
+            {
+                foreach (var equipmentSupplyType in equipmentSupplyTypes)
+                {
+                    <option value="@equipmentSupplyType.Id">@equipmentSupplyType.Title</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">قیمت خرید / ساخت</label>
+        <input asp-for="PurchasePriceConstruction" name="PurchasePriceConstruction" class="form-control form-control-lg form-control-solid number-separator"/>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="form-check form-check-custom form-check-solid form-check-inline">
+            <span class="form-check-label fw-bold text-gray-700 fs-6">
+                نیاز به کالیبراسیون دارد
+            </span>
+        </label>
+        <br>
+        <input asp-for="IsNeededToCalibrate" name="IsNeededToCalibrate" class="form-check-input" type="checkbox"/>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="fs-6 fw-bold mb-2">تاریخ آخرین کالیبراسیون</label>
+        <div class="position-relative d-flex align-items-center">
+            <span class="svg-icon svg-icon-2 position-absolute mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
+                    <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
+                    <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <input asp-for="LastCalibrationDate" type="text" name="LastCalibrationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
+        </div>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="fs-6 fw-bold mb-2">تاریخ انقضا گارانتی</label>
+        <div class="position-relative d-flex align-items-center">
+            <span class="svg-icon svg-icon-2 position-absolute mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
+                    <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
+                    <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <input asp-for="WarrantyExpirationDate" type="text" name="WarrantyExpirationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
+        </div>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="fs-6 fw-bold mb-2">تاریخ انقضا بیمه</label>
+        <div class="position-relative d-flex align-items-center">
+            <span class="svg-icon svg-icon-2 position-absolute mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
+                    <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
+                    <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <input asp-for="InsuranceExpirationDate" type="text" name="InsuranceExpirationDate" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
+        </div>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6 fv-row">
+        <label class="required fs-6 fw-bold form-label mb-2">ویژگی خاص</label>
+        <textarea asp-for="SpecialCharacteristic" name="SpecialCharacteristic" class="form-control form-control-lg form-control-solid" rows="2"></textarea>
+    </div>
+    <div class="col-md-6 fv-row">
+        <label class="fs-6 fw-bold form-label mb-2">عناوین پیوست تجهیز</label>
+        <textarea asp-for="TitlesAttachedToEquipment" name="TitlesAttachedToEquipment" class="form-control form-control-lg form-control-solid" rows="2"></textarea>
+    </div>
+</div>
+</div>
 </div>
 <!--end::Step 3-->
 <!--begin::Step 4-->
@@ -715,7 +449,7 @@
         <!--begin::Heading-->
         <div class="pb-10 pb-lg-15">
             <!--begin::Title-->
-            <h2 class="fw-bolder text-dark">توانمندیها</h2>
+            <h2 class="fw-bolder text-dark">صورتحساب جزییات</h2>
             <!--end::Title-->
             <!--begin::Notice-->
             <div class="text-muted fw-bold fs-6">
@@ -726,125 +460,134 @@
         </div>
         <!--end::Heading-->
         <!--begin::Input group-->
-        <div class="fv-row mb-10">
+        <div class="d-flex flex-column mb-7 fv-row">
             <!--begin::Tags-->
-            <label class="form-label required">عنوان توانمندی</label>
+            <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                <span class="required">نام بر روی کارت</span>
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="نام دارنده کارت را مشخص کنید"></i>
+            </label>
             <!--end::Tags-->
-            <!--begin::Input-->
-            <select asp-for="AbilityTitle" name="AbilityTitle" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
-                <option></option>
-                @if (abilityTitles != null && abilityTitles.Any())
-                {
-                    foreach (var abilityTitle in abilityTitles)
-                    {
-                        <option value="@abilityTitle.Id">@abilityTitle.Title</option>
-                    }
-                }
-            </select>
-            <!--end::Input-->
+            <input type="text" class="form-control form-control-solid" placeholder="" name="card_name" value="مکس اندره"/>
         </div>
-        <div class="fv-row mb-10">
-            <!--end::Tags-->
-            <label class="form-label">توضیحات تکمیلی / روش اجرا</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <textarea asp-for="FurtherDetailsAndProcedure" name="FurtherDetailsAndProcedure" class="form-control form-control-lg form-control-solid" rows="3"></textarea>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="d-flex flex-column mb-7 fv-row">
             <!--begin::Tags-->
-            <label class="form-label required">شرح مواد مصرفی</label>
+            <label class="required fs-6 fw-bold form-label mb-2">شماره کارت</label>
             <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="DescriptionOfConsumables" name="DescriptionOfConsumables" class="form-control form-control-lg form-control-solid"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">هزینه مواد مصرفی</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="ConsumableCost" name="ConsumableCost" class="form-control form-control-lg form-control-solid number-separator"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">هزینه نیروی انسانی</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="HumanResourceCost" name="HumanResourceCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">هزینه تجهیزات</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="EquipmentCost" name="EquipmentCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">سایر هزینه ها</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="OtherCost" name="OtherCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-10">
-            <!--begin::Tags-->
-            <label class="form-label required">هزینه اجرا / تست</label>
-            <!--end::Tags-->
-            <!--begin::Input-->
-            <input asp-for="ImplementationCost" name="ImplementationCost" type="text" class="form-control form-control-lg form-control-solid number-separator"/>
-            <!--end::Input-->
-        </div>
-        <div class="fv-row mb-8">
-            <label class="required fs-6 fw-bold mb-2">تاریخ زمان انجام</label>
-            <div class="position-relative d-flex align-items-center">
-                <!--begin::Icon-->
-                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="currentColor"/>
-                        <path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="currentColor"/>
-                        <path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="currentColor"/>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-                <!--end::Icon-->
-                <!--begin::تاریخpicker-->
-                <input asp-for="ImplementationTime" type="text" name="ImplementationTime" class="form-control form-control-solid ps-12 datepicker" placeholder="انتخاب تاریخ "/>
-                <!--end::تاریخpicker-->
-            </div>
-        </div>
-        <div class="fv-row mb-8">
-            <!--begin::Dropzone-->
-            <div class="dropzone" id="kt_modal_create_project_settings_logo">
-                <!--begin::Message-->
-                <div class="dz-message needsclick">
-                    <!--begin::Icon-->
-                    <!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
-                    <span class="svg-icon svg-icon-3hx svg-icon-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM14.5 12L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L10 12H11.5V17C11.5 17.6 11.4 18 12 18C12.6 18 12.5 17.6 12.5 17V12H14.5Z" fill="currentColor"/>
-                            <path d="M13 11.5V17.9355C13 18.2742 12.6 19 12 19C11.4 19 11 18.2742 11 17.9355V11.5H13Z" fill="currentColor"/>
-                            <path d="M8.2575 11.4411C7.82942 11.8015 8.08434 12.5 8.64398 12.5H15.356C15.9157 12.5 16.1706 11.8015 15.7425 11.4411L12.4375 8.65789C12.1875 8.44737 11.8125 8.44737 11.5625 8.65789L8.2575 11.4411Z" fill="currentColor"/>
-                            <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor"/>
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                    <!--end::Icon-->
-                    <!--begin::Info-->
-                    <div class="ms-4">
-                        <h3 class="dfs-3 fw-bolder text-gray-900 mb-1">فایل های پیوست را اینجا رها کنید یا برای بارگذاری کلیک کنید.</h3>
-                        <span class="fw-bold fs-4 text-muted">اپلود فایل بیش از 10 تا</span>
-                    </div>
-                    <!--end::Info-->
+            <!--begin::Input wrapper-->
+            <div class="position-relative">
+                <!--begin::Input-->
+                <input type="text" class="form-control form-control-solid" placeholder="شماره کارت را وارد کنید" name="card_number" value="4111 1111 1111 1111"/>
+                <!--end::Input-->
+                <!--begin::Card logos-->
+                <div class="position-absolute translate-middle-y top-50 end-0 me-5">
+                    <img src="/media/svg/card-logos/visa.svg" alt="" class="h-25px"/>
+                    <img src="/media/svg/card-logos/mastercard.svg" alt="" class="h-25px"/>
+                    <img src="/media/svg/card-logos/american-express.svg" alt="" class="h-25px"/>
                 </div>
+                <!--end::Card logos-->
             </div>
-            <!--end::Dropzone-->
+            <!--end::Input wrapper-->
         </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="row mb-10">
+            <!--begin::Col-->
+            <div class="col-md-8 fv-row">
+                <!--begin::Tags-->
+                <label class="required fs-6 fw-bold form-label mb-2">تاریخ انقضا</label>
+                <!--end::Tags-->
+                <!--begin::Row-->
+                <div class="row fv-row">
+                    <!--begin::Col-->
+                    <div class="col-6">
+                        <select name="card_expiry_month" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="ماه">
+                            <option></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-6">
+                        <select name="card_expiry_year" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="سال">
+                            <option></option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+                            <option value="2032">2032</option>
+                        </select>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-4 fv-row">
+                <!--begin::Tags-->
+                <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                    <span class="required">CVV</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Enter a card CVV code"></i>
+                </label>
+                <!--end::Tags-->
+                <!--begin::Input wrapper-->
+                <div class="position-relative">
+                    <!--begin::Input-->
+                    <input type="text" class="form-control form-control-solid" minlength="3" maxlength="4" placeholder="CVV" name="card_cvv"/>
+                    <!--end::Input-->
+                    <!--begin::CVV icon-->
+                    <div class="position-absolute translate-middle-y top-50 end-0 me-3">
+                        <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
+                        <span class="svg-icon svg-icon-2hx">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 7H2V11H22V7Z" fill="currentColor"/>
+                                <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::CVV icon-->
+                </div>
+                <!--end::Input wrapper-->
+            </div>
+            <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="d-flex flex-stack">
+            <!--begin::Tags-->
+            <div class="me-5">
+                <label class="fs-6 fw-bold form-label">کارت را برای صورتحساب بیشتر ذخیره کنید؟?</label>
+                <div class="fs-7 fw-bold text-muted">اگر به اطلاعات بیشتری نیاز دارید ، لطفا برنامه ریزی بودجه را بررسی کنید</div>
+            </div>
+            <!--end::Tags-->
+            <!--begin::Switch-->
+            <label class="form-check form-switch form-check-custom form-check-solid">
+                <input class="form-check-input" type="checkbox" value="1" checked="checked"/>
+                <span class="form-check-label fw-bold text-muted">ذخیره کارت</span>
+            </label>
+            <!--end::Switch-->
+        </div>
+        <!--end::Input group-->
     </div>
     <!--end::Wrapper-->
 </div>
@@ -869,14 +612,14 @@
         <!--begin::Body-->
         <div class="mb-0">
             <!--begin::Text-->
-            <div class="fs-6 text-gray-600 mb-5">برای ثبت آزمایشگاه جدید از این ویزارد استفاده نمایید</div>
+            <div class="fs-6 text-gray-600 mb-5">نوشتن عناوین برای پست های وبلاگ به همان اندازه که یک علم است یک هنر است و احتمالاً پست خود را تضمین می کند ، اما توصیه همه اینها این است که برای مخاطبان بزرگ و شگفت انگیز شما مفید است.</div>
             <!--end::Text-->
             <!--begin::Alert-->
             <!--begin::Notice-->
-            <div class="notice d-flex bg-light-success rounded border-warning border border-dashed p-6">
+            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
                 <!--begin::Icon-->
                 <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-                <span class="svg-icon svg-icon-2tx svg-icon-success me-4">
+                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"/>
                         <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="currentColor"/>
@@ -889,11 +632,10 @@
                 <div class="d-flex flex-stack flex-grow-1">
                     <!--begin::Content-->
                     <div class="fw-bold">
-                        <h4 class="text-gray-900 fw-bolder">عملیات ثبت آزمایشگاه با موفقیت انجام شد</h4>
+                        <h4 class="text-gray-900 fw-bolder">ما به توجه شما نیاز داریم</h4>
                         <div class="fs-6 text-gray-700">
-                            لطفاً برای مشاهده لیست آزمایشگاه ها به
-                            <a href="#" class="fw-bolder">این قسمت</a>
-                            مراجعه نمایید
+                            لطفاً برای شروع استفاده از ابزارهای عالی ، لطفاً
+                            <a href="#" class="fw-bolder">ساختن تیم پلت فرم</a>
                         </div>
                     </div>
                     <!--end::Content-->
@@ -909,7 +651,7 @@
 </div>
 <!--end::Step 5-->
 <!--begin::Actions-->
-<div class="d-flex flex-stack pt-10">
+<div class="d-flex flex-stack pt-15">
     <!--begin::Wrapper-->
     <div class="mr-2">
         <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
@@ -948,8 +690,8 @@
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
             <span class="svg-icon svg-icon-4 ms-1 me-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor"></rect>
-                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor"></path>
+                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor"/>
+                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor"/>
                 </svg>
             </span>
             <!--end::Svg Icon-->
@@ -961,9 +703,11 @@
 </form>
 <!--end::Form-->
 </div>
-<!--end::Content-->
-</div>
 <!--end::Stepper-->
+</div>
+<!--end::Card body-->
+</div>
+<!--end::Card-->
 </div>
 <!--end::Container-->
 </div>
