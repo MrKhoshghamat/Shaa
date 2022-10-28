@@ -15,14 +15,16 @@ public class LaboratoryController : BaseController
     private readonly ILaboratoryService _laboratoryService;
     private readonly IEquipmentService _equipmentService;
     private readonly IAbilityService _abilityService;
+    private readonly IWardService _wardService;
 
     public LaboratoryController(IBaseInfoService baseInfoService, ILaboratoryService laboratoryService,
-        IEquipmentService equipmentService, IAbilityService abilityService)
+        IEquipmentService equipmentService, IAbilityService abilityService, IWardService wardService)
     {
         _baseInfoService = baseInfoService;
         _laboratoryService = laboratoryService;
         _equipmentService = equipmentService;
         _abilityService = abilityService;
+        _wardService = wardService;
     }
 
     #endregion
@@ -60,9 +62,9 @@ public class LaboratoryController : BaseController
 
         ViewData["EquipmentSupplyTypes"] =
             await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
-        
+
         ViewData["RelatedSection"] =
-            await _baseInfoService.GetAllRelatedSections((int)BaseTableTypeId.RelatedSection);
+            await _wardService.GetAllWards();
         
         ViewData["EquipmentsStatus"] =
             await _baseInfoService.GetAllEquipmentsStatus((int)BaseTableTypeId.EquipmentStatus);

@@ -47,7 +47,7 @@ public class LaboratoryViewModel
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$", ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
     public string? ExploitationDate { get; set; }
     public int? SupplyTypeId { get; set; }
-    public long? EquipmentCost { get; set; }
+    public string? EquipmentCost { get; set; }
     public string? EquipmentImage { get; set; }
     public int? RelatedSectionId { get; set; }
     public string? BaitulMalNo { get; set; }

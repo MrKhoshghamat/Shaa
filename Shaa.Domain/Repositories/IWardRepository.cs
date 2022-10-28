@@ -7,4 +7,5 @@ public interface IWardRepository : IRepository<Ward, Guid>
 {
     Task<bool> IsExistWardByTitle(string title);
     Task<Ward> GetWardByLaboratoryId(Guid laboratoryId);
+    Task<List<Ward>> GetAllWards();
 }

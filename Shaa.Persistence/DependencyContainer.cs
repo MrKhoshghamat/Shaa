@@ -32,6 +32,7 @@ public static class DependencyContainer
         services.AddScoped<IEquipmentService, EquipmentService>();
         services.AddScoped<IAbilityService, AbilityService>();
         services.AddScoped<ILaboratoryService, LaboratoryService>();
+        services.AddScoped<IWardService, WardService>();
 
         #endregion
     }

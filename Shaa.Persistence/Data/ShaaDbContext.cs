@@ -153,6 +153,8 @@ namespace Shaa.Persistence.Data
 
                 entity.Property(e => e.TitlesAttachedToEquipment).HasMaxLength(255);
 
+                entity.Property(e => e.WarrantyExpirationDate).HasColumnType("datetime");
+
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.EquipmentCountries)
                     .HasForeignKey(d => d.CountryId)
@@ -315,6 +317,8 @@ namespace Shaa.Persistence.Data
                 entity.ToTable("Ward", "Lab");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Row).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 
