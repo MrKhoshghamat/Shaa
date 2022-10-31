@@ -24,9 +24,9 @@ public class HomeController : Controller
     [HttpGet("BaseInfoList")]
     public async Task<IActionResult> BaseInfoList(FilterBaseInfoViewModel filter)
     {
-        var basTableTypeId = await _baseInfoService.GetBaseTableTypeId(filter.BaseTableTypeId);
+        var baseTableTypeId = await _baseInfoService.GetBaseTableTypeId(filter.BaseTableTypeId);
         var result = await _baseInfoService.FilterBaseInfo(filter);
-        ViewBag.baseTableTypeId = basTableTypeId;
+        ViewBag.baseTableTypeId = baseTableTypeId;
         
         return View(result);
     }
