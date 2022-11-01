@@ -1,0 +1,135 @@
+﻿@model RegisterLaboratory_MainViewModel
+
+@{
+    var passiveDefences = ViewData["PassiveDefences"] as List<SelectListViewModel>;
+    var approvalAuthorities = ViewData["ApprovalAuthorities"] as List<SelectListViewModel>;
+    var researchCenters = ViewData["ResearchCenters"] as List<SelectListViewModel>;
+    var laboratoryTypes = ViewData["LaboratoryTypes"] as List<SelectListViewModel>;
+    var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
+}
+
+<!--begin::Step 1-->
+
+<div
+    @* asp-action="RegisterLaboratory"  *@
+    @* asp-controller="Laboratory"  *@
+    @* method="post" *@
+      class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_main_form">
+    @* <div class="pb-10 pb-lg-15"> *@
+    @*     <h2 class="fw-bolder d-flex align-items-center text-dark"> *@
+    @*         اطلاعات اصلی *@
+    @*         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="اطلاعات اصلی آزمایشگاه"></i> *@
+    @*     </h2> *@
+    @*     <div class="text-muted fw-bold fs-6"> *@
+    @*         در این بخش اطلاعات اصلی آزمایشگاه را وارد نمایید *@
+    @*     </div> *@
+    @* </div> *@
+    <div class="row mb-12">
+        <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">عنوان آزمایشگاه</label>
+            <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
+        </div>
+        <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">پدافند غیرعامل</label>
+            <select asp-for="PassiveDefenceId" name="PassiveDefenceId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                <option></option>
+                @if (passiveDefences != null && passiveDefences.Any())
+                {
+                    foreach (var passiveDefence in passiveDefences)
+                    {
+                        <option value="@passiveDefence.Id">@passiveDefence.Title</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mb-12">
+        <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">مرجع تصویب</label>
+            <select asp-for="ApprovalAuthorityId" name="ApprovalAuthorityId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                <option></option>
+                @if (approvalAuthorities != null && approvalAuthorities.Any())
+                {
+                    foreach (var approvalAuthority in approvalAuthorities)
+                    {
+                        <option value="@approvalAuthority.Id">@approvalAuthority.Title</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">مرکز تحقیقاتی</label>
+            <select asp-for="ResearchCenterId" name="ResearchCenterId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                <option></option>
+                @if (researchCenters != null && researchCenters.Any())
+                {
+                    foreach (var researchCenter in researchCenters)
+                    {
+                        <option value="@researchCenter.Id">@researchCenter.Title</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mb-12">
+        <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">نوع آزمایشگاه / کارگاه</label>
+            <select asp-for="LaboratoryTypeId" name="LaboratoryTypeId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                <option></option>
+                @if (laboratoryTypes != null && laboratoryTypes.Any())
+                {
+                    foreach (var laboratoryType in laboratoryTypes)
+                    {
+                        <option value="@laboratoryType.Id">@laboratoryType.Title</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">وضعیت استاندارد</label>
+            <select asp-for="StandardStatusId" name="StandardStatusId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                <option></option>
+                @if (standardStatus != null && standardStatus.Any())
+                {
+                    foreach (var standardStatusItem in standardStatus)
+                    {
+                        <option value="@standardStatusItem.Id">@standardStatusItem.Title</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mb-12">
+        <div class="col-md-12 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">شماره تماس <span style="font-size: 9px"> (لطفا شماره تماس را با پیش شماره وارد کنید) </span></label>
+            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
+        </div>
+    </div>
+    <div class="row mb-12">
+        <div class="col-md-4 fv-row">
+            <label class="d-block fw-bold fs-6 mb-5">
+                <span>تصویر آزمایشگاه</span>
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="تصویز آزمایشگاه"></i>
+            </label>
+            <div class="image-input image-input-empty image-input-outline" data-kt-image-input="true" style="background-image: url(media/svg/files/blank-image.svg)">
+                <div class="image-input-wrapper w-125px h-125px"></div>
+                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تعویض آواتار">
+                    <i class="bi bi-pencil-fill fs-7"></i>
+                    <input asp-for="LaboratoryImagePath" name="LaboratoryImagePath" type="file" accept=".png, .jpg, .jpeg"/>
+                    <input type="hidden" name="avatar_remove"/>
+                </label>
+                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف avatar">
+                    <i class="bi bi-x fs-2"></i>
+                </span>
+                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف آواتار">
+                    <i class="bi bi-x fs-2"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-8 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">آدرس</label>
+            <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+<!--end::Step 1-->

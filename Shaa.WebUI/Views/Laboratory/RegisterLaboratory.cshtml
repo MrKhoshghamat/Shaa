@@ -57,9 +57,9 @@
                                 <h3 class="stepper-title">کامل شد</h3>
                             </div>
                         </div>
-                        <form asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_form">
+                        <div asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_form">
 
-                            <div data-kt-stepper-element="content">
+                            <div data-kt-stepper-element="content" class="current">
                                 <div id="stepper-content-1" class="w-100">
                                 </div>
                             </div>
@@ -84,11 +84,7 @@
                                 </div>
                             </div>
 
-                            @*
-
-
-
-
+                            @* 
                             <!--begin::Step 1-->
                             <div class="current" data-kt-stepper-element="content">
                             <div class="w-100">
@@ -678,7 +674,7 @@
                                 <!--end::Wrapper-->
                             </div>
                             <!--end::Actions-->
-                        </form>
+                        </div>
                         <!--end::Form-->
                     </div>
                     <!--end::Stepper-->
@@ -693,8 +689,9 @@
 </div>
 <!--end::Content-->
 @section Scripts
-    {
+{
     <partial name="_JQueryValidation" />
+    <script src="/js/custom/utilities/util.js"></script>
     <script src="/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="/js/custom/apps/laboratory/create-laboratory.js"></script>
     <script src="/js/widgets.bundle.js"></script>

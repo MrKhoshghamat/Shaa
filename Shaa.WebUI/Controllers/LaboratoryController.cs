@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shaa.Business.Services.Interfaces;
 using Shaa.Domain;
 using Shaa.Domain.ViewModels;
+using Shaa.Domain.ViewModels.Lab;
 using Shaa.WebUI.ActionFilters;
 
 namespace Shaa.WebUI.Controllers;
@@ -65,15 +66,46 @@ public class LaboratoryController : BaseController
 
         ViewData["RelatedSection"] =
             await _wardService.GetAllWards();
-        
+
         ViewData["EquipmentsStatus"] =
             await _baseInfoService.GetAllEquipmentsStatus((int)BaseTableTypeId.EquipmentStatus);
-        
+
         ViewData["EmploymentsStatus"] =
             await _baseInfoService.GetAllEmploymentsStatus((int)BaseTableTypeId.EmploymentStatus);
 
         return View();
     }
+
+
+    [HttpGet("RegisterLaboratoryMainPartial")]
+    [Authorize]
+    public async Task<IActionResult> RegisterLaboratoryMainPartial()
+    {
+        ViewData["PassiveDefences"] =
+            await _baseInfoService.GetAllPassiveDefences((int)BaseTableTypeId.PassiveDefenceType);
+        
+        ViewData["ApprovalAuthorities"] =
+            await _baseInfoService.GetAllApprovalAuthorities((int)BaseTableTypeId.ApprovalAuthority);
+        
+        ViewData["ResearchCenters"] =
+            await _baseInfoService.GetAllResearchCenters((int)BaseTableTypeId.ResearchCenter);
+        
+        ViewData["LaboratoryTypes"] =
+            await _baseInfoService.GetAllLaboratoryTypes((int)BaseTableTypeId.LaboratoryType);
+        
+        ViewData["StandardStatus"] =
+            await _baseInfoService.GetAllStandardStatus((int)BaseTableTypeId.StandardStatus);
+
+        return PartialView(new RegisterLaboratory_MainViewModel());
+    }
+    
+    [HttpPost("RegisterLaboratoryMainPartial")]
+    [Authorize]
+    public async Task<IActionResult> RegisterLaboratoryMainPartial(RegisterLaboratory_MainViewModel model)
+    { 
+        return Ok(model);
+    }
+
 
     [HttpPost("RegisterLaboratory")]
     [RedirectHomeIfLoggedInActionFilter]
@@ -103,7 +135,7 @@ public class LaboratoryController : BaseController
 
         return View(laboratory);
     }
-    
+
     // [HttpGet("RegisterLaboratoryPrepare")]
     // public IActionResult RegisterLaboratoryPrepare()
     // {
