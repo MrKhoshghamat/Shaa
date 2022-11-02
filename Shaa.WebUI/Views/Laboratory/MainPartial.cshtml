@@ -10,11 +10,11 @@
 
 <!--begin::Step 1-->
 
-<div
-    @* asp-action="RegisterLaboratory"  *@
-    @* asp-controller="Laboratory"  *@
-    @* method="post" *@
-      class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_main_form">
+<form
+    asp-action="MainPartial"
+    asp-controller="Laboratory"
+    method="post" 
+    class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_main_form">
     @* <div class="pb-10 pb-lg-15"> *@
     @*     <h2 class="fw-bolder d-flex align-items-center text-dark"> *@
     @*         اطلاعات اصلی *@
@@ -111,7 +111,7 @@
                 <span>تصویر آزمایشگاه</span>
                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="تصویز آزمایشگاه"></i>
             </label>
-            <div class="image-input image-input-empty image-input-outline" data-kt-image-input="true" style="background-image: url(media/svg/files/blank-image.svg)">
+            <div class="image-input image-input-empty image-input-outline" data-kt-image-input="true" style="background-image: url('/media/svg/files/blank-image.svg')">
                 <div class="image-input-wrapper w-125px h-125px"></div>
                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تعویض آواتار">
                     <i class="bi bi-pencil-fill fs-7"></i>
@@ -131,5 +131,6 @@
             <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
         </div>
     </div>
-</div>
+</form>
+ 
 <!--end::Step 1-->

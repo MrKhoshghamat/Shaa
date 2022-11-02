@@ -30,7 +30,7 @@ public class LaboratoryController : BaseController
 
     #endregion
 
-    [HttpGet("RegisterLaboratory")]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> RegisterLaboratory()
     {
@@ -77,9 +77,9 @@ public class LaboratoryController : BaseController
     }
 
 
-    [HttpGet("RegisterLaboratoryMainPartial")]
+    [HttpGet]
     [Authorize]
-    public async Task<IActionResult> RegisterLaboratoryMainPartial()
+    public async Task<IActionResult> MainPartial()
     {
         ViewData["PassiveDefences"] =
             await _baseInfoService.GetAllPassiveDefences((int)BaseTableTypeId.PassiveDefenceType);
@@ -99,14 +99,13 @@ public class LaboratoryController : BaseController
         return PartialView(new RegisterLaboratory_MainViewModel());
     }
     
-    [HttpPost("RegisterLaboratoryMainPartial")]
+    [HttpPost]
     [Authorize]
-    public async Task<IActionResult> RegisterLaboratoryMainPartial(RegisterLaboratory_MainViewModel model)
+    public async Task<IActionResult> MainPartial(RegisterLaboratory_MainViewModel model)
     { 
         return Ok(model);
     }
-
-
+ 
     [HttpPost("RegisterLaboratory")]
     [RedirectHomeIfLoggedInActionFilter]
     public async Task<IActionResult> RegisterLaboratory(LaboratoryViewModel laboratory)

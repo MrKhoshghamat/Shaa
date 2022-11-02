@@ -20,71 +20,71 @@
 }
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="toolbar" id="kt_toolbar">
-        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">ثبت اطلاعات آزمایشگاه</h1>
-                <span class="h-20px border-gray-300 border-start mx-4"></span>
-                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-                    <li class="breadcrumb-item text-muted" itemtype="http://schema.org/ListItem" itemscope itemprop="itemListElement">
-                        <a href="javascript:void(0)" class="text-muted text-hover-primary" itemprop="item">
-                            @ViewData["Title"]
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<div class="toolbar" id="kt_toolbar">
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+            <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">ثبت اطلاعات آزمایشگاه</h1>
+            <span class="h-20px border-gray-300 border-start mx-4"></span>
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <li class="breadcrumb-item text-muted" itemtype="http://schema.org/ListItem" itemscope itemprop="itemListElement">
+                    <a href="javascript:void(0)" class="text-muted text-hover-primary" itemprop="item">
+                        @ViewData["Title"]
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-    <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class="container-xxl">
-            <div class="card">
-                <div class="card-body">
-                    <div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
-                        <div class="stepper-nav mb-5">
-                            <div class="stepper-item current" data-kt-stepper-element="nav">
-                                <h3 class="stepper-title"> اطلاعات اصلی</h3>
-                            </div>
-                            <div class="stepper-item" data-kt-stepper-element="nav">
-                                <h3 class="stepper-title">بخش ها</h3>
-                            </div>
-                            <div class="stepper-item" data-kt-stepper-element="nav">
-                                <h3 class="stepper-title">تجهیزات</h3>
-                            </div>
-                            <div class="stepper-item" data-kt-stepper-element="nav">
-                                <h3 class="stepper-title">توانمندیها</h3>
-                            </div>
-                            <div class="stepper-item" data-kt-stepper-element="nav">
-                                <h3 class="stepper-title">کامل شد</h3>
-                            </div>
-                        </div>
-                        <div asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_form">
+</div>
+<div class="post d-flex flex-column-fluid" id="kt_post">
+<div id="kt_content_container" class="container-xxl">
+<div class="card">
+<div class="card-body">
+<div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
+<div class="stepper-nav mb-5">
+    <div class="stepper-item current" data-kt-stepper-element="nav">
+        <h3 class="stepper-title"> اطلاعات اصلی</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">بخش ها</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">تجهیزات</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">توانمندیها</h3>
+    </div>
+    <div class="stepper-item" data-kt-stepper-element="nav">
+        <h3 class="stepper-title">کامل شد</h3>
+    </div>
+</div>
+<div asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post" class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_form">
 
-                            <div data-kt-stepper-element="content" class="current">
-                                <div id="stepper-content-1" class="w-100">
-                                </div>
-                            </div>
-                            <div data-kt-stepper-element="content">
-                                <div id="stepper-content-2" class="w-100">
-                                    2
-                                </div>
-                            </div>
-                            <div data-kt-stepper-element="content">
-                                <div id="stepper-content-3" class="w-100">
-                                    3
-                                </div>
-                            </div>
-                            <div data-kt-stepper-element="content">
-                                <div id="stepper-content-4" class="w-100">
-                                    4
-                                </div>
-                            </div>
-                            <div data-kt-stepper-element="content">
-                                <div id="stepper-content-5" class="w-100">
-                                    5
-                                </div>
-                            </div>
+<div data-kt-stepper-element="content" class="current">
+    <div id="stepper-content-1" class="w-100">
+    </div>
+</div>
+<div data-kt-stepper-element="content">
+    <div id="stepper-content-2" class="w-100">
+        2
+    </div>
+</div>
+<div data-kt-stepper-element="content">
+    <div id="stepper-content-3" class="w-100">
+        3
+    </div>
+</div>
+<div data-kt-stepper-element="content">
+    <div id="stepper-content-4" class="w-100">
+        4
+    </div>
+</div>
+<div data-kt-stepper-element="content">
+    <div id="stepper-content-5" class="w-100">
+        5
+    </div>
+</div>
 
-                            @* 
+@* 
                             <!--begin::Step 1-->
                             <div class="current" data-kt-stepper-element="content">
                             <div class="w-100">
@@ -623,74 +623,75 @@
                             <!--end::Step 5-->
                             *@
 
-                            <!--begin::Actions-->
-                            <div class="d-flex flex-stack pt-15">
-                                <!--begin::Wrapper-->
-                                <div class="mr-2">
-                                    <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
-                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
-                                        <span class="svg-icon svg-icon-4 ms-1 me-0">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor" />
-                                                <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->برگشت
-                                    </button>
-                                </div>
-                                <!--end::Wrapper-->
-                                <!--begin::Wrapper-->
-                                <div>
-                                    <button type="button" class="btn btn-lg btn-primary me-3" data-kt-stepper-action="submit">
-                                        <span class="indicator-label">
-                                            ثبت
-                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                            <span class="svg-icon svg-icon-3 ms-2 me-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor" />
-                                                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                        <span class="indicator-progress">
-                                            لطفا صبر کنید...
-                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                        </span>
-                                    </button>
-                                    <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
-                                        ادامه
-                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-
-                                        <span class="svg-icon svg-icon-4 me-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="currentColor" />
-                                                <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </button>
-                                </div>
-                                <!--end::Wrapper-->
-                            </div>
-                            <!--end::Actions-->
-                        </div>
-                        <!--end::Form-->
-                    </div>
-                    <!--end::Stepper-->
-                </div>
-                <!--end::Card body-->
-            </div>
-            <!--end::Card-->
-        </div>
-        <!--end::Container-->
+<!--begin::Actions-->
+<div class="d-flex flex-stack pt-15">
+    <!--begin::Wrapper-->
+    <div class="mr-2">
+        <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
+            <span class="svg-icon svg-icon-4 ms-1 me-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor"/>
+                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <!--end::Svg Icon-->برگشت
+        </button>
     </div>
-    <!--end::Post-->
+    <!--end::Wrapper-->
+    <!--begin::Wrapper-->
+    <div>
+        <button type="button" class="btn btn-lg btn-primary me-3" data-kt-stepper-action="submit">
+            <span class="indicator-label">
+                ثبت
+                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+                <span class="svg-icon svg-icon-3 ms-2 me-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="currentColor"/>
+                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="currentColor"/>
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </span>
+            <span class="indicator-progress">
+                لطفا صبر کنید...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button>
+        <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
+            ادامه
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+
+            <span class="svg-icon svg-icon-4 me-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="currentColor"/>
+                    <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </button>
+    </div>
+    <!--end::Wrapper-->
+</div>
+<!--end::Actions-->
+</div>
+<!--end::Form-->
+</div>
+<!--end::Stepper-->
+</div>
+<!--end::Card body-->
+</div>
+<!--end::Card-->
+</div>
+<!--end::Container-->
+</div>
+<!--end::Post-->
 </div>
 <!--end::Content-->
+
 @section Scripts
 {
-    <partial name="_JQueryValidation" />
+    <partial name="_JQueryValidation"/>
     <script src="/js/custom/utilities/util.js"></script>
     <script src="/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="/js/custom/apps/laboratory/create-laboratory.js"></script>
@@ -700,4 +701,6 @@
     @*    <script src="/common/custom/custom.js"></script>*@
     <script src="/js/custom/apps/ecommerce/settings/settings.js"></script>
     <script src="/js/custom/apps/file-manager/list.js"></script>
+
+    <script src="https://malsup.github.io/jquery.form.js"></script>
 }
