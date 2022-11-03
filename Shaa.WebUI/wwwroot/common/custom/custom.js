@@ -49,14 +49,14 @@ const inputElement = document.getElementById('phoneNumber');
 inputElement.addEventListener('keydown', enforceFormat);
 inputElement.addEventListener('keyup', formatToPhone);
 
-var datepickers = document.querySelectorAll(".datepicker");
+const datepickers = document.querySelectorAll(".datepicker");
 if (datepickers.length) {
-    for (var datepicker of datepickers) {
-        var id = $(datepicker).attr("id");
+    for (const datepicker of datepickers) {
+        const id = $(datepicker).attr("id");
         kamaDatepicker(id, {
             placeholder: 'مثال : 1400/01/01',
             twodigit: true,
-            closeAfterSelect: false,
+            closeAfterSelect: true,
             forceFarsiDigits: true,
             markToday: true,
             markHolidays: true,
@@ -65,5 +65,4 @@ if (datepickers.length) {
             gotoToday: true
         });
     }
-
 }

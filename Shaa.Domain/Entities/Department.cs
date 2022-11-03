@@ -8,7 +8,6 @@ namespace Shaa.Domain.Entities
         public Department()
         {
             InverseParent = new HashSet<Department>();
-            Laboratories = new HashSet<Laboratory>();
             Users = new HashSet<User>();
         }
 
@@ -20,7 +19,6 @@ namespace Shaa.Domain.Entities
         public virtual BaseInfo DepartmentType { get; set; } = null!;
         public virtual Department? Parent { get; set; }
         public virtual ICollection<Department> InverseParent { get; set; }
-        public virtual ICollection<Laboratory> Laboratories { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }

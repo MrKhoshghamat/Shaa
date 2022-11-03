@@ -29,7 +29,7 @@ namespace Shaa.Persistence.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR; Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR;");
             }
         }
 
@@ -257,9 +257,14 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_Laboratory_BaseInfo1");
 
                 entity.HasOne(d => d.ResearchCenter)
-                    .WithMany(p => p.Laboratories)
+                    .WithMany(p => p.LaboratoryResearchCenters)
                     .HasForeignKey(d => d.ResearchCenterId)
-                    .HasConstraintName("FK_Laboratory_Department");
+                    .HasConstraintName("FK_Laboratory_BaseInfo4");
+
+                entity.HasOne(d => d.StandardStatus)
+                    .WithMany(p => p.LaboratoryStandardStatuses)
+                    .HasForeignKey(d => d.StandardStatusId)
+                    .HasConstraintName("FK_Laboratory_BaseInfo3");
             });
 
             modelBuilder.Entity<User>(entity =>

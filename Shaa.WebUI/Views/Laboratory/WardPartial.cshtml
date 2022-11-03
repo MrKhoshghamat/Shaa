@@ -1,0 +1,16 @@
+﻿@model RegisterLaboratory_WardViewModel
+
+<form
+    asp-action="WardPartial"
+    asp-controller="Laboratory"
+    method="post"
+    class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ward_form">
+    <div class="w-100">
+        <div class="row mb-12">
+            <div class="col-md-12 fv-row">
+                <label class="fs-6 fw-bold form-label mb-2">عنوان بخش</label>
+                <input asp-for="WardTitle" name="WardTitle" class="form-control form-control-lg form-control-solid"/>
+            </div>
+        </div>
+    </div>
+</form>

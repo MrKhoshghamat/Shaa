@@ -17,6 +17,35 @@ var KTCreateLaboratory = function () {
                     PhoneNumber: {validators: {notEmpty: {message: "لطفا شماره تماس را وارد کنید"}}},
                     Address: {validators: {notEmpty: {message: "لطفا آدرس را وارد کنید"}}}
                 }
+            }, {
+                form_id: '#kt_create_laboratory_ward_form',
+                load_url: '/Laboratory/WardPartial',
+                data: {},
+                fields: {}
+            }, {
+                form_id: '#kt_create_laboratory_equipment_form',
+                load_url: '/Laboratory/EquipmentPartial',
+                data: {},
+                fields: {
+                    EquipmentTypeId: {validators: {notEmpty: {message: "لطفا نوع تجهیز را وارد کنید"}}},
+                    GeneralTechnicalSpecification: {validators: {notEmpty: {message: "لطفا مشخصات فنی را وارد کنید"}}},
+                    PersianTitle: {validators: {notEmpty: {message: "لطفا عنوان فارسی را وارد کنید"}}},
+                    EquipmentTitle: {validators: {notEmpty: {message: "لطفا عنوان انگلیسی را وارد کنید"}}},
+                    Model: {validators: {notEmpty: {message: "لطفا مدل را وارد کنید"}}},
+                    EquipmentUsage: {validators: {notEmpty: {message: "لطفا کاربرد تجهیز را وارد کنید"}}},
+                    CountryId: {validators: {notEmpty: {message: "لطفا کشور را وارد کنید"}}},
+                    CompanyName: {validators: {notEmpty: {message: "لطفا نام کشور سازتده را وارد کنید"}}},
+                    RelatedSectionId: {validators: {notEmpty: {message: "لطفا بخش مرتبط را وارد کنید"}}},
+                    BaitulMalNo: {validators: {notEmpty: {message: "لطفا شماره بیت المال را وارد کنید"}}},
+                    SerialNumber: {validators: {notEmpty: {message: "لطفا شماره سریال را وارد کنید"}}},
+                    InstallationDate: {validators: {notEmpty: {message: "لطفا تاریخ نصب را وارد کنید"}}},
+                    ExploitationDate: {validators: {notEmpty: {message: "لطفا تاریخ بهره برداری را وارد کنید"}}},
+                    EquipmentStatusId: {validators: {notEmpty: {message: "لطفا وضعیت تجهیز را وارد کنید"}}},
+                    EmploymentStatusId: {validators: {notEmpty: {message: "لطفا وضعیت بکارگیری را وارد کنید"}}},
+                    SupplyTypeId: {validators: {notEmpty: {message: "لطفا نوع تامین دستگاه را وارد کنید"}}},
+                    PurchasePriceConstruction: {validators: {notEmpty: {message: "لطفا قیمت ساخت / خرید را وارد کنید"}}},
+                    SpecialCharacteristic: {validators: {notEmpty: {message: "لطفا ویژگی های خاص را وارد کنید"}}},
+                }
             }];
 
             const submit_step = function (page_index, succeed, failed) {
@@ -116,3 +145,4 @@ var KTCreateLaboratory = function () {
 KTUtil.onDOMContentLoaded((function () {
     KTCreateLaboratory.init()
 }));
+

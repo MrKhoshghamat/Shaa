@@ -18,6 +18,8 @@ namespace Shaa.Domain.Entities
             LaboratoryApprovalAuthorities = new HashSet<Laboratory>();
             LaboratoryLaboratoryTypes = new HashSet<Laboratory>();
             LaboratoryPassiveDefences = new HashSet<Laboratory>();
+            LaboratoryResearchCenters = new HashSet<Laboratory>();
+            LaboratoryStandardStatuses = new HashSet<Laboratory>();
             UserCities = new HashSet<User>();
             UserCountries = new HashSet<User>();
         }
@@ -38,6 +40,8 @@ namespace Shaa.Domain.Entities
         public virtual ICollection<Laboratory> LaboratoryApprovalAuthorities { get; set; }
         public virtual ICollection<Laboratory> LaboratoryLaboratoryTypes { get; set; }
         public virtual ICollection<Laboratory> LaboratoryPassiveDefences { get; set; }
+        public virtual ICollection<Laboratory> LaboratoryResearchCenters { get; set; }
+        public virtual ICollection<Laboratory> LaboratoryStandardStatuses { get; set; }
         public virtual ICollection<User> UserCities { get; set; }
         public virtual ICollection<User> UserCountries { get; set; }
     }

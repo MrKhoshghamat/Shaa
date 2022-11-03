@@ -105,8 +105,52 @@ public class LaboratoryController : BaseController
     { 
         return Ok(model);
     }
- 
-    [HttpPost("RegisterLaboratory")]
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> WardPartial()
+    {
+        return PartialView(new RegisterLaboratory_WardViewModel());
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> WardPartial(RegisterLaboratory_WardViewModel model)
+    {
+        return Ok(model);
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> EquipmentPartial()
+    {
+        ViewData["EquipmentTypes"] =
+            await _baseInfoService.GetAllEquipmentTypes((int)BaseTableTypeId.EquipmentType);
+        
+        ViewData["Countries"] =
+            await _baseInfoService.GetAllCountries((int)BaseTableTypeId.CountryId);
+        
+        ViewData["RelatedSection"] =
+            await _wardService.GetAllWards();
+        
+        ViewData["EquipmentsStatus"] =
+            await _baseInfoService.GetAllEquipmentsStatus((int)BaseTableTypeId.EquipmentStatus);
+
+        ViewData["EmploymentsStatus"] =
+            await _baseInfoService.GetAllEmploymentsStatus((int)BaseTableTypeId.EmploymentStatus);
+        
+        ViewData["EquipmentSupplyTypes"] =
+            await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
+        
+        return PartialView(new RegisterLaboratory_EquipmentViewModel());
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> EquipmentPartial(RegisterLaboratory_EquipmentViewModel model)
+    {
+        return Ok(model);
+    }
     [RedirectHomeIfLoggedInActionFilter]
     public async Task<IActionResult> RegisterLaboratory(LaboratoryViewModel laboratory)
     {
