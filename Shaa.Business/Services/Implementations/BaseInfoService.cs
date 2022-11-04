@@ -12,10 +12,12 @@ public class BaseInfoService : IBaseInfoService
     #region Ctor
 
     private readonly IBaseInfoRepository _baseInfoRepository;
+    private readonly IWardRepository _wardRepository;
 
-    public BaseInfoService(IBaseInfoRepository baseInfoRepository)
+    public BaseInfoService(IBaseInfoRepository baseInfoRepository, IWardRepository wardRepository)
     {
         _baseInfoRepository = baseInfoRepository;
+        _wardRepository = wardRepository;
     }
 
     #endregion
@@ -203,6 +205,17 @@ public class BaseInfoService : IBaseInfoService
         {
             Id = s.Id,
             Title = s.Title
+        }).ToList();
+    }
+    
+    public async Task<List<SelectListViewModel>> GetAllWards()
+    {
+        var wards = await _wardRepository.GetAllWards();
+
+        return wards.Select(s => new SelectListViewModel()
+        {
+            Id = s.Row,
+            Title = s.Title,
         }).ToList();
     }
 

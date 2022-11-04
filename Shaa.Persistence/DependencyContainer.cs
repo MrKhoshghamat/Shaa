@@ -19,7 +19,7 @@ public static class DependencyContainer
         services.AddScoped<IBaseInfoRepository, BaseInfoRepository>();
         services.AddScoped<IEquipmentRepository, EquipmentRepository>();
         services.AddScoped<IAbilityRepository, AbilityRepository>();
-        services.AddScoped<ILaboratoryRepository, LaboratoryRepository>();
+        services.AddScoped<IMainInfoRepository, MainInfoRepository>();
         services.AddScoped<IWardRepository, WardRepository>();
 
         #endregion
@@ -29,10 +29,7 @@ public static class DependencyContainer
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IBaseInfoTypeService, BaseInfoTypeService>();
         services.AddScoped<IBaseInfoService, BaseInfoService>();
-        services.AddScoped<IEquipmentService, EquipmentService>();
-        services.AddScoped<IAbilityService, AbilityService>();
-        services.AddScoped<ILaboratoryService, LaboratoryService>();
-        services.AddScoped<IWardService, WardService>();
+        services.AddScoped<IRegisterLaboratoryService, RegisterLaboratoryService>();
 
         #endregion
     }

@@ -19,3 +19,9 @@ public class RegisterLaboratory_AbilityViewModel
 
     public string? FileAttachment { get; set; }
 }
+
+public enum RegisterAbilityResult
+{
+    AbilityExists,
+    Success
+}

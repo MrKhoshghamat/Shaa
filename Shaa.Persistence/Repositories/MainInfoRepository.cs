@@ -5,11 +5,11 @@ using Shaa.Persistence.Data;
 
 namespace Shaa.Persistence.Repositories;
 
-public class LaboratoryRepository : Repository<Laboratory, Guid>, ILaboratoryRepository
+public class MainInfoRepository : Repository<Laboratory, Guid>, IMainInfoRepository
 {
     #region Ctor
 
-    public LaboratoryRepository(ShaaDbContext context) : base(context)
+    public MainInfoRepository(ShaaDbContext context) : base(context)
     {
     }
 

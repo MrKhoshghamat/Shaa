@@ -46,3 +46,9 @@ public class RegisterLaboratory_EquipmentViewModel
     public string? SpecialCharacteristic { get; set; }
     public string? TitlesAttachedToEquipment { get; set; }
 }
+
+public enum RegisterEquipmentResult
+{
+    EquipmentExists,
+    Success
+}
