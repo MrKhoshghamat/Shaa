@@ -44,7 +44,7 @@ const formatToPhone = (event) => {
         event.target.value = `(${areaCode}`;
     }
 };
- 
+
 
 const initPhoneNumbers = function () {
     const phoneNumbers = document.querySelectorAll(".phoneNumber");
@@ -57,7 +57,7 @@ const initPhoneNumbers = function () {
         }
     }
 }
- 
+
 
 const initDatePickers = function () {
     const datepickers = document.querySelectorAll(".datepicker");
@@ -79,10 +79,67 @@ const initDatePickers = function () {
     }
 }
 
+const initSelect = function () {
+    const selects = document.querySelectorAll('[data-control="select2"]');
+    if (selects.length) {
+        for (const select of selects) {
+            $(select).select2({
+                /*closeOnSelect: false*/
+                language: {
+                    // You can find all of the options in the language files provided in the
+                    // build. They all must be functions that return the string that should be
+                    // displayed.
+                    errorLoading: function () {
+                        return 'خطا در دریافت اطلاعات';
+                    },
+                    //inputTooLong: function (args) {
+                    //    var overChars = args.input.length - args.maximum;
+                    //    var message = 'Пожалуйста, удалите ' + overChars + ' символ';
+                    //    if (overChars >= 2 && overChars <= 4) {
+                    //        message += 'а';
+                    //    } else if (overChars >= 5) {
+                    //        message += 'ов';
+                    //    }
+                    //    return message;
+                    //},
+                    //inputTooShort: function (args) {
+                    //    var remainingChars = args.minimum - args.input.length;
+
+                    //    var message = 'Пожалуйста, введите ' + remainingChars + ' или более символов';
+
+                    //    return message;
+                    //},
+                    loadingMore: function () {
+                        return ' درحال دریافت موارد بیشتر ...';
+                    },
+                    //maximumSelected: function (args) {
+                    //    var message = 'Вы можете выбрать ' + args.maximum + ' элемент';
+
+                    //    if (args.maximum >= 2 && args.maximum <= 4) {
+                    //        message += 'а';
+                    //    } else if (args.maximum >= 5) {
+                    //        message += 'ов';
+                    //    }
+
+                    //    return message;
+                    //},
+                    noResults: function () {
+                        return 'موردی یافت نشد !';
+                    },
+                    searching: function () {
+                        return 'در حال جستجو…';
+                    }
+                }
+            });
+        }
+    }
+}
+
 initPhoneNumbers();
 initDatePickers();
 
 function InitComponents() {
     initPhoneNumbers();
     initDatePickers();
+    initSelect();
 }

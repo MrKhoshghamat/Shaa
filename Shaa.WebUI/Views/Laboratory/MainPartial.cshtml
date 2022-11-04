@@ -8,21 +8,20 @@
     var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
 }
 
-<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css"/>
-<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css"/>
-<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css"/>
-<link href="/common/custom/custom.css" rel="stylesheet" type="text/css"/>
+<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="/common/custom/custom.css" rel="stylesheet" type="text/css" />
 
-<form
-    asp-action="MainPartial"
-    asp-controller="Laboratory"
-    method="post"
-    class="w-100 pt-1 px-1 pb-1 fv-plugins-bootstrap5 fv-plugins-framework"
-    novalidate="novalidate" id="kt_create_laboratory_main_form">
+<form asp-action="MainPartial"
+      asp-controller="Laboratory"
+      method="post"
+      class="w-100 pt-1 px-1 pb-1 fv-plugins-bootstrap5 fv-plugins-framework"
+      novalidate="novalidate" id="kt_create_laboratory_main_form">
     <div class="row mb-12">
         <div class="col-md-6 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">عنوان آزمایشگاه</label>
-            <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
+            <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid" />
         </div>
         <div class="col-md-6 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">پدافند غیرعامل</label>
@@ -97,7 +96,7 @@
     <div class="row mb-12">
         <div class="col-md-12 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">شماره تماس <span style="font-size: 9px"> (لطفا شماره تماس را با پیش شماره وارد کنید) </span></label>
-            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
+            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid" />
         </div>
     </div>
     <div class="row mb-12">
@@ -110,8 +109,8 @@
                 <div class="image-input-wrapper w-125px h-125px"></div>
                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تعویض آواتار">
                     <i class="bi bi-pencil-fill fs-7"></i>
-                    <input asp-for="LaboratoryImagePath" name="LaboratoryImagePath" type="file" accept=".png, .jpg, .jpeg"/>
-                    <input type="hidden" name="avatar_remove"/>
+                    <input asp-for="LaboratoryImagePath" name="LaboratoryImagePath" type="file" accept=".png, .jpg, .jpeg" />
+                    <input type="hidden" name="avatar_remove" />
                 </label>
                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف avatar">
                     <i class="bi bi-x fs-2"></i>
@@ -127,6 +126,7 @@
         </div>
     </div>
 </form>
+ 
 
 @*<script src="/js/widgets.bundle.js"></script>
 <script src="/js/custom/widgets.js"></script>
