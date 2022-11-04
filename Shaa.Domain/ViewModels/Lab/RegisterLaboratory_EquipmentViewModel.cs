@@ -24,7 +24,6 @@ public class RegisterLaboratory_EquipmentViewModel
     public string? ExploitationDate { get; set; }
 
     public int? SupplyTypeId { get; set; }
-    public string? EquipmentCost { get; set; }
     public string? EquipmentImage { get; set; }
     public int? RelatedSectionId { get; set; }
     public string? BaitulMalNo { get; set; }

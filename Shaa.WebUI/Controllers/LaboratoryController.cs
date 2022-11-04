@@ -151,6 +151,22 @@ public class LaboratoryController : BaseController
     {
         return Ok(model);
     }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> AbilityPartial()
+    {
+        return PartialView(new RegisterLaboratory_AbilityViewModel());
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> AbilityPartial(RegisterLaboratory_AbilityViewModel model)
+    {
+        return Ok(model);
+    }
+
+
     [RedirectHomeIfLoggedInActionFilter]
     public async Task<IActionResult> RegisterLaboratory(LaboratoryViewModel laboratory)
     {

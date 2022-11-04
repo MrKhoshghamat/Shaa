@@ -8,11 +8,15 @@
     var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
 }
 
-<!--begin::Step 1-->
+<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css"/>
+<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css"/>
+<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css"/>
+<link href="/common/custom/custom.css" rel="stylesheet" type="text/css"/>
+
 <form
     asp-action="MainPartial"
     asp-controller="Laboratory"
-    method="post" 
+    method="post"
     class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_main_form">
     <div class="row mb-12">
         <div class="col-md-6 fv-row">
@@ -96,7 +100,7 @@
         </div>
     </div>
     <div class="row mb-12">
-        <div class="col-md-4 fv-row">
+        <div class="col-md-2 fv-row">
             <label class="d-block fw-bold fs-6 mb-5">
                 <span>تصویر آزمایشگاه</span>
                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="تصویز آزمایشگاه"></i>
@@ -116,11 +120,15 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-8 fv-row">
+        <div class="col-md-10 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">آدرس</label>
             <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
         </div>
     </div>
 </form>
- 
-<!--end::Step 1-->
+
+<script src="/js/widgets.bundle.js"></script>
+<script src="/js/custom/widgets.js"></script>
+<script src="/js/custom/apps/ecommerce/settings/settings.js"></script>
+<script src="/js/custom/apps/file-manager/list.js"></script>
+<script src="/common/custom/custom.js"></script>

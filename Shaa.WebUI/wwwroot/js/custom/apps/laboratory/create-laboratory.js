@@ -1,5 +1,5 @@
 "use strict";
-var KTCreateLaboratory = function () {
+const KTCreateLaboratory = function () {
     let t, o, s, stepper = [], forms = [], validations = [];
     return {
         init: function () {
@@ -44,7 +44,14 @@ var KTCreateLaboratory = function () {
                     EmploymentStatusId: {validators: {notEmpty: {message: "لطفا وضعیت بکارگیری را وارد کنید"}}},
                     SupplyTypeId: {validators: {notEmpty: {message: "لطفا نوع تامین دستگاه را وارد کنید"}}},
                     PurchasePriceConstruction: {validators: {notEmpty: {message: "لطفا قیمت ساخت / خرید را وارد کنید"}}},
-                    SpecialCharacteristic: {validators: {notEmpty: {message: "لطفا ویژگی های خاص را وارد کنید"}}},
+                    SpecialCharacteristic: {validators: {notEmpty: {message: "لطفا ویژگی های خاص را وارد کنید"}}}
+                }
+            }, {
+                form_id: '#kt_create_laboratory_ability_form',
+                load_url: '/Laboratory/AbilityPartial',
+                data: {},
+                fields: {
+                    AbilityTitle: {validators: {notEmpty: {message: "لطفا عنوان توانمندی را وارد کنید"}}}
                 }
             }];
 
