@@ -45,7 +45,6 @@ const formatToPhone = (event) => {
     }
 };
 
-
 const initPhoneNumbers = function () {
     const phoneNumbers = document.querySelectorAll(".phoneNumber");
     if (phoneNumbers.length) {
@@ -57,7 +56,6 @@ const initPhoneNumbers = function () {
         }
     }
 }
-
 
 const initDatePickers = function () {
     const datepickers = document.querySelectorAll(".datepicker");
@@ -83,6 +81,7 @@ const initSelect = function () {
     const selects = document.querySelectorAll('[data-control="select2"]');
     if (selects.length) {
         for (const select of selects) {
+            const id = $(select).attr("id");
             $(select).select2({
                 /*closeOnSelect: false*/
                 language: {
@@ -130,6 +129,18 @@ const initSelect = function () {
                         return 'در حال جستجو…';
                     }
                 }
+            });
+
+            $(select).on("change", function (e) {
+                var theSelection = $(select).val();
+
+                if (theSelection) {
+                    $(select).closest('.fv-plugins-bootstrap5-row-invalid')
+                        .removeClass('fv-plugins-bootstrap5-row-invalid').addClass('r-vl-m')
+                        .find('.invalid-feedback').hide();
+                } else {
+                    $(select).closest('.r-vl-m').find('.invalid-feedback').show();
+                };
             });
         }
     }
