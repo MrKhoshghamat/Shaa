@@ -44,25 +44,45 @@ const formatToPhone = (event) => {
         event.target.value = `(${areaCode}`;
     }
 };
+ 
 
-const inputElement = document.getElementById('phoneNumber');
-inputElement.addEventListener('keydown', enforceFormat);
-inputElement.addEventListener('keyup', formatToPhone);
-
-const datepickers = document.querySelectorAll(".datepicker");
-if (datepickers.length) {
-    for (const datepicker of datepickers) {
-        const id = $(datepicker).attr("id");
-        kamaDatepicker(id, {
-            placeholder: 'مثال : 1400/01/01',
-            twodigit: true,
-            closeAfterSelect: true,
-            forceFarsiDigits: true,
-            markToday: true,
-            markHolidays: true,
-            highlightSelectedDay: true,
-            sync: true,
-            gotoToday: true
-        });
+const initPhoneNumbers = function () {
+    const phoneNumbers = document.querySelectorAll(".phoneNumber");
+    if (phoneNumbers.length) {
+        for (const phoneNumber of phoneNumbers) {
+            const id = $(phoneNumber).attr("id");
+            const inputElement = document.getElementById(id);
+            inputElement.addEventListener('keydown', enforceFormat);
+            inputElement.addEventListener('keyup', formatToPhone);
+        }
     }
+}
+ 
+
+const initDatePickers = function () {
+    const datepickers = document.querySelectorAll(".datepicker");
+    if (datepickers.length) {
+        for (const datepicker of datepickers) {
+            const id = $(datepicker).attr("id");
+            kamaDatepicker(id, {
+                placeholder: 'مثال : 1400/01/01',
+                twodigit: true,
+                closeAfterSelect: true,
+                forceFarsiDigits: true,
+                markToday: true,
+                markHolidays: true,
+                highlightSelectedDay: true,
+                sync: true,
+                gotoToday: true
+            });
+        }
+    }
+}
+
+initPhoneNumbers();
+initDatePickers();
+
+function InitComponents() {
+    initPhoneNumbers();
+    initDatePickers();
 }

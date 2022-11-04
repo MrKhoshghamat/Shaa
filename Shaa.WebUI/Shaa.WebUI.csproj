@@ -7,6 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="wwwroot\plugins\custom\NewFolder\**" />
+	  <Content Remove="wwwroot\plugins\custom\NewFolder\**" />
+	  <EmbeddedResource Remove="wwwroot\plugins\custom\NewFolder\**" />
+	  <None Remove="wwwroot\plugins\custom\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
 		<_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
 		<_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
@@ -34,6 +41,10 @@
 
 	<ItemGroup>
 	  <Content Remove="Views\Laboratory\RegisterLaboratoryp.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\plugins\custom\jquery\" />
 	</ItemGroup>
 
 </Project>
