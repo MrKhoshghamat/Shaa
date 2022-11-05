@@ -1,6 +1,8 @@
+using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Shaa.Persistence;
 using Shaa.Persistence.Data;
@@ -77,6 +79,36 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else
+{
+    //app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler(errorApp =>
+    {
+        errorApp.Run(async context =>
+        { 
+            var exceptionHandlerPathFeature =
+                context.Features.Get<IExceptionHandlerPathFeature>();
+            
+            // //check if the handler path contains api or not.
+            // if (exceptionHandlerPathFeature.Path.Contains("api"))
+            // { 
+            //     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError; ;
+            //     context.Response.ContentType = "text/html";
+            //
+            //     await context.Response.WriteAsync("<html lang=\"en\"><body>\r\n");
+            //     await context.Response.WriteAsync("ERROR From API!<br><br>\r\n");
+            //
+            //     await context.Response.WriteAsync(
+            //         "<a href=\"/\">Home</a><br>\r\n");
+            //     await context.Response.WriteAsync("</body></html>\r\n"); 
+            // }
+            // else
+            // {
+            //     context.Response.Redirect("/Home/Error");
+            // }
+        });
+    });
 }
 
 // app.UseCors(build =>

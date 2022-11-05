@@ -44,6 +44,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="wwwroot\common\toastr" />
 	  <Folder Include="wwwroot\content\lab" />
 	  <Folder Include="wwwroot\plugins\custom\jquery\" />
 	</ItemGroup>

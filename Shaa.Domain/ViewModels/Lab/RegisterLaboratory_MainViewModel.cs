@@ -2,6 +2,7 @@
 
 public class RegisterLaboratory_MainViewModel
 {
+    public Guid? Id { get; set; }
     public string LaboratoryTitle { get; set; } = null!;
     public int LaboratoryTypeId { get; set; }
     public int PassiveDefenceId { get; set; }

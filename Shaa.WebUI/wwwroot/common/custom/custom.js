@@ -140,7 +140,8 @@ const initSelect = function () {
                         .find('.invalid-feedback').hide();
                 } else {
                     $(select).closest('.r-vl-m').find('.invalid-feedback').show();
-                };
+                }
+                ;
             });
         }
     }
@@ -154,3 +155,90 @@ function InitComponents() {
     initDatePickers();
     initSelect();
 }
+
+function ShowWarning(title) { 
+    toastr.warning('اخطار',title,{
+        positionClass: 'toast-bottom-right'
+    });
+}
+
+function ShowSuccess(title) { 
+    toastr.success('موفق',title,{
+        positionClass: 'toast-bottom-right'
+    });
+}
+
+function ShowInfo(title) { 
+    toastr.info('اطلاع',title,{
+        positionClass: 'toast-bottom-right'
+    });
+}
+
+function ShowError(title) {
+    toastr.error('خطا',title,{
+        positionClass: 'toast-bottom-right'
+    });
+}
+
+// toastr.error('Error', 'Error Title', {
+//     // tap to dismiss 
+//     tapToDismiss: true,
+//     // toast class 
+//     toastClass: 'toast',
+//     // container ID 
+//     containerId: 'toast-container',
+//     // debug mode 
+//     debug: false,
+//     // fadeIn, slideDown, and show are built into jQuery 
+//     showMethod: 'fadeIn',
+//     // duration of animation 
+//     showDuration: 300,
+//     // easing function 
+//     showEasing: 'swing',
+//     // callback function 
+//     onShown: undefined,
+//     onHidden: undefined,
+//     // hide animation 
+//     hideMethod: 'fadeOut',
+//     // duration of animation 
+//     hideDuration: 1000,
+//     // easing function 
+//     hideEasing: 'swing',
+//     // close animation 
+//     closeMethod: false,
+//     // duration of animation 
+//     closeDuration: false,
+//     // easing function 
+//     closeEasing: false,
+//     // timeout in ms 
+//     extendedTimeOut: 1000,
+//     // you can customize icons here 
+//     iconClasses: {
+//         error: 'toast-error',
+//         info: 'toast-info',
+//         success: 'toast-success',
+//         warning: 'toast-warning'
+//     },
+//     iconClass: 'toast-info',
+//     // toast-top-center, toast-bottom-center, toast-top-full-width 
+//     // toast-bottom-full-width, toast-top-left, toast-bottom-right 
+//     // toast-bottom-left, toast-top-right 
+//     positionClass: 'toast-top-right',
+//     // set timeOut and extendedTimeOut to 0 to make it sticky 
+//     timeOut: 5000,
+//     titleClass: 'toast-title',
+//     messageClass: 'toast-message',
+//     // allows HTML content in the toast? 
+//     escapeHtml: false,
+//     // target container 
+//     target: 'body',
+//     // close button 
+//     closeHtml: '<button type="button">&times;</button>',
+//     // place the newest toast on the top 
+//     newestOnTop: true,
+//     //revent duplicate toasts
+//     preventDuplicates: false,
+//     // shows progress bar
+//     progressBar: false
+// })
+

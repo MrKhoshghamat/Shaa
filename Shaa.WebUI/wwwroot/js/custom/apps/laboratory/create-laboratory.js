@@ -3,10 +3,13 @@ const KTCreateLaboratory = function () {
     let t, o, s, stepper = [], forms = [], validations = [];
     return {
         init: function () {
+
             const form_steps = [{
                 form_id: '#kt_create_laboratory_main_form',
                 load_url: '/Laboratory/MainPartial',
-                data: {},
+                data: function () {
+                    return {};
+                },
                 fields: {
                     LaboratoryTitle: {validators: {notEmpty: {message: "لطفا عنوان آزمایشگاه را وارد کنید"}}},
                     PassiveDefenceId: {validators: {notEmpty: {message: "لطفا پدافند غیر عامل را وارد کنید"}}},
@@ -16,16 +19,26 @@ const KTCreateLaboratory = function () {
                     StandardStatusId: {validators: {notEmpty: {message: "لطفا وضعیت استاندارد را وارد کنید"}}},
                     PhoneNumber: {validators: {notEmpty: {message: "لطفا شماره تماس را وارد کنید"}}},
                     Address: {validators: {notEmpty: {message: "لطفا آدرس را وارد کنید"}}}
-                }
+                },
+                onSuccess: function (result) {
+                    console.log('result 66', result);
+                    $('#kt_create_laboratory_main_form #id').val(result.data.id);
+                    form_steps[0].id = result.data.id
+                },
+                id: null
             }, {
                 form_id: '#kt_create_laboratory_ward_form',
                 load_url: '/Laboratory/WardPartial',
-                data: {},
+                data: function () {
+                    return {id: form_steps[0].id};
+                },
                 fields: {}
             }, {
                 form_id: '#kt_create_laboratory_equipment_form',
                 load_url: '/Laboratory/EquipmentPartial',
-                data: {},
+                data: function () {
+                    return {id: form_steps[0].id};
+                },
                 fields: {
                     EquipmentTypeId: {validators: {notEmpty: {message: "لطفا نوع تجهیز را وارد کنید"}}},
                     GeneralTechnicalSpecification: {validators: {notEmpty: {message: "لطفا مشخصات فنی را وارد کنید"}}},
@@ -49,7 +62,9 @@ const KTCreateLaboratory = function () {
             }, {
                 form_id: '#kt_create_laboratory_ability_form',
                 load_url: '/Laboratory/AbilityPartial',
-                data: {},
+                data: function () {
+                    return {id: form_steps[0].id};
+                },
                 fields: {
                     AbilityTitle: {validators: {notEmpty: {message: "لطفا عنوان توانمندی را وارد کنید"}}}
                 }
@@ -61,11 +76,28 @@ const KTCreateLaboratory = function () {
                     return;
                 }
 
+                const _form = form_steps[page_index];
                 validations[page_index].validate().then((function (validation_result) {
                     if (validation_result === "Valid") {
                         $(forms[page_index]).ajaxSubmit({
                             success: function (res) {
-                                succeed();
+                                if (res.success == false) {
+                                    failed();
+
+                                    if (res.errors)
+                                        ShowError(res.errors[0].message);
+                                    else
+                                        ShowSuccess('عملیات موفقیت آمیز نبود');
+
+                                } else {
+                                    if (typeof _form.onSuccess === "function") {
+                                        _form.onSuccess(res);
+                                    }
+                                    succeed();
+
+                                    if (res.success == true)
+                                        ShowSuccess('اطلاعات با موفقیت ذخیره شد');
+                                }
                             },
                             error: function (e) {
                                 failed();
@@ -94,7 +126,8 @@ const KTCreateLaboratory = function () {
                             ' <div class="sk-cube sk-cube4"></div>  <div class="sk-cube sk-cube5"></div>  <div class="sk-cube sk-cube6"></div>  <div class="sk-cube sk-cube7"></div>' +
                             ' <div class="sk-cube sk-cube8"></div>  <div class="sk-cube sk-cube9"></div></div>');
 
-                        load_content(_form.load_url, _form.data, function (data) {
+                        console.log('_form.data', _form.data());
+                        load_content(_form.load_url, _form.data(), function (data) {
                             $(sel).html(data);
                             $(sel).addClass('init');
 

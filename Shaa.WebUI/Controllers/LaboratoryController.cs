@@ -96,7 +96,7 @@ public class LaboratoryController : BaseController
     public async Task<IActionResult> MainPartial(RegisterLaboratory_MainViewModel model)
     {
         if (model.LaboratoryImagePath == null) model.LaboratoryImagePath = PathTools.DefaultLabImage;
-        
+
         if (!ModelState.IsValid) return View(model);
 
         var result = await _registerLaboratoryService.RegisterMainInfo(model);
@@ -104,16 +104,19 @@ public class LaboratoryController : BaseController
         switch (result)
         {
             case RegisterMainResult.MainExists:
-                TempData[ErrorMessage] = "آزمایشگاهی با این اطلاعات اصلی قبلا ثبت شده است";
-                break;
+                // TempData[ErrorMessage] = "آزمایشگاهی با این اطلاعات اصلی قبلا ثبت شده است";
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "آزمایشگاهی با این اطلاعات اصلی قبلا ثبت شده است")));
+            case RegisterMainResult.Success:
+                return Ok(new Success() { Data = model });
         }
 
-        return Ok(model);
+        return BadRequest(model);
     }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> WardPartial()
+    public async Task<IActionResult> WardPartial(Guid? id)
     {
         return PartialView(new RegisterLaboratory_WardViewModel());
     }

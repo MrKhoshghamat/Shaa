@@ -47,11 +47,14 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
             ResearchCenterId = model.ResearchCenterId,
             PhoneNumber = model.PhoneNumber.SanitizeText().Trim(),
             ImagePath = model.LaboratoryImagePath,
-            Address = model.Address.SanitizeText().Trim()
+            Address = model.Address.SanitizeText().Trim(),
+            LaboratoryTypeId = model.LaboratoryTypeId
         };
 
         await _mainInfoRepository.AddAsync(mainInfo);
         await _mainInfoRepository.Save();
+
+        model.Id = mainInfo.Id;
 
         return RegisterMainResult.Success;
     }
