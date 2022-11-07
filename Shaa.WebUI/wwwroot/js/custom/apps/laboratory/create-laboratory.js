@@ -25,14 +25,23 @@ const KTCreateLaboratory = function () {
                     $('#kt_create_laboratory_main_form #id').val(result.data.id);
                     form_steps[0].id = result.data.id
                 },
-                id: null
+                id: null,
             }, {
                 form_id: '#kt_create_laboratory_ward_form',
                 load_url: '/Laboratory/WardPartial',
                 data: function () {
                     return {id: form_steps[0].id};
                 },
-                fields: {}
+                fields: {
+                    WardTitle: {validators: {notEmpty: {message: "لطفا عنوان بخش را وارد کنید"}}}
+                },
+                onSuccess: function (result) {
+                    debugger;
+                    console.log('result 86', result);
+                    $('#kt_create_laboratory_ward_form #id').val(result.data.id);
+                    form_steps[0].id = result.data.id;
+                },
+                id: null,
             }, {
                 form_id: '#kt_create_laboratory_equipment_form',
                 load_url: '/Laboratory/EquipmentPartial',
@@ -58,7 +67,13 @@ const KTCreateLaboratory = function () {
                     SupplyTypeId: {validators: {notEmpty: {message: "لطفا نوع تامین دستگاه را وارد کنید"}}},
                     PurchasePriceConstruction: {validators: {notEmpty: {message: "لطفا قیمت ساخت / خرید را وارد کنید"}}},
                     SpecialCharacteristic: {validators: {notEmpty: {message: "لطفا ویژگی های خاص را وارد کنید"}}}
-                }
+                },
+                onSuccess: function (result) {
+                    console.log('result 86', result);
+                    $('#kt_create_laboratory_equipment_form #id').val(result.data.id);
+                    form_steps[0].id = result.data.id;
+                },
+                id: null,
             }, {
                 form_id: '#kt_create_laboratory_ability_form',
                 load_url: '/Laboratory/AbilityPartial',

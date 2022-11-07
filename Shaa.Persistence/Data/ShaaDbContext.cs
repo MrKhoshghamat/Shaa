@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -20,7 +23,10 @@ namespace Shaa.Persistence.Data
         public virtual DbSet<Department> Departments { get; set; } = null!;
         public virtual DbSet<Equipment> Equipment { get; set; } = null!;
         public virtual DbSet<EquipmentAbility> EquipmentAbilities { get; set; } = null!;
+        public virtual DbSet<Indicator> Indicators { get; set; } = null!;
+        public virtual DbSet<IndicatorNo> IndicatorNos { get; set; } = null!;
         public virtual DbSet<Laboratory> Laboratories { get; set; } = null!;
+        public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Ward> Wards { get; set; } = null!;
 
@@ -179,7 +185,6 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Equipment)
                     .HasForeignKey(d => d.LaboratoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Equipment_Laboratory");
 
                 entity.HasOne(d => d.RelatedSection)
@@ -221,6 +226,27 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_EquipmentAbility_Equipment");
             });
 
+            modelBuilder.Entity<Indicator>(entity =>
+            {
+                entity.ToTable("Indicator");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<IndicatorNo>(entity =>
+            {
+                entity.ToTable("IndicatorNo");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Template).HasMaxLength(255);
+
+                entity.HasOne(d => d.Indicator)
+                    .WithMany(p => p.IndicatorNos)
+                    .HasForeignKey(d => d.IndicatorId)
+                    .HasConstraintName("FK_IndicatorNo_Indicator");
+            });
+
             modelBuilder.Entity<Laboratory>(entity =>
             {
                 entity.ToTable("Laboratory", "Lab");
@@ -236,6 +262,8 @@ namespace Shaa.Persistence.Data
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Row).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 
@@ -265,6 +293,44 @@ namespace Shaa.Persistence.Data
                     .WithMany(p => p.LaboratoryStandardStatuses)
                     .HasForeignKey(d => d.StandardStatusId)
                     .HasConstraintName("FK_Laboratory_BaseInfo3");
+            });
+
+            modelBuilder.Entity<Request>(entity =>
+            {
+                entity.ToTable("Request", "Req");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.LetterPath)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RequestLetterDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RequestLetterNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RequestTitle).HasMaxLength(255);
+
+                entity.Property(e => e.UserName).HasMaxLength(255);
+
+                entity.HasOne(d => d.IndicatorNo)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.IndicatorNoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Request_IndicatorNo");
+
+                entity.HasOne(d => d.Laboratory)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.LaboratoryId)
+                    .HasConstraintName("FK_Request_Laboratory");
+
+                entity.HasOne(d => d.RequestType)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.RequestTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Request_BaseInfo");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -330,7 +396,6 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Wards)
                     .HasForeignKey(d => d.LaboratoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ward_Laboratory");
             });
 

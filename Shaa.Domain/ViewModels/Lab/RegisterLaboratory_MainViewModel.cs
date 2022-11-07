@@ -12,6 +12,7 @@ public class RegisterLaboratory_MainViewModel
     public string? PhoneNumber { get; set; }
     public string? LaboratoryImagePath { get; set; }
     public string? Address { get; set; }
+    public string? Description { get; set; }
 }
 
 public enum RegisterMainResult

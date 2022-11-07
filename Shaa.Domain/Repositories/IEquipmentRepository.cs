@@ -7,6 +7,6 @@ public interface IEquipmentRepository : IRepository<Equipment, Guid>
 {
     Task<bool> IsExistEquipmentBySerialNumber(string serialNumber);
     Task<Equipment> GetEquipmentBySerialNumber(string serialnumber);
-    Task<Guid> GetLaboratoryIdByEquipmentLaboratoryId(Guid laboratoryId);
+    Task<Guid?> GetLaboratoryIdByWardId(Guid? wardId);
 
 }

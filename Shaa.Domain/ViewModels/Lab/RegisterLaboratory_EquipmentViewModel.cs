@@ -4,6 +4,7 @@ namespace Shaa.Domain.ViewModels.Lab;
 
 public class RegisterLaboratory_EquipmentViewModel
 {
+    public Guid? Id { get; set; }
     public int EquipmentTypeId { get; set; }
     public string EquipmentTitle { get; set; } = null!;
     public string? PersianTitle { get; set; }
@@ -34,17 +35,20 @@ public class RegisterLaboratory_EquipmentViewModel
 
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",
         ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
-    public DateTime? LastCalibrationDate { get; set; }
+    public string? LastCalibrationDate { get; set; }
 
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",
         ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
-    public DateTime? WarrantyExpirationDate { get; set; }
+    public string? WarrantyExpirationDate { get; set; }
 
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",
         ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
-    public DateTime? InsuranceExpirationDate { get; set; }
+    public string? InsuranceExpirationDate { get; set; }
+
     public string? SpecialCharacteristic { get; set; }
     public string? TitlesAttachedToEquipment { get; set; }
+    public Guid? WardId { get; set; }
+    public Guid? LaboratoryId { get; set; }
 }
 
 public enum RegisterEquipmentResult

@@ -9,6 +9,7 @@ namespace Shaa.Domain.Entities
         {
             Abilities = new HashSet<Ability>();
             Equipment = new HashSet<Equipment>();
+            Requests = new HashSet<Request>();
             Wards = new HashSet<Ward>();
         }
 
@@ -23,6 +24,7 @@ namespace Shaa.Domain.Entities
         public string? ImagePath { get; set; }
         public string? Address { get; set; }
         public string? Description { get; set; }
+        public int Row { get; set; }
 
         public virtual BaseInfo? ApprovalAuthority { get; set; }
         public virtual BaseInfo LaboratoryType { get; set; } = null!;
@@ -31,6 +33,7 @@ namespace Shaa.Domain.Entities
         public virtual BaseInfo? StandardStatus { get; set; }
         public virtual ICollection<Ability> Abilities { get; set; }
         public virtual ICollection<Equipment> Equipment { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<Ward> Wards { get; set; }
     }
 }

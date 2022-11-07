@@ -34,4 +34,9 @@ public class MainInfoRepository : Repository<Laboratory, Guid>, IMainInfoReposit
     {
         return await _dbSet.FirstOrDefaultAsync(p => p.Title == title);
     }
+
+    public async Task<List<Laboratory>> GetAllLaboratories()
+    {
+        return await _dbSet.ToListAsync();
+    }
 }

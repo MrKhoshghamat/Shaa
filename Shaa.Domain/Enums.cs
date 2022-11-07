@@ -13,5 +13,6 @@ public enum BaseTableTypeId
     AbilityTitle = 9,
     EquipmentSupplyType = 10,
     EquipmentStatus = 11,
-    EmploymentStatus = 12
+    EmploymentStatus = 12,
+    RequestType = 13
 }

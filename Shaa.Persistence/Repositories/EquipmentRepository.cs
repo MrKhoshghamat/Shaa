@@ -26,10 +26,10 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
         return await _dbSet.FirstOrDefaultAsync(p => p.SerialNumber == serialnumber);
     }
 
-    public async Task<Guid> GetLaboratoryIdByEquipmentLaboratoryId(Guid laboratoryId)
+    public async Task<Guid?> GetLaboratoryIdByWardId(Guid? wardId)
     {
-        var equipment = await _dbSet.FirstOrDefaultAsync(p => p.LaboratoryId == laboratoryId);
-        var labId = equipment.LaboratoryId;
-        return labId;
+        var ward = await _context.Set<Ward>().FirstOrDefaultAsync(p => p.Id == wardId);
+        var laboratoryId = ward.LaboratoryId;
+        return laboratoryId;
     }
 }

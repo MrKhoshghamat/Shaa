@@ -97,14 +97,14 @@ public class LaboratoryController : BaseController
     {
         if (model.LaboratoryImagePath == null) model.LaboratoryImagePath = PathTools.DefaultLabImage;
 
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid) return Ok(new HassError() { Data = model }
+            .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
         var result = await _registerLaboratoryService.RegisterMainInfo(model);
 
         switch (result)
         {
             case RegisterMainResult.MainExists:
-                // TempData[ErrorMessage] = "آزمایشگاهی با این اطلاعات اصلی قبلا ثبت شده است";
                 return Ok(new HassError() { Data = model }
                     .AddError(new ModelError("*", "آزمایشگاهی با این اطلاعات اصلی قبلا ثبت شده است")));
             case RegisterMainResult.Success:
@@ -118,19 +118,34 @@ public class LaboratoryController : BaseController
     [Authorize]
     public async Task<IActionResult> WardPartial(Guid? id)
     {
-        return PartialView(new RegisterLaboratory_WardViewModel());
+        // ViewData["LaboratoryId"] = id;
+        return PartialView(new RegisterLaboratory_WardViewModel() { laboratoryId = id});
     }
 
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> WardPartial(RegisterLaboratory_WardViewModel model)
     {
-        return Ok(model);
+        if(!ModelState.IsValid) return Ok(new HassError() { Data = model }
+            .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+
+        var result = await _registerLaboratoryService.RegisterWard(model);
+
+        switch (result)
+        {
+            case RegisterWardResult.WardExists:
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "بخشی با این عنوان قبلا ثبت شده است")));
+            case RegisterWardResult.Success:
+                return Ok(new Success() { Data = model });
+        }
+        
+        return BadRequest(model);
     }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> EquipmentPartial()
+    public async Task<IActionResult> EquipmentPartial(Guid? id)
     {
         ViewData["EquipmentTypes"] =
             await _baseInfoService.GetAllEquipmentTypes((int)BaseTableTypeId.EquipmentType);
@@ -150,19 +165,35 @@ public class LaboratoryController : BaseController
         ViewData["EquipmentSupplyTypes"] =
             await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
 
-        return PartialView(new RegisterLaboratory_EquipmentViewModel());
+        return PartialView(new RegisterLaboratory_EquipmentViewModel() {WardId = id});
     }
 
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> EquipmentPartial(RegisterLaboratory_EquipmentViewModel model)
     {
-        return Ok(model);
+        if (model.EquipmentImage == null) model.EquipmentImage = PathTools.DefaultLabPath;
+        
+        if(!ModelState.IsValid) return Ok(new HassError() { Data = model }
+            .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+
+        var result = await _registerLaboratoryService.RegisterEquipment(model);
+
+        switch (result)
+        {
+            case RegisterEquipmentResult.EquipmentExists:
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "تجهیزی با این مشخصات قبلا ثبت شده است")));
+            case RegisterEquipmentResult.Success:
+                return Ok(new Success() { Data = model });
+        }
+
+        return BadRequest(model);
     }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> AbilityPartial()
+    public async Task<IActionResult> AbilityPartial(Guid? id)
     {
         return PartialView(new RegisterLaboratory_AbilityViewModel());
     }

@@ -9,4 +9,5 @@ public interface IMainInfoRepository : IRepository<Laboratory, Guid>
     Task<bool> IsExistLaboratoryByTitle(string title);
     Task<Laboratory> GetLaboratoryByPhoneNumber(string phoneNumber);
     Task<Laboratory> GetLaboratoryByTitle(string title);
+    Task<List<Laboratory>> GetAllLaboratories();
 }

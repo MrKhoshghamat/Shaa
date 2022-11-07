@@ -10,6 +10,13 @@ public static class PathTools
         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/content/lab/");
 
     public static readonly string DefaultLabPath = "/content/lab/";
+    
+    public static readonly string DefaultEquipmentImage = "DefaultequipmentImage.png";
+
+    public static readonly string DefaultEquipmentServerPath =
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/content/equipment/");
+
+    public static readonly string DefaultEquipmentPath = "/content/equipment/";
 
     #endregion
     

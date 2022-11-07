@@ -8,17 +8,17 @@
     var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
 }
 
-<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
-<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
-<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css" />
-<link href="/common/custom/custom.css" rel="stylesheet" type="text/css" />
+<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css"/>
+<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css"/>
+<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css"/>
+<link href="/common/custom/custom.css" rel="stylesheet" type="text/css"/>
 
 <form asp-action="MainPartial"
       asp-controller="Laboratory"
       method="post"
       class="w-100 pt-1 px-1 pb-1 fv-plugins-bootstrap5 fv-plugins-framework"
       novalidate="novalidate" id="kt_create_laboratory_main_form">
-    
+
     <input id="id" name="id" type="hidden"/>
     <div class="row mb-12">
         <div class="col-md-6 fv-row">
@@ -127,8 +127,14 @@
             <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
         </div>
     </div>
+    <div class="row mb-12">
+        <div class="col-md-12 fv-row">
+            <label class="fs-6 fw-bold form-label mb-2">توضیحات</label>
+            <textarea asp-for="Description" name="Description" class="form-control form-control-lg form-control-solid" rows="4"></textarea>
+        </div>
+    </div>
 </form>
- 
+
 
 @*<script src="/js/widgets.bundle.js"></script>
 <script src="/js/custom/widgets.js"></script>
