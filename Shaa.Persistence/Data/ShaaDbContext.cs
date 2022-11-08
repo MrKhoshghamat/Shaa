@@ -34,8 +34,6 @@ namespace Shaa.Persistence.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR;");
             }
         }
 
@@ -185,6 +183,7 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Equipment)
                     .HasForeignKey(d => d.LaboratoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Equipment_Laboratory");
 
                 entity.HasOne(d => d.RelatedSection)
@@ -231,19 +230,32 @@ namespace Shaa.Persistence.Data
                 entity.ToTable("Indicator");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Template).HasMaxLength(255);
             });
 
             modelBuilder.Entity<IndicatorNo>(entity =>
             {
+                entity.HasKey(e => e.Id);
+
                 entity.ToTable("IndicatorNo");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id)
+                    .HasMaxLength(255)
+                    .HasColumnName("IndicatorNo");
 
-                entity.Property(e => e.Template).HasMaxLength(255);
+                entity.Property(e => e.IndicatorDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReqId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ReqInfo).HasMaxLength(1000);
 
                 entity.HasOne(d => d.Indicator)
                     .WithMany(p => p.IndicatorNos)
                     .HasForeignKey(d => d.IndicatorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_IndicatorNo_Indicator");
             });
 
@@ -287,12 +299,12 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.ResearchCenter)
                     .WithMany(p => p.LaboratoryResearchCenters)
                     .HasForeignKey(d => d.ResearchCenterId)
-                    .HasConstraintName("FK_Laboratory_BaseInfo4");
+                    .HasConstraintName("FK_Laboratory_BaseInfo3");
 
                 entity.HasOne(d => d.StandardStatus)
                     .WithMany(p => p.LaboratoryStandardStatuses)
                     .HasForeignKey(d => d.StandardStatusId)
-                    .HasConstraintName("FK_Laboratory_BaseInfo3");
+                    .HasConstraintName("FK_Laboratory_BaseInfo4");
             });
 
             modelBuilder.Entity<Request>(entity =>
@@ -301,29 +313,32 @@ namespace Shaa.Persistence.Data
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
+                entity.Property(e => e.IndicatorNo).HasMaxLength(255);
+
                 entity.Property(e => e.LetterPath)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.RequestLetterDate).HasColumnType("datetime");
+                entity.Property(e => e.RequestDate).HasColumnType("datetime");
 
-                entity.Property(e => e.RequestLetterNo)
+                entity.Property(e => e.Title).HasMaxLength(255);
+
+                entity.Property(e => e.TraceCode)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.RequestTitle).HasMaxLength(255);
-
                 entity.Property(e => e.UserName).HasMaxLength(255);
 
-                entity.HasOne(d => d.IndicatorNo)
+                entity.HasOne(d => d.IndicatorNoNavigation)
                     .WithMany(p => p.Requests)
-                    .HasForeignKey(d => d.IndicatorNoId)
+                    .HasForeignKey(d => d.IndicatorNo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_IndicatorNo");
 
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.LaboratoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_Laboratory");
 
                 entity.HasOne(d => d.RequestType)
@@ -396,6 +411,7 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Wards)
                     .HasForeignKey(d => d.LaboratoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ward_Laboratory");
             });
 

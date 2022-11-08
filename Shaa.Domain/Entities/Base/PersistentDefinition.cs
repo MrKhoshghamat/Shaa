@@ -10,5 +10,6 @@ namespace Shaa.Domain.Entities
     public partial class User : IIdentityObject<Guid> { }
     public partial class BaseTableType : IIdentityObject<int> { }
     public partial class BaseInfo : IIdentityObject<int> { }
-    
+    public partial class IndicatorNo : IIdentityObject<string> { }
+
 }

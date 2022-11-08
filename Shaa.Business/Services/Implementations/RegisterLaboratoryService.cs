@@ -67,13 +67,13 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     public async Task<RegisterWardResult> RegisterWard(RegisterLaboratory_WardViewModel model)
     {
-        if (await _wardRepository.IsExistWardByTitle(model.WardTitle)) return RegisterWardResult.WardExists;
+        if (await _wardRepository.IsExistWardByTitle(model.WardTitle!)) return RegisterWardResult.WardExists;
 
         var ward = new Ward()
         {
             Id = CodeGenerator.CreateId(),
-            Title = model.WardTitle.SanitizeText().Trim(),
-            LaboratoryId = model.laboratoryId,
+            Title = model.WardTitle!.SanitizeText().Trim(),
+            LaboratoryId = (Guid)model.laboratoryId!,
         };
 
         await _wardRepository.AddAsync(ward);
@@ -98,7 +98,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         var equipment = new Equipment()
         {
             Id = CodeGenerator.CreateId(),
-            LaboratoryId = laboratoryId,
+            LaboratoryId = (Guid)laboratoryId!,
             EquipmentTypeId = model.EquipmentTypeId,
             Title = model.EquipmentTitle.SanitizeText().Trim(),
             PersianTitle = model.PersianTitle.SanitizeText().Trim(),

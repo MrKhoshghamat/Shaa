@@ -10,11 +10,14 @@ namespace Shaa.Domain.Entities
             Requests = new HashSet<Request>();
         }
 
-        public Guid Id { get; set; }
-        public int? IndicatorId { get; set; }
-        public string? Template { get; set; }
+        public string Id { get; set; } = null!;
+        public int IndicatorId { get; set; }
+        public DateTime IndicatorDate { get; set; }
+        public int IndicatedNumber { get; set; }
+        public string? ReqInfo { get; set; }
+        public string? ReqId { get; set; }
 
-        public virtual Indicator? Indicator { get; set; }
+        public virtual Indicator Indicator { get; set; } = null!;
         public virtual ICollection<Request> Requests { get; set; }
     }
 }

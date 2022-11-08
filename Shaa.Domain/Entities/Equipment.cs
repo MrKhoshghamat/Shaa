@@ -11,7 +11,7 @@ namespace Shaa.Domain.Entities
         }
 
         public Guid Id { get; set; }
-        public Guid? LaboratoryId { get; set; }
+        public Guid LaboratoryId { get; set; }
         public int EquipmentTypeId { get; set; }
         public string Title { get; set; } = null!;
         public string? PersianTitle { get; set; }
@@ -44,7 +44,7 @@ namespace Shaa.Domain.Entities
         public virtual BaseInfo? EmploymentStatus { get; set; }
         public virtual BaseInfo? EquipmentStatus { get; set; }
         public virtual BaseInfo EquipmentType { get; set; } = null!;
-        public virtual Laboratory? Laboratory { get; set; }
+        public virtual Laboratory Laboratory { get; set; } = null!;
         public virtual BaseInfo? RelatedSection { get; set; }
         public virtual BaseInfo? SupplyType { get; set; }
         public virtual BaseInfo UsageType { get; set; } = null!;
