@@ -297,7 +297,7 @@ namespace Shaa.Persistence.Data
 
             modelBuilder.Entity<Request>(entity =>
             {
-                entity.ToTable("Request", "Req");
+                entity.ToTable("Request", "Lab");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
