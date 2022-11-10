@@ -18,8 +18,8 @@ namespace Shaa.Domain.Entities
         public int LaboratoryTypeId { get; set; }
         public int PassiveDefenceId { get; set; }
         public int? ApprovalAuthorityId { get; set; }
-        public int? ResearchCenterId { get; set; }
         public int? StandardStatusId { get; set; }
+        public int? ResearchCenterId { get; set; }
         public string? PhoneNumber { get; set; }
         public string? ImagePath { get; set; }
         public string? Address { get; set; }

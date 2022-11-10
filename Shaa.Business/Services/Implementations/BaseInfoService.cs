@@ -29,7 +29,7 @@ public class BaseInfoService : IBaseInfoService
 
     public async Task<FilterBaseInfoViewModel> FilterBaseInfo(FilterBaseInfoViewModel filter)
     {
-        var query = await _baseInfoRepository.GetAllBaseInfos();
+        var query = (await _baseInfoRepository.GetAllBaseInfos()).Where(p => p.BaseTableTypeId == filter.BaseTableTypeId);
 
         if (!string.IsNullOrEmpty(filter.Title))
         {

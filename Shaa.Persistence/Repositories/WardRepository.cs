@@ -21,8 +21,8 @@ public class WardRepository : Repository<Ward, Guid>, IWardRepository
         return await _dbSet.FirstOrDefaultAsync(p => p.LaboratoryId == laboratoryId);
     }
 
-    public async Task<List<Ward>> GetAllWards()
+    public async Task<IQueryable<Ward>> GetAllWards()
     {
-        return await _dbSet.ToListAsync();
+        return _dbSet.AsQueryable();
     }
 }

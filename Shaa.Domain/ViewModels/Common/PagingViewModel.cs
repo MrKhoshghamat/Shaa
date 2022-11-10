@@ -15,7 +15,7 @@ public class PagingViewModel<T>
     }
 
     #endregion
-    
+
     public List<T> Entities { get; set; }
     public int CurrentPage { get; set; }
     public int StartPage { get; set; }
@@ -29,9 +29,11 @@ public class PagingViewModel<T>
     public async Task SetPaging(IQueryable<T> query)
     {
         AllEntitiesCount = query.Count();
-        TotalPage = (int)Math.Ceiling(AllEntitiesCount / (double)TakeEntity);
+        TotalPage = (int)(AllEntitiesCount / (double)TakeEntity) + 1;
+
         CurrentPage = CurrentPage < 1 ? 1 : CurrentPage;
         CurrentPage = CurrentPage > TotalPage ? TotalPage : CurrentPage;
+
         SkipEntity = (CurrentPage - 1) * TakeEntity;
         StartPage = CurrentPage - HowManyShowBeforeAfter > 0 ? CurrentPage - HowManyShowBeforeAfter : 1;
         EndPage = CurrentPage + HowManyShowBeforeAfter > TotalPage ? TotalPage : CurrentPage + HowManyShowBeforeAfter;

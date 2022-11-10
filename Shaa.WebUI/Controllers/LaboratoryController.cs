@@ -13,11 +13,17 @@ public class LaboratoryController : BaseController
 
     private readonly IBaseInfoService _baseInfoService;
     private readonly IRegisterLaboratoryService _registerLaboratoryService;
+    private readonly IWardService _wardService;
 
-    public LaboratoryController(IBaseInfoService baseInfoService, IRegisterLaboratoryService registerLaboratoryService)
+    public LaboratoryController(
+        IBaseInfoService baseInfoService, 
+        IRegisterLaboratoryService registerLaboratoryService,
+        IWardService wardService
+        )
     {
         _baseInfoService = baseInfoService;
         _registerLaboratoryService = registerLaboratoryService;
+        _wardService = wardService;
     }
 
     #endregion
@@ -116,31 +122,36 @@ public class LaboratoryController : BaseController
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> WardPartial(Guid? id)
-    {
+    public async Task<IActionResult> WardPartial(FilterWardViewModel filter)
+    {  
+        var result = await _wardService.FilterWard(filter);
+        return PartialView(result);
+ 
         // ViewData["LaboratoryId"] = id;
-        return PartialView(new RegisterLaboratory_WardViewModel() { laboratoryId = id});
+       // return PartialView(new RegisterLaboratory_WardViewModel() { laboratoryId = id});
     }
 
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> WardPartial(RegisterLaboratory_WardViewModel model)
     {
-        if(!ModelState.IsValid) return Ok(new HassError() { Data = model }
-            .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
-
-        var result = await _registerLaboratoryService.RegisterWard(model);
-
-        switch (result)
-        {
-            case RegisterWardResult.WardExists:
-                return Ok(new HassError() { Data = model }
-                    .AddError(new ModelError("*", "بخشی با این عنوان قبلا ثبت شده است")));
-            case RegisterWardResult.Success:
-                return Ok(new Success() { Data = model });
-        }
+        return Ok(new Success() { Data = model });
         
-        return BadRequest(model);
+        // if(!ModelState.IsValid) return Ok(new HassError() { Data = model }
+        //     .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+        //
+        // var result = await _registerLaboratoryService.RegisterWard(model);
+        //
+        // switch (result)
+        // {
+        //     case RegisterWardResult.WardExists:
+        //         return Ok(new HassError() { Data = model }
+        //             .AddError(new ModelError("*", "بخشی با این عنوان قبلا ثبت شده است")));
+        //     case RegisterWardResult.Success:
+        //         return Ok(new Success() { Data = model });
+        // }
+        //
+        // return BadRequest(model);
     }
 
     [HttpGet]

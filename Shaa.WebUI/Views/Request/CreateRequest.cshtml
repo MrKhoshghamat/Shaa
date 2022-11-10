@@ -56,7 +56,7 @@
                                         <label class="required fs-6 fw-bold form-label mb-2">عنوان درخواست کننده</label>
                                         <input asp-for="UserName" name="UserName" class="form-control form-control-lg form-control-solid"/>
                                     </div>
-                                @*    <div class="col-md-6 fv-row">
+                                    @*    <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">شماره نامه درخواست</label>
                                         <input asp-for="RequestLetterNo" disabled="disabled" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
                                     </div>*@
@@ -145,6 +145,13 @@
                                         <input href="#" disabled="disabled" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
                                     </div>
                                 </div>
+
+                                <!--begin::Actions-->
+                                <div class="float-end mt-5">
+                                    <a href="#" class="btn btn-bg-success me-2" data-bs-toggle="modal">ثبت</a>
+                                    <a href="#" class="btn btn-danger me-2" data-bs-toggle="modal">تماس های امروز</a>
+                                </div>
+                                <!--end::Actions--> 
                             </form>
                         </div>
                     </div>

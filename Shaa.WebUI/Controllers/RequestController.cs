@@ -20,6 +20,19 @@ public class RequestController : BaseController
 
     #endregion
 
+    
+    [HttpGet]
+    public async Task<IActionResult> RequestIndex()
+    {
+        // CreateRequestViewModel requestViewModel = new CreateRequestViewModel();
+        // ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
+        // ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
+
+       // return View(requestViewModel);
+
+       return View();
+    }
+ 
 
     [HttpGet]
     public async Task<IActionResult> CreateRequest()

@@ -34,6 +34,8 @@ namespace Shaa.Persistence.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR;");
             }
         }
 
@@ -183,7 +185,6 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Equipment)
                     .HasForeignKey(d => d.LaboratoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Equipment_Laboratory");
 
                 entity.HasOne(d => d.RelatedSection)
@@ -236,13 +237,9 @@ namespace Shaa.Persistence.Data
 
             modelBuilder.Entity<IndicatorNo>(entity =>
             {
-                entity.HasKey(e => e.Id);
-
                 entity.ToTable("IndicatorNo");
 
-                entity.Property(e => e.Id)
-                    .HasMaxLength(255)
-                    .HasColumnName("IndicatorNo");
+                entity.Property(e => e.Id).HasMaxLength(255);
 
                 entity.Property(e => e.IndicatorDate).HasColumnType("datetime");
 
@@ -299,12 +296,12 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.ResearchCenter)
                     .WithMany(p => p.LaboratoryResearchCenters)
                     .HasForeignKey(d => d.ResearchCenterId)
-                    .HasConstraintName("FK_Laboratory_BaseInfo3");
+                    .HasConstraintName("FK_Laboratory_BaseInfo4");
 
                 entity.HasOne(d => d.StandardStatus)
                     .WithMany(p => p.LaboratoryStandardStatuses)
                     .HasForeignKey(d => d.StandardStatusId)
-                    .HasConstraintName("FK_Laboratory_BaseInfo4");
+                    .HasConstraintName("FK_Laboratory_BaseInfo3");
             });
 
             modelBuilder.Entity<Request>(entity =>
@@ -411,7 +408,6 @@ namespace Shaa.Persistence.Data
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Wards)
                     .HasForeignKey(d => d.LaboratoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ward_Laboratory");
             });
 

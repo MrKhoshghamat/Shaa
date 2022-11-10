@@ -89,7 +89,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                           <a asp-action="RequestIndex" asp-controller="Request" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -127,7 +127,7 @@
                             @foreach (var item in _BaseInfoTypeService.ShowBaseTableTypeSubMenu().Result)
                             {
                                 <div class="menu-item">
-                                    <a asp-action="BaseInfoList" asp-controller="Home" class="menu-link">
+                                    <a asp-action="BaseInfoList" asp-controller="Home" asp-route-BaseTableTypeId="@item.Id"  class="menu-link">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
