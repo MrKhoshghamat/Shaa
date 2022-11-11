@@ -237,7 +237,7 @@ const KTCreateLaboratory = function () {
                         $(sel).html(' <div class="sk-cube-grid"> <div class="sk-cube sk-cube1"></div> <div class="sk-cube sk-cube2"></div> <div class="sk-cube sk-cube3"></div> ' +
                             ' <div class="sk-cube sk-cube4"></div>  <div class="sk-cube sk-cube5"></div>  <div class="sk-cube sk-cube6"></div>  <div class="sk-cube sk-cube7"></div>' +
                             ' <div class="sk-cube sk-cube8"></div>  <div class="sk-cube sk-cube9"></div></div>');
- 
+
                         load_content(_form.load_url, _form.data(), function (data) {
                             $(sel).html(data);
                             $(sel).addClass('init');
@@ -302,13 +302,14 @@ const KTCreateLaboratory = function () {
 KTUtil.onDOMContentLoaded((function () {
     KTCreateLaboratory.init();
 }));
- 
+
 function OpenWardWindow(modelId, laboratoryId) {
     openDialog("Ward-dialog", 'بخش', '/Laboratory/WardWindow', {
         Id: modelId,
         LaboratoryId: laboratoryId
     }, function (res) {
-    })
+        InitComponents();
+    }, "modal-xl")
 }
 
 function OpenEquipmentWindow(modelId, laboratoryId) {
@@ -316,7 +317,8 @@ function OpenEquipmentWindow(modelId, laboratoryId) {
         Id: modelId,
         LaboratoryId: laboratoryId
     }, function (res) {
-    })
+        InitComponents();
+    }, "modal-xl")
 }
 
 function OpenAbilityWindow(modelId, laboratoryId) {
@@ -324,5 +326,6 @@ function OpenAbilityWindow(modelId, laboratoryId) {
         Id: modelId,
         LaboratoryId: laboratoryId
     }, function (res) {
-    })
+        InitComponents();
+    }, "modal-xl")
 }

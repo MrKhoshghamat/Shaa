@@ -35,6 +35,16 @@ public class LaboratoryController : BaseController
 
     #endregion
 
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> LaboratoryIndex(FilterLaboratoryViewModel filter)
+    {
+        var result = await _registerLaboratoryService.FilterLaboratory(filter);
+        return View(result);
+    }
+
+
     [HttpGet]
     [Authorize]
     public async Task<IActionResult> RegisterLaboratory(Guid? id)

@@ -4,10 +4,10 @@
     var abilityTitles = ViewData["AbilityTitles"] as List<SelectListViewModel>;
 }
 
-<div asp-action="AbilityPartial"
+<form asp-action="AbilityPartial"
      asp-controller="Laboratory"
      method="post"
-     class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ability_partial_form">
+     class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ability_form">
     <div class="w-100">
         @*        <div class="pb-10 pb-lg-15">
         <h2 class="fw-bolder text-dark">توانمندیها</h2>
@@ -96,11 +96,58 @@
         <hr />
         <!--begin::Actions-->
         <div class="mt-5">
-            <a href="#" class="btn btn-danger float-end me-2" onclick="closeOpenDialogContent($('#kt_create_laboratory_ward_form'))">انصراف</a>
+            <a href="#" class="btn btn-danger float-end me-2" onclick="closeOpenDialogContent($('#kt_create_laboratory_ability_partial_form'))">انصراف</a>
             <a href="#" class="btn btn-bg-success float-end me-2" onclick="AddNewAbility()">ثبت</a>
         </div>
         <!--end::Actions-->
     </div>
-</div>
+</form>
 
-@*<script src="/common/custom/custom.js"></script>*@
+<script>
+    var ability_form = document.querySelector('#kt_create_laboratory_ability_form');
+    var abilityWindow_Validation = FormValidation.formValidation(ability_form, {
+        fields: {
+            abilityTitle: { validators: { notEmpty: { message: "لطفا عنوان بخش را وارد کنید" } } },
+        },
+        plugins: {
+            trigger: new FormValidation.plugins.Trigger,
+            bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" })
+        }
+    });
+
+    var AddNewAbility = function() {
+        var lab_id = $('#kt_create_laboratory_ability_form #LaboratoryId').val();
+        abilityWindow_Validation.validate().then((function(vr) {
+            if (vr === "Valid") {
+                $(ability_form).ajaxSubmit({
+                    success: function(res) {
+                        debugger;
+                        if (res.success == false) {
+                            // failed();
+
+                            if (res.errors)
+                                ShowError(res.errors[0].message);
+                            else
+                                ShowSuccess('عملیات موفقیت آمیز نبود');
+
+                        } else {
+                            closeOpenDialogContent($('#kt_create_laboratory_ability_form'));
+                            load_content('/Laboratory/AbilityPartial', { laboratoryId: lab_id }
+                                , function(data) {
+                                    $('#stepper-content-2').html(data);
+                                    InitComponents();
+                                    KTUtil.scrollTop();
+                                });
+
+                            if (res.success == true)
+                                ShowSuccess('اطلاعات با موفقیت ذخیره شد');
+                        }
+                    },
+                    error: function(e) {
+                    }
+                });
+            }
+        }));
+    }
+
+</script>

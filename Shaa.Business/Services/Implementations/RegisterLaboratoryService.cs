@@ -4,6 +4,7 @@ using Shaa.Business.Security;
 using Shaa.Business.Services.Interfaces;
 using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
+using Shaa.Domain.ViewModels.BasicInfo;
 using Shaa.Domain.ViewModels.Lab;
 
 namespace Shaa.Business.Services.Implementations;
@@ -16,16 +17,51 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
     private readonly IWardRepository _wardRepository;
     private readonly IEquipmentRepository _equipmentRepository;
     private readonly IAbilityRepository _abilityRepository;
+    private readonly ILaboratoryRepository _laboratoryRepository;
 
     public RegisterLaboratoryService(IMainInfoRepository mainInfoRepository, IWardRepository wardRepository,
-        IEquipmentRepository equipmentRepository, IAbilityRepository abilityRepository)
+        IEquipmentRepository equipmentRepository, IAbilityRepository abilityRepository, ILaboratoryRepository laboratoryRepository)
     {
         _mainInfoRepository = mainInfoRepository;
         _wardRepository = wardRepository;
         _equipmentRepository = equipmentRepository;
         _abilityRepository = abilityRepository;
+        _laboratoryRepository = laboratoryRepository;
     }
 
+    #endregion
+
+    #region Laboratory
+    public async Task<FilterLaboratoryViewModel> FilterLaboratory(FilterLaboratoryViewModel filter)
+    {
+        var query = (await _laboratoryRepository.GetAllLaboratory());
+        //.Where(p => p. == filter.LaboratoryId);
+
+        if (!string.IsNullOrEmpty(filter.Search))
+        {
+            query = query.Where(p => p.Title.Contains(filter.Search.SanitizeText().Trim()));
+        }
+
+        var result = query
+            .Select(s => new LaboratoryListViewModel()
+            {
+                Title = s.Title,
+                LaboratoryId = s.Id
+            }).AsQueryable();
+
+        switch (filter.Sort)
+        {
+            case FilterEnum.AlphabeticASC:
+                query = query.OrderBy(p => p.Title);
+                break;
+            case FilterEnum.AlphabeticDESC:
+                query = query.OrderByDescending(p => p.Title);
+                break;
+        }
+
+        await filter.SetPaging(result);
+        return filter;
+    }
     #endregion
 
     #region MainInfo 
@@ -179,5 +215,5 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
     {
         throw new NotImplementedException();
     }
-    #endregion
+    #endregion 
 }
