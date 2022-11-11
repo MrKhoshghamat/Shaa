@@ -45,8 +45,9 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         var result = query
             .Select(s => new LaboratoryListViewModel()
             {
+                LaboratoryId = s.Id,
                 Title = s.Title,
-                LaboratoryId = s.Id
+                PassiveDefenceTitle = s.PassiveDefence.Title
             }).AsQueryable();
 
         switch (filter.Sort)
