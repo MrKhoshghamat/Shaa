@@ -28,7 +28,25 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     #endregion
 
-    #region MainInfo
+    #region MainInfo 
+    public async Task<RegisterLaboratory_MainViewModel> GetMainInfo(Guid id)
+    {
+        var model = (await _mainInfoRepository.GetAsync(p => p.Id == id)).FirstOrDefault();
+        return new RegisterLaboratory_MainViewModel()
+        {
+            Id = model.Id,
+            LaboratoryTitle = model.Title,
+            LaboratoryTypeId = model.LaboratoryTypeId,
+            PassiveDefenceId = model.PassiveDefenceId,
+            ApprovalAuthorityId = model.ApprovalAuthorityId,
+            ResearchCenterId = model.ResearchCenterId,
+            StandardStatusId = model.StandardStatusId,
+            PhoneNumber = model.PhoneNumber,
+            LaboratoryImagePath = model.ImagePath,
+            Address = model.Address,
+            Description = model.Description,
+        };
+    }
 
     public async Task<RegisterMainResult> RegisterMainInfo(RegisterLaboratory_MainViewModel model)
     {
@@ -61,6 +79,25 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         return RegisterMainResult.Success;
     }
 
+    public async Task<RegisterMainResult> UpdateMainInfo(RegisterLaboratory_MainViewModel model)
+    {
+        var dbModel = (await _mainInfoRepository.GetAsync(p => p.Id == model.Id)).FirstOrDefault();
+
+        dbModel.Title = model.LaboratoryTitle.SanitizeText().Trim();
+        dbModel.LaboratoryTypeId = model.LaboratoryTypeId;
+        dbModel.PassiveDefenceId = model.PassiveDefenceId;
+        dbModel.ApprovalAuthorityId = model.ApprovalAuthorityId;
+        dbModel.StandardStatusId = model.StandardStatusId;
+        dbModel.ResearchCenterId = model.ResearchCenterId;
+        dbModel.PhoneNumber = model.PhoneNumber.SanitizeText().Trim();
+        dbModel.ImagePath = model.LaboratoryImagePath;
+        dbModel.Address = model.Address.SanitizeText().Trim();
+        dbModel.Description = model.Description.SanitizeText().Trim();
+
+        await _mainInfoRepository.UpdateAsync(dbModel);
+        return RegisterMainResult.Success;
+    }
+
     #endregion
 
     #region Ward
@@ -80,7 +117,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         await _wardRepository.Save();
 
         model.Id = ward.Id;
-        
+
         return RegisterWardResult.Success;
     }
 
@@ -92,7 +129,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
     {
         if (await _equipmentRepository.IsExistEquipmentBySerialNumber(model.SerialNumber))
             return RegisterEquipmentResult.EquipmentExists;
-        
+
         var laboratoryId = await _equipmentRepository.GetLaboratoryIdByWardId(model.WardId);
 
         var equipment = new Equipment()
@@ -142,6 +179,5 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
     {
         throw new NotImplementedException();
     }
-
     #endregion
 }

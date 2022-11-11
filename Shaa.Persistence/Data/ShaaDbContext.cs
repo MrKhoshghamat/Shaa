@@ -272,7 +272,7 @@ namespace Shaa.Persistence.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Row).ValueGeneratedOnAdd();
+                entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 

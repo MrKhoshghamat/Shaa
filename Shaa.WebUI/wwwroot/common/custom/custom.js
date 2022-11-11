@@ -180,21 +180,6 @@ function ShowError(title) {
     });
 }
 
-let AddNewWard = function () {
-    $.ajax({
-        url: '/Laboratory/WardPartial',
-        method: 'GET',
-        data: {
-            laboratoryId : $('#LaboratoryId').val(),
-            wardTitle : $('#WardTitle').val()
-        },
-        success: function (res) {
-            $('#stepper-content-2').html(res);
-        },
-        error: function (e) {
-        }
-    });
-}
 // toastr.error('Error', 'Error Title', {
 //     // tap to dismiss 
 //     tapToDismiss: true,

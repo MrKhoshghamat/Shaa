@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shaa.Business.Services.Interfaces;
 using Shaa.Business.Statics;
 using Shaa.Domain;
+using Shaa.Domain.ViewModels;
 using Shaa.Domain.ViewModels.Lab;
 
 namespace Shaa.WebUI.Controllers;
@@ -14,24 +15,34 @@ public class LaboratoryController : BaseController
     private readonly IBaseInfoService _baseInfoService;
     private readonly IRegisterLaboratoryService _registerLaboratoryService;
     private readonly IWardService _wardService;
+    private readonly IEquipmentService _equipmentService;
+    private readonly IAbilityService _abilityService;
 
     public LaboratoryController(
         IBaseInfoService baseInfoService,
         IRegisterLaboratoryService registerLaboratoryService,
-        IWardService wardService
+        IWardService wardService,
+        IEquipmentService equipmentService,
+        IAbilityService abilityService
     )
     {
         _baseInfoService = baseInfoService;
         _registerLaboratoryService = registerLaboratoryService;
         _wardService = wardService;
+        _equipmentService = equipmentService;
+        _abilityService = abilityService;
     }
 
     #endregion
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> RegisterLaboratory()
+    public async Task<IActionResult> RegisterLaboratory(Guid? id)
     {
+        LaboratoryViewModel model =
+           (id != null) ? new LaboratoryViewModel() { LaboratoryId = (Guid)id } : new LaboratoryViewModel();
+
+
         ViewData["PassiveDefences"] =
             await _baseInfoService.GetAllPassiveDefences((int)BaseTableTypeId.PassiveDefenceType);
 
@@ -71,14 +82,17 @@ public class LaboratoryController : BaseController
         ViewData["EmploymentsStatus"] =
             await _baseInfoService.GetAllEmploymentsStatus((int)BaseTableTypeId.EmploymentStatus);
 
-        return View();
+        return View(model);
     }
 
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> MainPartial()
+    public async Task<IActionResult> MainPartial(Guid? id)
     {
+        RegisterLaboratory_MainViewModel model =
+            (id != null) ? await _registerLaboratoryService.GetMainInfo((Guid)id) : new RegisterLaboratory_MainViewModel();
+
         ViewData["PassiveDefences"] =
             await _baseInfoService.GetAllPassiveDefences((int)BaseTableTypeId.PassiveDefenceType);
 
@@ -94,7 +108,7 @@ public class LaboratoryController : BaseController
         ViewData["StandardStatus"] =
             await _baseInfoService.GetAllStandardStatus((int)BaseTableTypeId.StandardStatus);
 
-        return PartialView(new RegisterLaboratory_MainViewModel());
+        return PartialView(model);
     }
 
     [HttpPost]
@@ -107,7 +121,8 @@ public class LaboratoryController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
-        var result = await _registerLaboratoryService.RegisterMainInfo(model);
+        var result = (model.Id != null) ? await _registerLaboratoryService.UpdateMainInfo(model) :
+            await _registerLaboratoryService.RegisterMainInfo(model);
 
         switch (result)
         {
@@ -121,23 +136,25 @@ public class LaboratoryController : BaseController
         return BadRequest(model);
     }
 
+
+    #region Ward
+
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> WardPartial(FilterWardViewModel filter, Guid id, Guid laboratoryId,
-        string wardTitle)
+    public async Task<IActionResult> WardPartial(FilterWardViewModel filter)
     {
-        if (laboratoryId != Guid.Empty && !string.IsNullOrEmpty(wardTitle))
-        {
-            var registerLaboratoryWardViewModel = new RegisterLaboratory_WardViewModel()
-            {
-                LaboratoryId = laboratoryId,
-                WardTitle = wardTitle
-            };
-            var res = await _registerLaboratoryService.RegisterWard(registerLaboratoryWardViewModel);
-            ViewBag.LaboratoryId = laboratoryId;
-        }
+        //if (laboratoryId != Guid.Empty && !string.IsNullOrEmpty(filter.Title))
+        //{
+        //    var registerLaboratoryWardViewModel = new RegisterLaboratory_WardViewModel()
+        //    {
+        //        LaboratoryId = laboratoryId,
+        //        WardTitle = wardTitle
+        //    };
+        //    var res = await _registerLaboratoryService.RegisterWard(registerLaboratoryWardViewModel);
+        //    ViewBag.LaboratoryId = laboratoryId;
+        //}
 
-        if (id != Guid.Empty) ViewBag.LaboratoryId = id;
+        //if (id != Guid.Empty) ViewBag.LaboratoryId = id;
 
         var result = await _wardService.FilterWard(filter);
         return PartialView(result);
@@ -148,30 +165,60 @@ public class LaboratoryController : BaseController
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> WardPartial()
+    public IActionResult WardPartial()
     {
-        return Ok(new Success() { });
-
-        // if(!ModelState.IsValid) return Ok(new HassError() { Data = model }
-        //     .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
-        //
-        // var result = await _registerLaboratoryService.RegisterWard(model);
-        //
-        // switch (result)
-        // {
-        //     case RegisterWardResult.WardExists:
-        //         return Ok(new HassError() { Data = model }
-        //             .AddError(new ModelError("*", "بخشی با این عنوان قبلا ثبت شده است")));
-        //     case RegisterWardResult.Success:
-        //         return Ok(new Success() { Data = model });
-        // }
-        //
-        // return BadRequest(model);
+        return Ok(new Success() { Data = new { id = 0 } });
     }
+
+
+    public ActionResult WardWindow(FilterWardViewModel model)
+    {
+        return PartialView(model);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> SaveWard(RegisterLaboratory_WardViewModel model)
+    {
+        if (!ModelState.IsValid) return Ok(new HassError() { Data = model }
+            .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+
+        var result = await _registerLaboratoryService.RegisterWard(model);
+
+        switch (result)
+        {
+            case RegisterWardResult.WardExists:
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "بخشی با این عنوان قبلا ثبت شده است")));
+            case RegisterWardResult.Success:
+                return Ok(new Success() { Data = model });
+        }
+
+        return BadRequest(model);
+    }
+
+    #endregion
+
+
+    #region Equipment
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> EquipmentPartial(Guid? id)
+    public async Task<IActionResult> EquipmentPartial(FilterEquipmentViewModel filter)
+    {
+        var result = await _equipmentService.FilterEquipment(filter);
+        return PartialView(result);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult EquipmentPartial()
+    {
+        return Ok(new Success() { Data = new { id = 0 } });
+    }
+
+
+    public async Task<IActionResult> EquipmentWindow(FilterWardViewModel model)
     {
         ViewData["EquipmentTypes"] =
             await _baseInfoService.GetAllEquipmentTypes((int)BaseTableTypeId.EquipmentType);
@@ -191,12 +238,12 @@ public class LaboratoryController : BaseController
         ViewData["EquipmentSupplyTypes"] =
             await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
 
-        return PartialView(new RegisterLaboratory_EquipmentViewModel() { WardId = id });
+        return PartialView(new RegisterLaboratory_EquipmentViewModel() { Id = model.Id, LaboratoryId = model.LaboratoryId });
     }
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> EquipmentPartial(RegisterLaboratory_EquipmentViewModel model)
+    public async Task<IActionResult> SaveEquipment(RegisterLaboratory_EquipmentViewModel model)
     {
         if (model.EquipmentImage == null) model.EquipmentImage = PathTools.DefaultLabPath;
 
@@ -218,17 +265,64 @@ public class LaboratoryController : BaseController
         return BadRequest(model);
     }
 
+    #endregion
+
+
+    #region Ability
+
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> AbilityPartial(Guid? id)
+    public async Task<IActionResult> AbilityPartial(FilterAbilityViewModel filter)
+    {
+        var result = await _abilityService.FilterAbility(filter);
+        return PartialView(result);
+
+        //
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult AbilityPartial()
+    {
+        return Ok(new Success() { Data = new { id = 0 } });
+    }
+
+    public async Task<IActionResult> AbilityWindow(RegisterLaboratory_AbilityViewModel model)
     {
         return PartialView(new RegisterLaboratory_AbilityViewModel());
     }
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> AbilityPartial(RegisterLaboratory_AbilityViewModel model)
+    public async Task<IActionResult> SaveAbility(RegisterLaboratory_AbilityViewModel model)
     {
-        return Ok(model);
+        //if (model.EquipmentImage == null) model.EquipmentImage = PathTools.DefaultLabPath;
+
+        //if (!ModelState.IsValid)
+        //    return Ok(new HassError() { Data = model }
+        //        .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+
+        //var result = await _registerLaboratoryService.RegisterEquipment(model);
+
+        //switch (result)
+        //{
+        //    case RegisterEquipmentResult.EquipmentExists:
+        //        return Ok(new HassError() { Data = model }
+        //            .AddError(new ModelError("*", "تجهیزی با این مشخصات قبلا ثبت شده است")));
+        //    case RegisterEquipmentResult.Success:
+        //        return Ok(new Success() { Data = model });
+        //}
+
+        return BadRequest(model);
+    }
+
+    #endregion
+
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> ConfirmPartial(Guid? laboratoryId)
+    {
+        return PartialView(new Laboratory_ConfirmViewModel() { LaboratoryId = laboratoryId });
     }
 }

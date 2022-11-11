@@ -1,6 +1,6 @@
 "use strict";
-const KTCreateLaboratory = function () {
-    let t, o, s, stepper = [], forms = [], validations = [];
+const KTSaveWard = function () {
+    let t, save_btn, s, forms = [], validations = [];
     return {
         init: function () {
 
@@ -23,6 +23,7 @@ const KTCreateLaboratory = function () {
                     Address: { validators: { notEmpty: { message: "لطفا آدرس را وارد کنید" } } }
                 },
                 onSuccess: function (result) {
+                    console.log('result 66', result);
                     $('#kt_create_laboratory_main_form #id').val(result.data.id);
                     $('#LaboratoryId').val(result.data.id);
                     form_steps[0].id = result.data.id
@@ -152,20 +153,16 @@ const KTCreateLaboratory = function () {
                 //    });
                 //},
                 fields: {
-                    // AbilityTitle: { validators: { notEmpty: { message: "لطفا عنوان توانمندی را وارد کنید" } } }
+                   // AbilityTitle: { validators: { notEmpty: { message: "لطفا عنوان توانمندی را وارد کنید" } } }
                 }
             }
             ];
 
             const submit_step = function (page_index, succeed, failed) {
 
-                if (!forms[page_index]) {
-                    succeed();
-                    return;
-                }
-
                 const _form = form_steps[page_index];
                 validations[page_index].validate().then((function (validation_result) {
+                    console.log('validation_result', validation_result);
                     if (validation_result === "Valid") {
                         if (typeof _form.ajaxSubmit === "function") {
                             _form.ajaxSubmit(function (res) {
@@ -190,7 +187,7 @@ const KTCreateLaboratory = function () {
                                 failed();
                             });
                         } else {
-                            $(forms[page_index]).ajaxSubmit({
+                            $(form).ajaxSubmit({
                                 success: function (res) {
                                     if (res.success == false) {
                                         failed();
@@ -229,7 +226,7 @@ const KTCreateLaboratory = function () {
                     }
                 }));
             };
-            const load_step_content = function () {
+            const load_content = function () {
                 const sel = '#stepper-content-' + stepper.getCurrentStepIndex();
                 if (!($(sel).hasClass('init'))) {
                     const _form = form_steps[stepper.getCurrentStepIndex() - 1];
@@ -237,92 +234,56 @@ const KTCreateLaboratory = function () {
                         $(sel).html(' <div class="sk-cube-grid"> <div class="sk-cube sk-cube1"></div> <div class="sk-cube sk-cube2"></div> <div class="sk-cube sk-cube3"></div> ' +
                             ' <div class="sk-cube sk-cube4"></div>  <div class="sk-cube sk-cube5"></div>  <div class="sk-cube sk-cube6"></div>  <div class="sk-cube sk-cube7"></div>' +
                             ' <div class="sk-cube sk-cube8"></div>  <div class="sk-cube sk-cube9"></div></div>');
- 
+
+                        console.log('_form.data', _form.data());
                         load_content(_form.load_url, _form.data(), function (data) {
                             $(sel).html(data);
-                            $(sel).addClass('init');
-
-                            let form = document.querySelector(_form.form_id);
-                            validations.push(FormValidation.formValidation(form, {
-                                fields: _form.fields,
-                                plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
-                                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                                        rowSelector: ".fv-row",
-                                        eleInvalidClass: "",
-                                        eleValidClass: ""
-                                    })
-                                }
-                            }));
-                            forms.push(form);
+                            form = document.querySelector(_form.form_id);
+                            validations.push()); 
                             InitComponents();
-                            KTUtil.scrollTop();
+                            //KTUtil.scrollTop();
                         });
                     }
                 }
             };
-            const kt_stepper_changed = function (e) {
-                5 === stepper.getCurrentStepIndex()
-                    ? (o.classList.remove("d-none"), o.classList.add("d-inline-block"), s.classList.add("d-none"))
-                    : 5 === stepper.getCurrentStepIndex() ? (o.classList.add("d-none"), s.classList.add("d-none")) :
-                        (o.classList.remove("d-inline-block"), o.classList.remove("d-none"), s.classList.remove("d-none"));
-                load_step_content();
-            };
+ 
+        save_btn = t.querySelector('[data-kt-action="submit"]');
 
-            // (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e),
-            //     t = document.querySelector("#kt_create_account_stepper"),
-            //     i = t.querySelector("#kt_create_account_form"),
-            //     o = t.querySelector('[data-kt-stepper-action="submit"]'),
-            //     s = t.querySelector('[data-kt-stepper-action="next"]');
+        FormValidation.formValidation(form, {
+            fields: _form.fields,
+            plugins: {
+                trigger: new FormValidation.plugins.Trigger,
+                bootstrap: new FormValidation.plugins.Bootstrap5({
+                    rowSelector: ".fv-row",
+                    eleInvalidClass: "",
+                    eleValidClass: ""
+                })
+            }
+        }
 
-            t = document.querySelector("#kt_create_account_stepper");
-            o = t.querySelector('[data-kt-stepper-action="submit"]');
-            s = t.querySelector('[data-kt-stepper-action="next"]');
-            stepper = new KTStepper(t);
-            stepper.on("kt.stepper.changed", kt_stepper_changed);
-            stepper.on("kt.stepper.next", (function (e) {
-                submit_step(stepper.getCurrentStepIndex() - 1, function () {
-                    load_step_content();
-                    e.goNext();
-                }, function () {
-                    //  stepper.goPrevious();
-                });
-                KTUtil.scrollTop();
-            }));
-            stepper.on("kt.stepper.previous", (function (e) {
-                e.goPrevious();
-                KTUtil.scrollTop();
-            }))
-
-            kt_stepper_changed(stepper);
         }
     }
 }();
 
 KTUtil.onDOMContentLoaded((function () {
-    KTCreateLaboratory.init();
+    KTSaveWard.init();
 }));
+
+
+
+var AddNewWard = function () {
+    $.ajax({
+        url: '/Laboratory/WardPartial',
+        method: 'GET',
+        data: {
+            laboratoryId: $('#LaboratoryId').val(),
+            wardTitle: $('#WardTitle').val()
+        },
+        success: function (res) {
+            $('#stepper-content-2').html(res);
+        },
+        error: function (e) {
+        }
+    });
+}
  
-function OpenWardWindow(modelId, laboratoryId) {
-    openDialog("Ward-dialog", 'بخش', '/Laboratory/WardWindow', {
-        Id: modelId,
-        LaboratoryId: laboratoryId
-    }, function (res) {
-    })
-}
-
-function OpenEquipmentWindow(modelId, laboratoryId) {
-    openDialog("Equipment-dialog", 'تجهیز', '/Laboratory/EquipmentWindow', {
-        Id: modelId,
-        LaboratoryId: laboratoryId
-    }, function (res) {
-    })
-}
-
-function OpenAbilityWindow(modelId, laboratoryId) {
-    openDialog("Ability-dialog", 'توانمندی', '/Laboratory/AbilityWindow', {
-        Id: modelId,
-        LaboratoryId: laboratoryId
-    }, function (res) {
-    })
-}

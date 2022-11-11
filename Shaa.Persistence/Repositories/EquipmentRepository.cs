@@ -32,4 +32,9 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
         var laboratoryId = ward.LaboratoryId;
         return laboratoryId;
     }
+ 
+    public async Task<IQueryable<Equipment>> GetAllEquipment()
+    {
+        return _dbSet.AsQueryable();
+    }
 }

@@ -20,4 +20,9 @@ public class AbilityRepository : Repository<Ability, Guid>, IAbilityRepository
     {
         return await _dbSet.FirstOrDefaultAsync(p => p.Title == title);
     }
+
+    public async Task<IQueryable<Ability>> GetAllAbility()
+    {
+        return _dbSet.AsQueryable();
+    }
 }

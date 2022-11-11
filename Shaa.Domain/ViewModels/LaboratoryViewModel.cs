@@ -6,7 +6,7 @@ public class LaboratoryViewModel
 {
     #region Laboratory
 
-    public Guid LaboratoryId { get; set; }
+    public Guid? LaboratoryId { get; set; }
     public string LaboratoryTitle { get; set; } = null!;
     public int LaboratoryTypeId { get; set; }
     public int PassiveDefenceId { get; set; }

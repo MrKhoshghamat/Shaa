@@ -7,4 +7,5 @@ public interface IAbilityRepository : IRepository<Ability, Guid>
 {
     Task<bool> IsExistAbilityByTitle(string title);
     Task<Ability> GetAbilityByTitle(string title);
+    Task<IQueryable<Ability>> GetAllAbility();
 }

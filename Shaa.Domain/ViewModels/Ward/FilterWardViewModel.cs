@@ -4,6 +4,7 @@ using Shaa.Domain.ViewModels.Common;
 
 public class FilterWardViewModel : PagingViewModel<WardListViewModel>
 {
+    public Guid? Id { get; set; }
     public string? Title { get; set; }
     public string? WardTitle { get; set; }
     public Guid LaboratoryId { get; set; } 
