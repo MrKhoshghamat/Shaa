@@ -1,4 +1,5 @@
-﻿using Shaa.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Persistence.Data;
 
@@ -12,7 +13,7 @@ public class LaboratoryRepository : Repository<Laboratory, Guid>, ILaboratoryRep
 
     public async Task<IQueryable<Laboratory>> GetAllLaboratory()
     {
-        return _dbSet.AsQueryable();
+        return _dbSet.Include(p => p.PassiveDefence).AsQueryable();
     }
 
 }
