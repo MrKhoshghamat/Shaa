@@ -6,7 +6,7 @@ public class RegisterLaboratory_WardViewModel
 {
     public Guid? Id { get; set; }
     public string? WardTitle { get; set; }
-    public Guid? laboratoryId { get; set; }
+    public Guid? LaboratoryId { get; set; }
 }
 
 public enum RegisterWardResult

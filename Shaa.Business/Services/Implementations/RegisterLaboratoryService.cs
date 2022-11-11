@@ -73,7 +73,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         {
             Id = CodeGenerator.CreateId(),
             Title = model.WardTitle!.SanitizeText().Trim(),
-            LaboratoryId = (Guid)model.laboratoryId!,
+            LaboratoryId = (Guid)model.LaboratoryId!,
         };
 
         await _wardRepository.AddAsync(ward);

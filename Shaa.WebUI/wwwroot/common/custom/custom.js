@@ -156,30 +156,45 @@ function InitComponents() {
     initSelect();
 }
 
-function ShowWarning(title) { 
-    toastr.warning('اخطار',title,{
+function ShowWarning(title) {
+    toastr.warning('اخطار', title, {
         positionClass: 'toast-bottom-right'
     });
 }
 
-function ShowSuccess(title) { 
-    toastr.success('موفق',title,{
+function ShowSuccess(title) {
+    toastr.success('موفق', title, {
         positionClass: 'toast-bottom-right'
     });
 }
 
-function ShowInfo(title) { 
-    toastr.info('اطلاع',title,{
+function ShowInfo(title) {
+    toastr.info('اطلاع', title, {
         positionClass: 'toast-bottom-right'
     });
 }
 
 function ShowError(title) {
-    toastr.error('خطا',title,{
+    toastr.error('خطا', title, {
         positionClass: 'toast-bottom-right'
     });
 }
 
+let AddNewWard = function () {
+    $.ajax({
+        url: '/Laboratory/WardPartial',
+        method: 'GET',
+        data: {
+            laboratoryId : $('#LaboratoryId').val(),
+            wardTitle : $('#WardTitle').val()
+        },
+        success: function (res) {
+            $('#stepper-content-2').html(res);
+        },
+        error: function (e) {
+        }
+    });
+}
 // toastr.error('Error', 'Error Title', {
 //     // tap to dismiss 
 //     tapToDismiss: true,
