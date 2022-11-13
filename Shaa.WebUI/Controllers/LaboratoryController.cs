@@ -77,8 +77,7 @@ public class LaboratoryController : BaseController
         ViewData["Countries"] =
             await _baseInfoService.GetAllCountries((int)BaseTableTypeId.CountryId);
 
-        ViewData["AbilityTitles"] =
-            await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
+        
 
         ViewData["EquipmentSupplyTypes"] =
             await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
@@ -248,6 +247,9 @@ public class LaboratoryController : BaseController
         ViewData["EquipmentSupplyTypes"] =
             await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
 
+        ViewData["UsageTypeId"] =
+            await _baseInfoService.GetAllUsageTypes((int)BaseTableTypeId.UsageType);
+
         return PartialView(new RegisterLaboratory_EquipmentViewModel() { Id = model.Id, LaboratoryId = model.LaboratoryId });
     }
 
@@ -299,6 +301,12 @@ public class LaboratoryController : BaseController
 
     public async Task<IActionResult> AbilityWindow(RegisterLaboratory_AbilityViewModel model)
     {
+        ViewData["Equipments"] =
+            await _baseInfoService.GetAllEquipments();
+        
+        ViewData["AbilityTitles"] =
+            await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
+            
         return PartialView(new RegisterLaboratory_AbilityViewModel());
     }
 
@@ -306,22 +314,22 @@ public class LaboratoryController : BaseController
     [Authorize]
     public async Task<IActionResult> SaveAbility(RegisterLaboratory_AbilityViewModel model)
     {
-        //if (model.EquipmentImage == null) model.EquipmentImage = PathTools.DefaultLabPath;
+        if (model.FileAttachment == null) model.FileAttachment = PathTools.DefaultLabPath;
 
-        //if (!ModelState.IsValid)
-        //    return Ok(new HassError() { Data = model }
-        //        .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+        if (!ModelState.IsValid)
+            return Ok(new HassError() { Data = model }
+                .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
-        //var result = await _registerLaboratoryService.RegisterEquipment(model);
+        var result = await _registerLaboratoryService.RegisterAbility(model);
 
-        //switch (result)
-        //{
-        //    case RegisterEquipmentResult.EquipmentExists:
-        //        return Ok(new HassError() { Data = model }
-        //            .AddError(new ModelError("*", "تجهیزی با این مشخصات قبلا ثبت شده است")));
-        //    case RegisterEquipmentResult.Success:
-        //        return Ok(new Success() { Data = model });
-        //}
+        switch (result)
+        {
+            case RegisterAbilityResult.AbilityExists:
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "تجهیزی با این مشخصات قبلا ثبت شده است")));
+            case RegisterAbilityResult.Success:
+                return Ok(new Success() { Data = model });
+        }
 
         return BadRequest(model);
     }

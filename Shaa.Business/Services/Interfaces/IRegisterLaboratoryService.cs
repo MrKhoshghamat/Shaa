@@ -11,6 +11,5 @@ public interface IRegisterLaboratoryService
     Task<RegisterWardResult> RegisterWard(RegisterLaboratory_WardViewModel model);
     Task<RegisterEquipmentResult> RegisterEquipment(RegisterLaboratory_EquipmentViewModel model);
     Task<RegisterAbilityResult> RegisterAbility(RegisterLaboratory_AbilityViewModel model);
-
     Task<FilterLaboratoryViewModel> FilterLaboratory(FilterLaboratoryViewModel filter);
 }

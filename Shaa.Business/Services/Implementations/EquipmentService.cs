@@ -1,4 +1,5 @@
-﻿using Shaa.Business.Security;
+﻿using Shaa.Business.Extensions;
+using Shaa.Business.Security;
 using Shaa.Business.Services.Interfaces;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels.BasicInfo;
@@ -14,7 +15,7 @@ public class EquipmentService : IEquipmentService
 
     public async Task<FilterEquipmentViewModel> FilterEquipment(FilterEquipmentViewModel filter)
     {
-        var query = (await _equipmentRepository.GetAllEquipment()).Where(p => p.LaboratoryId == filter.LaboratoryId);
+        var query = (await _equipmentRepository.GetAllEquipments()).Where(p => p.LaboratoryId == filter.LaboratoryId);
 
         if (!string.IsNullOrEmpty(filter.Search))
         {
@@ -25,7 +26,11 @@ public class EquipmentService : IEquipmentService
             .Select(s => new EquipmentListViewModel()
             {
                 Title = s.Title,
-                EquipmentId = s.Id
+                UsageTypeTitle = s.UsageType.Title,
+                EquipmentUsage = s.EquipmentUsage,
+                InstallationDate = DateExtensions.ToShamsi((DateTime)s.InstallationDate!),
+                SupplyType = s.SupplyType.Title,
+                PurchasePriceConstruction = s.PurchasePriceConstruction,
             }).AsQueryable();
 
         switch (filter.Sort)

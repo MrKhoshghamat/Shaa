@@ -14,13 +14,15 @@ public class BaseInfoService : IBaseInfoService
     private readonly IBaseInfoRepository _baseInfoRepository;
     private readonly IWardRepository _wardRepository;
     private readonly IMainInfoRepository _mainInfoRepository;
+    private readonly IEquipmentRepository _equipmentRepository;
 
     public BaseInfoService(IBaseInfoRepository baseInfoRepository, IWardRepository wardRepository,
-        IMainInfoRepository mainInfoRepository)
+        IMainInfoRepository mainInfoRepository, IEquipmentRepository equipmentRepository)
     {
         _baseInfoRepository = baseInfoRepository;
         _wardRepository = wardRepository;
         _mainInfoRepository = mainInfoRepository;
+        _equipmentRepository = equipmentRepository;
     }
 
     #endregion
@@ -29,7 +31,8 @@ public class BaseInfoService : IBaseInfoService
 
     public async Task<FilterBaseInfoViewModel> FilterBaseInfo(FilterBaseInfoViewModel filter)
     {
-        var query = (await _baseInfoRepository.GetAllBaseInfos()).Where(p => p.BaseTableTypeId == filter.BaseTableTypeId);
+        var query =
+            (await _baseInfoRepository.GetAllBaseInfos()).Where(p => p.BaseTableTypeId == filter.BaseTableTypeId);
 
         if (!string.IsNullOrEmpty(filter.Title))
         {
@@ -230,6 +233,17 @@ public class BaseInfoService : IBaseInfoService
         {
             Id = s.Row,
             Title = s.Title
+        }).ToList();
+    }
+
+    public async Task<List<SelectListViewModel>> GetAllEquipments()
+    {
+        var equipments = await _equipmentRepository.GetAllEquipments();
+
+        return equipments.Select(s => new SelectListViewModel()
+        {
+            Id = s.Row,
+            Title = s.PersianTitle!
         }).ToList();
     }
 

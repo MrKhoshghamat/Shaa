@@ -150,12 +150,13 @@ namespace Shaa.Persistence.Data
                 entity.Property(e => e.SerialNumber)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+                
+                entity.Property(e => e.Row).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.SpecialCharacteristic).HasMaxLength(255);
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.TitlesAttachedToEquipment).HasMaxLength(255);
 

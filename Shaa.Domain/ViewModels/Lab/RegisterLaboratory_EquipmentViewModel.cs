@@ -13,7 +13,7 @@ public class RegisterLaboratory_EquipmentViewModel
     public int UsageTypeId { get; set; }
     public int? CountryId { get; set; }
     public string? CompanyName { get; set; }
-    public string? Model { get; set; }
+    public string? ModelTitle { get; set; }
     public string? SerialNumber { get; set; }
 
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",
@@ -31,6 +31,7 @@ public class RegisterLaboratory_EquipmentViewModel
     public int? EquipmentStatusId { get; set; }
     public int? EmploymentStatusId { get; set; }
     public string? PurchasePriceConstruction { get; set; }
+    public string? EquipmentCost { get; set; }
     public bool IsNeededToCalibrate { get; set; }
 
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",

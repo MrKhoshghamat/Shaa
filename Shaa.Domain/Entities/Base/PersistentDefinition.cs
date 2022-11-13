@@ -11,5 +11,6 @@ namespace Shaa.Domain.Entities
     public partial class BaseTableType : IIdentityObject<int> { }
     public partial class BaseInfo : IIdentityObject<int> { }
     public partial class IndicatorNo : IIdentityObject<string> { }
+    public partial class EquipmentAbility : IIdentityObject<long> { }
 
 }

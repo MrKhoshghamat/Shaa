@@ -33,8 +33,21 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
         return laboratoryId;
     }
  
-    public async Task<IQueryable<Equipment>> GetAllEquipment()
+    public async Task<IQueryable<Equipment>> GetAllEquipments()
     {
         return _dbSet.AsQueryable();
+    }
+
+    public async Task<Guid> GetEquipmentIdByRow(int row)
+    {
+        var equipment = await _dbSet.FirstOrDefaultAsync(p => p.Row == row);
+        var equipmentId = equipment!.Id;
+        return equipmentId;
+    }
+    
+    public async Task<Equipment> GetEquipmentByRow(int row)
+    {
+        var equipment = await _dbSet.FirstOrDefaultAsync(p => p.Row == row);
+        return equipment;
     }
 }

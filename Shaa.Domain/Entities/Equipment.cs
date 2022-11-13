@@ -39,6 +39,7 @@ namespace Shaa.Domain.Entities
         public DateTime? InsuranceExpirationDate { get; set; }
         public string? SpecialCharacteristic { get; set; }
         public string? TitlesAttachedToEquipment { get; set; }
+        public int Row { get; set; }
 
         public virtual BaseInfo? Country { get; set; }
         public virtual BaseInfo? EmploymentStatus { get; set; }

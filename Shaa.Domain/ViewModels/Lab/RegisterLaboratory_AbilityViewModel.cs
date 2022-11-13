@@ -12,12 +12,14 @@ public class RegisterLaboratory_AbilityViewModel
     public string? EquipmentCost { get; set; }
     public string? OtherCost { get; set; }
     public string? ImplementationCost { get; set; }
+    public int EquipmentId { get; set; }
 
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",
         ErrorMessage = "تاریخ وارد شده معتبر نمیباشد")]
     public string? ImplementationTime { get; set; }
 
     public string? FileAttachment { get; set; }
+    public Guid? LaboratoryId { get; set; }
 }
 
 public enum RegisterAbilityResult

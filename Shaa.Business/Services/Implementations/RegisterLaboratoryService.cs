@@ -18,20 +18,24 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
     private readonly IEquipmentRepository _equipmentRepository;
     private readonly IAbilityRepository _abilityRepository;
     private readonly ILaboratoryRepository _laboratoryRepository;
+    private readonly IEquipmentAbilityRepository _equipmentAbilityRepository;
 
     public RegisterLaboratoryService(IMainInfoRepository mainInfoRepository, IWardRepository wardRepository,
-        IEquipmentRepository equipmentRepository, IAbilityRepository abilityRepository, ILaboratoryRepository laboratoryRepository)
+        IEquipmentRepository equipmentRepository, IAbilityRepository abilityRepository,
+        ILaboratoryRepository laboratoryRepository, IEquipmentAbilityRepository equipmentAbilityRepository)
     {
         _mainInfoRepository = mainInfoRepository;
         _wardRepository = wardRepository;
         _equipmentRepository = equipmentRepository;
         _abilityRepository = abilityRepository;
         _laboratoryRepository = laboratoryRepository;
+        _equipmentAbilityRepository = equipmentAbilityRepository;
     }
 
     #endregion
 
     #region Laboratory
+
     public async Task<FilterLaboratoryViewModel> FilterLaboratory(FilterLaboratoryViewModel filter)
     {
         var query = (await _laboratoryRepository.GetAllLaboratory());
@@ -47,6 +51,10 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
             {
                 LaboratoryId = s.Id,
                 Title = s.Title,
+                LaboratoryTypeTitle = s.LaboratoryType.Title,
+                ApprovalAuthorityTitle = s.ApprovalAuthority.Title,
+                ResearchCenterTitle = s.ResearchCenter.Title,
+                StandardStatusTitle = s.StandardStatus.Title,
                 PassiveDefenceTitle = s.PassiveDefence.Title
             }).AsQueryable();
 
@@ -63,9 +71,11 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         await filter.SetPaging(result);
         return filter;
     }
+
     #endregion
 
-    #region MainInfo 
+    #region MainInfo
+
     public async Task<RegisterLaboratory_MainViewModel> GetMainInfo(Guid id)
     {
         var model = (await _mainInfoRepository.GetAsync(p => p.Id == id)).FirstOrDefault();
@@ -164,46 +174,57 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     public async Task<RegisterEquipmentResult> RegisterEquipment(RegisterLaboratory_EquipmentViewModel model)
     {
-        if (await _equipmentRepository.IsExistEquipmentBySerialNumber(model.SerialNumber))
+        if (await _equipmentRepository.IsExistEquipmentBySerialNumber(model.SerialNumber!))
             return RegisterEquipmentResult.EquipmentExists;
 
-        var laboratoryId = await _equipmentRepository.GetLaboratoryIdByWardId(model.WardId);
+        var wardId = await _wardRepository.GetWardIdByRow((int)model.RelatedSectionId!);
 
-        var equipment = new Equipment()
+        var laboratoryId = await _equipmentRepository.GetLaboratoryIdByWardId(wardId);
+        try
         {
-            Id = CodeGenerator.CreateId(),
-            LaboratoryId = (Guid)laboratoryId!,
-            EquipmentTypeId = model.EquipmentTypeId,
-            Title = model.EquipmentTitle.SanitizeText().Trim(),
-            PersianTitle = model.PersianTitle.SanitizeText().Trim(),
-            GeneralTechnicalSpecification = model.GeneralTechnicalSpecification.SanitizeText().Trim(),
-            EquipmentUsage = model.EquipmentUsage.SanitizeText().Trim(),
-            UsageTypeId = model.UsageTypeId,
-            CountryId = model.CountryId,
-            CompanyName = model.CompanyName.SanitizeText().Trim(),
-            Model = model.Model.SanitizeText().Trim(),
-            SerialNumber = model.SerialNumber.SanitizeText().Trim(),
-            InstallationDate = model.InstallationDate.SanitizeText().ToMiladi(),
-            ExploitationDate = model.ExploitationDate.SanitizeText().ToMiladi(),
-            SupplyTypeId = model.SupplyTypeId,
-            WardId = model.WardId,
-            EquipmentImage = model.EquipmentImage,
-            RelatedSectionId = model.RelatedSectionId,
-            BaitulMalNo = model.BaitulMalNo.SanitizeText().Trim(),
-            EquipmentStatusId = model.EquipmentStatusId,
-            PurchasePriceConstruction = model.PurchasePriceConstruction.SanitizeText().Trim(),
-            IsNeededToCalibrate = model.IsNeededToCalibrate,
-            LastCalibrationDate = model.LastCalibrationDate.SanitizeText().ToMiladi(),
-            WarrantyExpirationDate = model.WarrantyExpirationDate.SanitizeText().ToMiladi(),
-            InsuranceExpirationDate = model.InsuranceExpirationDate.SanitizeText().ToMiladi(),
-            SpecialCharacteristic = model.SpecialCharacteristic.SanitizeText().Trim(),
-            TitlesAttachedToEquipment = model.TitlesAttachedToEquipment.SanitizeText().Trim()
-        };
+            var equipment = new Equipment()
+            {
+                Id = CodeGenerator.CreateId(),
+                LaboratoryId = (Guid)laboratoryId!,
+                EquipmentTypeId = model.EquipmentTypeId,
+                Title = model.EquipmentTitle.SanitizeText().Trim(),
+                PersianTitle = model.PersianTitle!.SanitizeText().Trim(),
+                GeneralTechnicalSpecification = model.GeneralTechnicalSpecification!.SanitizeText().Trim(),
+                EquipmentUsage = model.EquipmentUsage!.SanitizeText().Trim(),
+                UsageTypeId = model.UsageTypeId,
+                CountryId = model.CountryId,
+                CompanyName = model.CompanyName!.SanitizeText().Trim(),
+                EquipmentCost = long.Parse(model.EquipmentCost!.Replace(",", "")),
+                Model = model.ModelTitle!.SanitizeText().Trim(),
+                SerialNumber = model.SerialNumber!.SanitizeText().Trim(),
+                InstallationDate = model.InstallationDate!.SanitizeText().ToMiladi(),
+                ExploitationDate = model.ExploitationDate!.SanitizeText().ToMiladi(),
+                EmploymentStatusId = model.EmploymentStatusId,
+                SupplyTypeId = model.SupplyTypeId,
+                WardId = wardId,
+                EquipmentImage = model.EquipmentImage,
+                RelatedSectionId = model.RelatedSectionId,
+                BaitulMalNo = model.BaitulMalNo!.SanitizeText().Trim(),
+                EquipmentStatusId = model.EquipmentStatusId,
+                PurchasePriceConstruction = model.PurchasePriceConstruction!.SanitizeText().Trim(),
+                IsNeededToCalibrate = model.IsNeededToCalibrate,
+                LastCalibrationDate = model.LastCalibrationDate!.SanitizeText().ToMiladi(),
+                WarrantyExpirationDate = model.WarrantyExpirationDate!.SanitizeText().ToMiladi(),
+                InsuranceExpirationDate = model.InsuranceExpirationDate!.SanitizeText().ToMiladi(),
+                SpecialCharacteristic = model.SpecialCharacteristic!.SanitizeText().Trim(),
+                TitlesAttachedToEquipment = model.TitlesAttachedToEquipment!.SanitizeText().Trim(),
+            };
 
-        await _equipmentRepository.AddAsync(equipment);
-        await _equipmentRepository.Save();
+            await _equipmentRepository.AddAsync(equipment);
+            await _equipmentRepository.Save();
+            model.Id = equipment.Id;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
 
-        model.Id = equipment.Id;
 
         return RegisterEquipmentResult.Success;
     }
@@ -212,9 +233,51 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     #region Ability
 
-    public Task<RegisterAbilityResult> RegisterAbility(RegisterLaboratory_AbilityViewModel model)
+    public async Task<RegisterAbilityResult> RegisterAbility(RegisterLaboratory_AbilityViewModel model)
     {
-        throw new NotImplementedException();
+        if (await _abilityRepository.IsExistAbilityByTitle(model.AbilityTitle!))
+            return RegisterAbilityResult.AbilityExists;
+        try
+        {
+            var equipment = await _equipmentRepository.GetEquipmentByRow(model.EquipmentId);
+            
+            var ability = new Ability()
+            {
+                Id = CodeGenerator.CreateId(),
+                Title = model.AbilityTitle,
+                LaboratoryId = (Guid)equipment.LaboratoryId!,
+                ConsumableCost = long.Parse(model.ConsumableCost!.Replace(",", "")),
+                ImplementationCost = long.Parse(model.ImplementationCost!.Replace(",", "")),
+                OtherCost = long.Parse(model.OtherCost!.Replace(",", "")),
+                HumanResourceCost = long.Parse(model.HumanResourceCost!.Replace(",", "")),
+                DescriptionOfConsumables = model.DescriptionOfConsumables!.SanitizeText().Trim(),
+                ImplementationTime = model.ImplementationTime!.ToMiladi(),
+                FileAttachment = model.FileAttachment
+            };
+
+            await _abilityRepository.AddAsync(ability);
+            await _abilityRepository.Save();
+
+            var equipmentId = await _equipmentRepository.GetEquipmentIdByRow(model.EquipmentId);
+
+            var equipmentAbilityModel = new EquipmentAbility()
+            {
+                AbilityId = ability.Id,
+                EquipmentId = equipmentId
+            };
+
+            await _equipmentAbilityRepository.AddAsync(equipmentAbilityModel);
+            await _equipmentAbilityRepository.Save();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+
+        return RegisterAbilityResult.Success;
     }
-    #endregion 
+
+    #endregion
 }

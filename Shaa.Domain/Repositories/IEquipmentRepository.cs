@@ -8,5 +8,7 @@ public interface IEquipmentRepository : IRepository<Equipment, Guid>
     Task<bool> IsExistEquipmentBySerialNumber(string serialNumber);
     Task<Equipment> GetEquipmentBySerialNumber(string serialnumber);
     Task<Guid?> GetLaboratoryIdByWardId(Guid? wardId);
-    Task<IQueryable<Equipment>> GetAllEquipment();
+    Task<IQueryable<Equipment>> GetAllEquipments();
+    Task<Guid> GetEquipmentIdByRow(int row);
+    Task<Equipment> GetEquipmentByRow(int row);
 }

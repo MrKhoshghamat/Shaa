@@ -51,7 +51,7 @@
                                 ShowSuccess('عملیات موفقیت آمیز نبود');
 
                         } else {
-                            closeOpenDialogContent($('#kt_create_laboratory_ward_form')); 
+                            closeOpenDialogContent($('#kt_create_laboratory_ward_form'));
                             load_content('/Laboratory/WardPartial', { laboratoryId: lab_id }
                                 , function(data) {
                                     $('#stepper-content-2').html(data);

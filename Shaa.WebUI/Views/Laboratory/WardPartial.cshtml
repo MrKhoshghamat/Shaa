@@ -5,7 +5,7 @@
     <input asp-for="LaboratoryId" type="hidden" />
     <div class="card mb-5 mb-xl-8">
         <div class="card-header border-0 pt-5">
-            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="برای افزودن اطلاعات پایه کلیک کنید">
+            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="برای افزودن بخش کلیک کنید">
                 <a href="#" class="btn btn-sm btn-light btn-active-primary" onclick="OpenWardWindow(null,'@Model.LaboratoryId')">
                     <span class="svg-icon svg-icon-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -34,7 +34,7 @@
                     <tbody>
                         @if (Model.Entities.Any())
                         {
-                            foreach (WardListViewModel baseInfoModel in Model.Entities)
+                            foreach (WardListViewModel ward in Model.Entities)
                             {
                                 <tr>
                                     <td>
@@ -43,7 +43,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">@baseInfoModel.Title</a>
+                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">@ward.Title</a>
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
