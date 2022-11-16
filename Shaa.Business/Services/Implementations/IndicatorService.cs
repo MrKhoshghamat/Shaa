@@ -1,6 +1,7 @@
 ﻿using Shaa.Business.Services.Interfaces;
 using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
+
 namespace Shaa.Business.Services.Implementations;
 
 public class IndicatorService : IIndicatorService
@@ -19,7 +20,8 @@ public class IndicatorService : IIndicatorService
         await readLock.WaitAsync();
         try
         {
-            var lastIndicator = await _indicatorRepository.GetLastIndicator(1);
+            IndicatorNo lastIndicator = (await _indicatorRepository.GetLastIndicator(1)) ??
+                                        new IndicatorNo() { IndicatedNumber = 0 };
 
             newModel = new IndicatorNo()
             {
@@ -31,6 +33,9 @@ public class IndicatorService : IIndicatorService
             };
 
             await _indicatorRepository.AddAsync(newModel);
+        }
+        catch (Exception e)
+        {
         }
         finally
         {

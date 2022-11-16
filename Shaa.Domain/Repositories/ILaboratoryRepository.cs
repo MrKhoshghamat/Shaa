@@ -4,6 +4,7 @@ using Shaa.Domain.Repositories.Base;
 namespace Shaa.Domain.Repositories;
 
 public interface ILaboratoryRepository : IRepository<Laboratory, Guid>
-{ 
+{
     Task<IQueryable<Laboratory>> GetAllLaboratory();
+    Task<Laboratory> GetByRow(int row); 
 }

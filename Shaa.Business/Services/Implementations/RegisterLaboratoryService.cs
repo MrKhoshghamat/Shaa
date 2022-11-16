@@ -238,14 +238,12 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         if (await _abilityRepository.IsExistAbilityByTitle(model.AbilityTitle!))
             return RegisterAbilityResult.AbilityExists;
         try
-        {
-            var equipment = await _equipmentRepository.GetEquipmentByRow(model.EquipmentId);
-            
+        { 
             var ability = new Ability()
             {
                 Id = CodeGenerator.CreateId(),
                 Title = model.AbilityTitle,
-                LaboratoryId = (Guid)equipment.LaboratoryId!,
+                LaboratoryId = (Guid)model.LaboratoryId!,
                 ConsumableCost = long.Parse(model.ConsumableCost!.Replace(",", "")),
                 ImplementationCost = long.Parse(model.ImplementationCost!.Replace(",", "")),
                 OtherCost = long.Parse(model.OtherCost!.Replace(",", "")),

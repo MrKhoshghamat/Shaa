@@ -12,7 +12,8 @@ using Shaa.Persistence.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(x =>
+    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 //.AddRazorRuntimeCompilation();  
 
 #region Context
@@ -87,10 +88,10 @@ else
     app.UseExceptionHandler(errorApp =>
     {
         errorApp.Run(async context =>
-        { 
+        {
             var exceptionHandlerPathFeature =
                 context.Features.Get<IExceptionHandlerPathFeature>();
-            
+
             // //check if the handler path contains api or not.
             // if (exceptionHandlerPathFeature.Path.Contains("api"))
             // { 

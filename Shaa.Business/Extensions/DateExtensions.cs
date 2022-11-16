@@ -12,8 +12,11 @@ public static class DateExtensions
             $"{persianCalendar.GetYear(date)}/{persianCalendar.GetMonth(date).ToString("00")}/{persianCalendar.GetDayOfMonth(date).ToString("00")}";
     }
 
-    public static DateTime ToMiladi(this string date)
+    public static DateTime? ToMiladi(this string date)
     {
+        if (date == null)
+            return null;
+
         var splitedDate = date.Split("/");
 
         var year = Convert.ToInt32(splitedDate[0]);

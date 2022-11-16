@@ -307,7 +307,7 @@ public class LaboratoryController : BaseController
         ViewData["AbilityTitles"] =
             await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
             
-        return PartialView(new RegisterLaboratory_AbilityViewModel());
+        return PartialView(model);
     }
 
     [HttpPost]

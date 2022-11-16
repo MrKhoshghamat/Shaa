@@ -6,9 +6,10 @@
 }
 
 <form asp-action="SaveAbility"
-     asp-controller="Laboratory"
-     method="post"
-     class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ability_form">
+      asp-controller="Laboratory"
+      method="post"
+      class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ability_form">
+        <input asp-for="LaboratoryId" type="hidden" />
     <div class="w-100">
         <div class="row mb-12">
             <div class="col-md-12 fv-row">
@@ -24,7 +25,7 @@
                     }
                 </select>
             </div>
-                </div>
+        </div>
         <div class="row mb-12">
             <div class="col-md-12 fv-row">
                 <label class="required fs-6 fw-bold form-label mb-2">عنوان توانمندی</label>

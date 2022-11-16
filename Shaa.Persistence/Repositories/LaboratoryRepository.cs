@@ -15,5 +15,10 @@ public class LaboratoryRepository : Repository<Laboratory, Guid>, ILaboratoryRep
     {
         return _dbSet.Include(p => p.PassiveDefence).AsQueryable();
     }
+    
+    public async Task<Laboratory> GetByRow(int row)
+    {
+        return await _dbSet.Where(p => p.Row == row).FirstAsync();
+    }
 
 }

@@ -5,5 +5,5 @@ namespace Shaa.Domain.Repositories;
 
 public interface IIndicatorRepository : IRepository<IndicatorNo, string>
 {
-   Task<IndicatorNo> GetLastIndicator(int indicatorId);
+   Task<IndicatorNo?> GetLastIndicator(int indicatorId);
 }

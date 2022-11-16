@@ -61,18 +61,21 @@ const initDatePickers = function () {
     const datepickers = document.querySelectorAll(".datepicker");
     if (datepickers.length) {
         for (const datepicker of datepickers) {
-            const id = $(datepicker).attr("id");
-            kamaDatepicker(id, {
-                placeholder: 'مثال : 1400/01/01',
-                twodigit: true,
-                closeAfterSelect: true,
-                forceFarsiDigits: true,
-                markToday: true,
-                markHolidays: true,
-                highlightSelectedDay: true,
-                sync: true,
-                gotoToday: true
-            });
+            if (!$(datepicker).hasClass("initDatepicker")) {
+                const id = $(datepicker).attr("id");
+                kamaDatepicker(id, {
+                    placeholder: 'مثال : 1400/01/01',
+                    twodigit: true,
+                    closeAfterSelect: true,
+                    forceFarsiDigits: true,
+                    markToday: true,
+                    markHolidays: true,
+                    highlightSelectedDay: true,
+                    sync: true,
+                    gotoToday: true
+                });
+                $(datepicker).addClass("initDatepicker");
+            }
         }
     }
 }
@@ -83,6 +86,7 @@ const initSelect = function () {
         for (const select of selects) {
             const id = $(select).attr("id");
             $(select).select2({
+                dropdownParent : $(select).closest('form'),
                 /*closeOnSelect: false*/
                 language: {
                     // You can find all of the options in the language files provided in the
