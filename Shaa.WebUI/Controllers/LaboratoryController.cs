@@ -50,7 +50,7 @@ public class LaboratoryController : BaseController
     public async Task<IActionResult> RegisterLaboratory(Guid? id)
     {
         LaboratoryViewModel model =
-           (id != null) ? new LaboratoryViewModel() { LaboratoryId = (Guid)id } : new LaboratoryViewModel();
+            (id != null) ? new LaboratoryViewModel() { LaboratoryId = (Guid)id } : new LaboratoryViewModel();
 
 
         ViewData["PassiveDefences"] =
@@ -77,13 +77,12 @@ public class LaboratoryController : BaseController
         ViewData["Countries"] =
             await _baseInfoService.GetAllCountries((int)BaseTableTypeId.CountryId);
 
-        
 
         ViewData["EquipmentSupplyTypes"] =
             await _baseInfoService.GetAllEquipmentSupplyTypes((int)BaseTableTypeId.EquipmentSupplyType);
 
         ViewData["RelatedSection"] =
-            await _baseInfoService.GetAllWards();
+            await _baseInfoService.GetAllWards(model.LaboratoryId);
 
         ViewData["EquipmentsStatus"] =
             await _baseInfoService.GetAllEquipmentsStatus((int)BaseTableTypeId.EquipmentStatus);
@@ -100,7 +99,9 @@ public class LaboratoryController : BaseController
     public async Task<IActionResult> MainPartial(Guid? id)
     {
         RegisterLaboratory_MainViewModel model =
-            (id != null) ? await _registerLaboratoryService.GetMainInfo((Guid)id) : new RegisterLaboratory_MainViewModel();
+            (id != null)
+                ? await _registerLaboratoryService.GetMainInfo((Guid)id)
+                : new RegisterLaboratory_MainViewModel();
 
         ViewData["PassiveDefences"] =
             await _baseInfoService.GetAllPassiveDefences((int)BaseTableTypeId.PassiveDefenceType);
@@ -130,8 +131,9 @@ public class LaboratoryController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
-        var result = (model.Id != null) ? await _registerLaboratoryService.UpdateMainInfo(model) :
-            await _registerLaboratoryService.RegisterMainInfo(model);
+        var result = (model.Id != null)
+            ? await _registerLaboratoryService.UpdateMainInfo(model)
+            : await _registerLaboratoryService.RegisterMainInfo(model);
 
         switch (result)
         {
@@ -189,8 +191,9 @@ public class LaboratoryController : BaseController
     [Authorize]
     public async Task<IActionResult> SaveWard(RegisterLaboratory_WardViewModel model)
     {
-        if (!ModelState.IsValid) return Ok(new HassError() { Data = model }
-            .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+        if (!ModelState.IsValid)
+            return Ok(new HassError() { Data = model }
+                .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
         var result = await _registerLaboratoryService.RegisterWard(model);
 
@@ -236,7 +239,7 @@ public class LaboratoryController : BaseController
             await _baseInfoService.GetAllCountries((int)BaseTableTypeId.CountryId);
 
         ViewData["RelatedSection"] =
-            await _baseInfoService.GetAllWards();
+            await _baseInfoService.GetAllWards(model.LaboratoryId);
 
         ViewData["EquipmentsStatus"] =
             await _baseInfoService.GetAllEquipmentsStatus((int)BaseTableTypeId.EquipmentStatus);
@@ -250,7 +253,8 @@ public class LaboratoryController : BaseController
         ViewData["UsageTypeId"] =
             await _baseInfoService.GetAllUsageTypes((int)BaseTableTypeId.UsageType);
 
-        return PartialView(new RegisterLaboratory_EquipmentViewModel() { Id = model.Id, LaboratoryId = model.LaboratoryId });
+        return PartialView(new RegisterLaboratory_EquipmentViewModel()
+            { Id = model.Id, LaboratoryId = model.LaboratoryId });
     }
 
     [HttpPost]
@@ -302,11 +306,13 @@ public class LaboratoryController : BaseController
     public async Task<IActionResult> AbilityWindow(RegisterLaboratory_AbilityViewModel model)
     {
         ViewData["Equipments"] =
-            await _baseInfoService.GetAllEquipments();
-        
+            await _baseInfoService.GetAllEquipments(model.LaboratoryId);
+
         ViewData["AbilityTitles"] =
             await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
-            
+
+        
+
         return PartialView(model);
     }
 

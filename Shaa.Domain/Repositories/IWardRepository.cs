@@ -5,8 +5,8 @@ namespace Shaa.Domain.Repositories;
 
 public interface IWardRepository : IRepository<Ward, Guid>
 {
-    Task<bool> IsExistWardByTitle(string title);
+    Task<bool> IsExistWardByTitle(string title, Guid? laboratoryId);
     Task<Ward> GetWardByLaboratoryId(Guid laboratoryId);
-    Task<IQueryable<Ward>> GetAllWards();
+    Task<IQueryable<Ward>> GetAllWards(Guid? laboratoryId);
     Task<Guid?> GetWardIdByRow(int row);
 }

@@ -14,7 +14,8 @@ public class WardService : IWardService
 
     public async Task<FilterWardViewModel> FilterWard(FilterWardViewModel filter)
     {
-        var query = (await _wardRepository.GetAllWards()).Where(p => p.LaboratoryId == filter.LaboratoryId);
+        var query = (await _wardRepository.GetAllWards(filter.LaboratoryId)).Where(p =>
+            p.LaboratoryId == filter.LaboratoryId);
 
         if (!string.IsNullOrEmpty(filter.Title))
         {

@@ -15,7 +15,7 @@ public class EquipmentService : IEquipmentService
 
     public async Task<FilterEquipmentViewModel> FilterEquipment(FilterEquipmentViewModel filter)
     {
-        var query = (await _equipmentRepository.GetAllEquipments()).Where(p => p.LaboratoryId == filter.LaboratoryId);
+        var query = (await _equipmentRepository.GetAllEquipments(filter.LaboratoryId)).Where(p => p.LaboratoryId == filter.LaboratoryId);
 
         if (!string.IsNullOrEmpty(filter.Search))
         {

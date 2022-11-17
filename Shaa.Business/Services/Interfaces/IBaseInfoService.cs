@@ -20,7 +20,7 @@ public interface IBaseInfoService
     Task<List<SelectListViewModel>> GetAllEquipmentsStatus(int? baseTableTypeId);
     Task<List<SelectListViewModel>> GetAllEmploymentsStatus(int? baseTableTypeId);
     Task<List<SelectListViewModel>> GetAllRequestTypes(int? baseTableTypeId);
-    Task<List<SelectListViewModel>> GetAllWards();
-    Task<List<SelectListViewModel>> GetAllEquipments();
+    Task<List<SelectListViewModel>> GetAllWards(Guid? laboratoryId);
+    Task<List<SelectListViewModel>> GetAllEquipments(Guid? laboratoryId);
     Task<List<SelectListViewModel>> GetAllLaboratories();
 }

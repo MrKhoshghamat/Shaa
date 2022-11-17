@@ -5,6 +5,11 @@ namespace Shaa.Domain.Entities
 {
     public partial class Request
     {
+        public Request()
+        {
+            RequestIndicators = new HashSet<RequestIndicator>();
+        }
+
         public Guid Id { get; set; }
         public Guid LaboratoryId { get; set; }
         public string UserName { get; set; } = null!;
@@ -16,8 +21,8 @@ namespace Shaa.Domain.Entities
         public DateTime RequestDate { get; set; }
         public string TraceCode { get; set; } = null!;
 
-        public virtual IndicatorNo IndicatorNoNavigation { get; set; } = null!;
         public virtual Laboratory Laboratory { get; set; } = null!;
         public virtual BaseInfo RequestType { get; set; } = null!;
+        public virtual ICollection<RequestIndicator> RequestIndicators { get; set; }
     }
 }

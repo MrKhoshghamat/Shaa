@@ -10,10 +10,12 @@ namespace Shaa.Business.Services.Implementations;
 public class RequestService : IRequestService
 {
     private readonly IRequestRepository _requestRepository;
+    private readonly IRequestIndicatorRepository _requestIndicatorRepository;
 
-    public RequestService(IRequestRepository requestRepository)
+    public RequestService(IRequestRepository requestRepository, IRequestIndicatorRepository requestIndicatorRepository)
     {
         _requestRepository = requestRepository;
+        _requestIndicatorRepository = requestIndicatorRepository;
     }
 
     public async Task<FilterRequestViewModel> FilterInboxRequest(FilterRequestViewModel filter)
@@ -30,7 +32,6 @@ public class RequestService : IRequestService
             .Select(s => new RequestListViewModel()
             {
                 Title = s.Title,
-                //  AbilityId = s.Id
             }).AsQueryable();
 
         switch (filter.Sort)
@@ -80,22 +81,43 @@ public class RequestService : IRequestService
 
     public async Task<Request> RegisterRequest(CreateRequestViewModel model)
     {
-        Request dbModel = new Request()
+        try
         {
-            Id = Guid.NewGuid(),
-            LaboratoryId = (Guid)model.LaboratoryId!,
-            UserName = model.UserName,
-            IndicatorNo = model.IndicatorNo,
-            Title = model.Title,
-            Description = model.Description,
-            RequestTypeId = model.RequestTypeId,
-            LetterPath = model.LetterPath,
-            RequestDate = model.RequestDate?.ToMiladi() ?? DateTime.Now,
-            TraceCode = Guid.NewGuid().ToString("N"),
-        };
+            var traceCode = CodeGenerator.CreateRequestTraceCode(model.IndicatorNo!);
 
-        await _requestRepository.AddAsync(dbModel);
+            Request request = new Request()
+            {
+                Id = CodeGenerator.CreateId(),
+                LaboratoryId = (Guid)model.LaboratoryId!,
+                UserName = model.UserName!,
+                IndicatorNo = model.IndicatorNo!,
+                Title = model.Title!,
+                Description = model.Description!,
+                RequestTypeId = model.RequestTypeId,
+                LetterPath = model.LetterPath,
+                RequestDate = model.RequestDate?.ToMiladi() ?? DateTime.Now,
+                TraceCode = traceCode
+            };
 
-        return dbModel;
+            await _requestRepository.AddAsync(request);
+            await _requestRepository.Save();
+
+            var requestIndicator = new RequestIndicator()
+            {
+                RequestId = request.Id,
+                IndicatorNo = request.IndicatorNo,
+                TraceCode = request.TraceCode
+            };
+
+            await _requestIndicatorRepository.AddAsync(requestIndicator);
+            await _requestIndicatorRepository.Save();
+
+            return request;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

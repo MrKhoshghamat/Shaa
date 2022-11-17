@@ -21,13 +21,5 @@ public class HomeController : Controller
         return View();
     }
 
-     [HttpGet]
-    public async Task<IActionResult> BaseInfoList(FilterBaseInfoViewModel filter)
-    {
-        var baseTableTypeId = await _baseInfoService.GetBaseTableTypeId(filter.BaseTableTypeId);
-        var result = await _baseInfoService.FilterBaseInfo(filter);
-        ViewBag.baseTableTypeId = baseTableTypeId;
-        
-        return View(result);
-    }
+    
 }

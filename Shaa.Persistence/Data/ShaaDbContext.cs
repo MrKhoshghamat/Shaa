@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -23,10 +20,9 @@ namespace Shaa.Persistence.Data
         public virtual DbSet<Department> Departments { get; set; } = null!;
         public virtual DbSet<Equipment> Equipment { get; set; } = null!;
         public virtual DbSet<EquipmentAbility> EquipmentAbilities { get; set; } = null!;
-        public virtual DbSet<Indicator> Indicators { get; set; } = null!;
-        public virtual DbSet<IndicatorNo> IndicatorNos { get; set; } = null!;
         public virtual DbSet<Laboratory> Laboratories { get; set; } = null!;
         public virtual DbSet<Request> Requests { get; set; } = null!;
+        public virtual DbSet<RequestIndicator> RequestIndicators { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Ward> Wards { get; set; } = null!;
 
@@ -147,16 +143,15 @@ namespace Shaa.Persistence.Data
                     .HasMaxLength(50)
                     .HasColumnName("PurchasePrice/Construction");
 
+                entity.Property(e => e.Row).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.SerialNumber)
                     .HasMaxLength(100)
                     .IsUnicode(false);
-                
-                entity.Property(e => e.Row).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.SpecialCharacteristic).HasMaxLength(255);
 
-                entity.Property(e => e.Title)
-                    .HasMaxLength(255);
+                entity.Property(e => e.Title).HasMaxLength(255);
 
                 entity.Property(e => e.TitlesAttachedToEquipment).HasMaxLength(255);
 
@@ -227,36 +222,6 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_EquipmentAbility_Equipment");
             });
 
-            modelBuilder.Entity<Indicator>(entity =>
-            {
-                entity.ToTable("Indicator");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Template).HasMaxLength(255);
-            });
-
-            modelBuilder.Entity<IndicatorNo>(entity =>
-            {
-                entity.ToTable("IndicatorNo");
-
-                entity.Property(e => e.Id).HasMaxLength(255);
-
-                entity.Property(e => e.IndicatorDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ReqId)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ReqInfo).HasMaxLength(1000);
-
-                entity.HasOne(d => d.Indicator)
-                    .WithMany(p => p.IndicatorNos)
-                    .HasForeignKey(d => d.IndicatorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_IndicatorNo_Indicator");
-            });
-
             modelBuilder.Entity<Laboratory>(entity =>
             {
                 entity.ToTable("Laboratory", "Lab");
@@ -273,6 +238,8 @@ namespace Shaa.Persistence.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Row).ValueGeneratedOnAdd();
+                
                 entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
@@ -321,17 +288,9 @@ namespace Shaa.Persistence.Data
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 
-                entity.Property(e => e.TraceCode)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.TraceCode).HasMaxLength(255);
 
                 entity.Property(e => e.UserName).HasMaxLength(255);
-
-                entity.HasOne(d => d.IndicatorNoNavigation)
-                    .WithMany(p => p.Requests)
-                    .HasForeignKey(d => d.IndicatorNo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Request_IndicatorNo");
 
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Requests)
@@ -344,6 +303,21 @@ namespace Shaa.Persistence.Data
                     .HasForeignKey(d => d.RequestTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_BaseInfo");
+            });
+
+            modelBuilder.Entity<RequestIndicator>(entity =>
+            {
+                entity.ToTable("RequestIndicator", "Lab");
+
+                entity.Property(e => e.IndicatorNo).HasMaxLength(255);
+
+                entity.Property(e => e.TraceCode).HasMaxLength(255);
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.RequestIndicators)
+                    .HasForeignKey(d => d.RequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RequestIndicator_Request");
             });
 
             modelBuilder.Entity<User>(entity =>

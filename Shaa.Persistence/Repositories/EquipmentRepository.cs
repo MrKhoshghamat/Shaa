@@ -16,9 +16,9 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
         return await _dbSet.AnyAsync(p => p.Title == title);
     }
 
-    public async Task<bool> IsExistEquipmentBySerialNumber(string serialNumber)
+    public async Task<bool> IsExistEquipmentBySerialNumber(string serialNumber, Guid? laboratoryId)
     {
-        return await _dbSet.AnyAsync(p => p.SerialNumber == serialNumber);
+        return await _dbSet.AnyAsync(p => p.SerialNumber == serialNumber && p.LaboratoryId == laboratoryId);
     }
 
     public async Task<Equipment> GetEquipmentBySerialNumber(string serialnumber)
@@ -33,9 +33,9 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
         return laboratoryId;
     }
  
-    public async Task<IQueryable<Equipment>> GetAllEquipments()
+    public async Task<IQueryable<Equipment>> GetAllEquipments(Guid? laboratoryId)
     {
-        return _dbSet.AsQueryable();
+        return _dbSet.Where(p=>p.LaboratoryId == laboratoryId).AsQueryable();
     }
 
     public async Task<Guid> GetEquipmentIdByRow(int row)

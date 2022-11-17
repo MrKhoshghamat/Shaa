@@ -1,6 +1,8 @@
-﻿@model  CreateRequestViewModel
+﻿@using Shaa.Business.Extensions
+@model  CreateRequestViewModel
 
 @{
+    ViewData["Title"] = "ثبت درخواست";
     var laboratories = ViewData["Laboratories"] as List<SelectListViewModel>;
     var requestTypes = ViewData["RequestTypes"] as List<SelectListViewModel>;
 }
@@ -56,18 +58,18 @@
                                     </div>
                                 </div>
                                 <div class="row mb-12">
-                                    <div class="col-md-12 fv-row">
+                                    <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">عنوان درخواست کننده</label>
-                                        <input asp-for="UserName" name="UserName" class="form-control form-control-lg form-control-solid"/>
+                                        <input asp-for="UserName" name="UserName" value="@Model.User?.GetUserName()" class="form-control form-control-lg form-control-solid"/>
                                     </div>
-                                    @*    <div class="col-md-6 fv-row">
+                                    <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">شماره نامه درخواست</label>
-                                        <input asp-for="RequestLetterNo" disabled="disabled" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
-                                    </div>*@
+                                        <input asp-for="IndicatorNo" value="@ViewBag.RequestNo" name="IndicatorNo" class="form-control form-control-lg form-control-solid"/>
+                                    </div>
                                 </div>
                                 <div class="row mb-12">
                                     <div class="col-md-6 fv-row">
-                                        <label class="required fs-6 fw-bold mb-2">تاریخ نصب</label>
+                                        <label class="required fs-6 fw-bold mb-2">تاریخ نامه</label>
                                         <div class="">
                                             <span class="svg-icon svg-icon-2 position-absolute mx-4">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -139,22 +141,22 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-12">
+                                <div class="row mb-12 project">
                                     <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">عنوان پروژه</label>
-                                        <input href="#" disabled="disabled" name="UserName" class="form-control form-control-lg form-control-solid"/>
+                                        <input id="ProjectTitle" href="#" name="ProjectTitle" class="form-control form-control-lg form-control-solid"/>
                                     </div>
                                     <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">کد پروژه</label>
-                                        <input href="#" disabled="disabled" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
+                                        <input id="ProjectCode" href="#" name="ProjectCode" class="form-control form-control-lg form-control-solid"/>
                                     </div>
                                 </div>
 
                                 <!--begin::Actions-->
                                 <div class="float-end mt-5">
-                                    <a  class="btn btn-bg-success me-2" onclick="CreateNewRequest()">ثبت درخواست</a>
+                                    <a class="btn btn-bg-success me-2" onclick="CreateNewRequest()">ثبت درخواست</a>
                                     <a id="btnRequestIndex" class="btn btn-danger me-2" asp-action="RequestIndex" asp-controller="Request">
-                                        <span class="menu-title">لیست آزمایشگاه ها</span>
+                                        <span class="menu-title">لیست درخواست ها</span>
                                     </a>
                                 </div>
                                 <!--end::Actions-->
@@ -168,8 +170,8 @@
 </form>
 
 @section Scripts
-    {
-    <partial name="_JQueryValidation" />
+{
+    <partial name="_JQueryValidation"/>
     <script src="/js/custom/utilities/util.js"></script>
     <script src="/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="/js/widgets.bundle.js"></script>
@@ -179,12 +181,18 @@
     <script src="/js/custom/apps/file-manager/list.js"></script>
     <script src="/plugins/custom/jquery/jquery.form.js"></script>
     <script src="/plugins/custom/jquery/jquery.form.js"></script>
- 
+
     <script>
         var create_request_form = document.querySelector('#kt_create_request_form');
         var create_request_Validation = FormValidation.formValidation(create_request_form, {
             fields: {
-                // UserName: { validators: { notEmpty: { message: "لطفا عنوان بخش را وارد کنید" } } },
+                UserName: { validators: { notEmpty: { message: "لطفا عنوان بخش را وارد کنید" } } },
+                laboratoryId: { validators: { notEmpty: { message: "لطفا آزمایشگاه را وارد کنید" } } },
+                IndicatorNo : { validators: { notEmpty: { message: "لطفا شماره نامه وارد کنید" } } },
+                RequestDate : { validators: { notEmpty: { message: "لطفا تاریخ نامه وارد کنید" } } },
+                Title : { validators: { notEmpty: { message: "لطفا تاریخ نامه وارد کنید" } } },
+                Description : { validators: { notEmpty: { message: "لطفا شرح نامه را وارد کنید" } } },
+                RequestType: { validators: { notEmpty: { message: "لطفا نوع درخواست را وارد کنید" } } },
             },
             plugins: {
                 trigger: new FormValidation.plugins.Trigger,
@@ -192,25 +200,32 @@
             }
         });
     
+        // function OpenRequestTraceCodeWindow(requestId) {
+        //     openDialog("RequestTraceCode", 'شماره پیگیری', '/Request/RequestTraceCode', {
+        //         RequestId: requestId
+        //     }, function (res) {
+        //         InitComponents();
+        //     }, "modal-xl")
+        // }
+        
         var CreateNewRequest = function() { 
             create_request_Validation.validate().then((function(vr) {
                 if (vr === "Valid") {
                     $(create_request_form).ajaxSubmit({
                         success: function(res) {
-                            debugger;
+                            console.log(res.data);
                             if (res.success == false) {
                                 // failed();
     
                                 if (res.errors)
                                     ShowError(res.errors[0].message);
-                                else
+                                else 
                                     ShowSuccess('عملیات موفقیت آمیز نبود');
-    
                             } else { 
-                                if (res.success == true)
+                                if (res.success == true) {
                                     ShowSuccess('اطلاعات با موفقیت ذخیره شد');
-                                
-                               location.href = '/Request/RequestIndex';
+                                }
+                                location.href = '/Request/RequestTraceCode/?traceCode=' + res.data.traceCode;
                             }
                         },
                         error: function(e) {
@@ -219,7 +234,16 @@
                 }
             }));
         }
-    
+        
+        $(document).ready(function (){
+            $('#ProjectId').change(function () {
+                if ($(this).text() == 'غیر پروژه ای') {
+                    $('.project').hide();
+                } else {
+                    $('.project').show();
+                }
+            })
+        });
+        
     </script>
 }
-

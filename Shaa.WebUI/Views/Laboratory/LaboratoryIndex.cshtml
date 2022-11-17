@@ -1,6 +1,10 @@
 ﻿@using Shaa.Domain.ViewModels.BasicInfo
 @model FilterLaboratoryViewModel
 
+@{
+    ViewData["Title"] = "لیست آزمایشگاه ها";
+}
+
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="toolbar" id="kt_toolbar">
         <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
@@ -21,7 +25,7 @@
         <div id="kt_content_container" class="container-xxl">
 
             <div class="card mb-7">
-                <form method="get" asp-action="BaseInfoList" asp-controller="Home" data-select2-id="select2-data-11-d5ab">
+                <form method="get" asp-action="BaseInfoList" asp-controller="BaseInfo" data-select2-id="select2-data-11-d5ab">
                     <div class="card-body" data-select2-id="select2-data-10-gbgb">
                         <div class="d-flex align-items-center">
                             <div class="position-relative w-md-400px me-md-2">

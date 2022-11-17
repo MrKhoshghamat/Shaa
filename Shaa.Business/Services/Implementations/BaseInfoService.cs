@@ -225,9 +225,9 @@ public class BaseInfoService : IBaseInfoService
         }).ToList();
     }
 
-    public async Task<List<SelectListViewModel>> GetAllWards()
+    public async Task<List<SelectListViewModel>> GetAllWards(Guid? laboratoryId)
     {
-        var wards = await _wardRepository.GetAllWards();
+        var wards = await _wardRepository.GetAllWards(laboratoryId);
 
         return wards.Select(s => new SelectListViewModel()
         {
@@ -236,9 +236,9 @@ public class BaseInfoService : IBaseInfoService
         }).ToList();
     }
 
-    public async Task<List<SelectListViewModel>> GetAllEquipments()
+    public async Task<List<SelectListViewModel>> GetAllEquipments(Guid? laboratoryId)
     {
-        var equipments = await _equipmentRepository.GetAllEquipments();
+        var equipments = await _equipmentRepository.GetAllEquipments(laboratoryId);
 
         return equipments.Select(s => new SelectListViewModel()
         {

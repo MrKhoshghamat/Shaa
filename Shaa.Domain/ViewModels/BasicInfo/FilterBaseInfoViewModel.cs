@@ -5,6 +5,7 @@ namespace Shaa.Domain.ViewModels.BasicInfo;
 
 public class FilterBaseInfoViewModel : PagingViewModel<BaseInfoListViewModel>
 {
+    public int Id { get; set; }
     public string? Title { get; set; }
     public int BaseTableTypeId { get; set; }
     public FilterBaseInfoEnum Sort { get; set; }

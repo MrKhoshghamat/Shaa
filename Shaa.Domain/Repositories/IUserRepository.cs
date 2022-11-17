@@ -10,4 +10,5 @@ public interface IUserRepository : IRepository<User, Guid>
     Task<User> GetUserByEmail(string email);
     Task<User?> GetUserByNationNo(string nationalNo);
     Task<User> GetUserByActivationCode(string activationCode);
+    Task<User> GetUserById(Guid userId);
 }

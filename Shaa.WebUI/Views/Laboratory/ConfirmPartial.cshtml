@@ -1,7 +1,36 @@
-﻿@using Shaa.Domain.ViewModels.BasicInfo;
-@model Laboratory_ConfirmViewModel
+﻿@model Laboratory_ConfirmViewModel
 
-<div class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" 
-  id="kt_create_laboratory_confirm_partial_form">
-    <p>اطلاعات با موفقیت ذخیر شد</p> 
+@{
+    ViewBag.Title = "کد پیگیری";
+}
+
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <div id="kt_content_container" class="container-xxl">
+        <div class="card">
+            <div class="card-body">
+                <div class="stepper stepper-links d-flex flex-column" id="kt_create_account_stepper">
+                    <div
+                        class="w-100 pt-5 px-5 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_confirm_partial_form">
+                        <div class="notice d-flex bg-light-success rounded border-success border border-dashed p-6">
+                            <span class="svg-icon svg-icon-2tx svg-icon-success me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="currentColor"></rect>
+                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="currentColor"></rect>
+                                </svg>
+                            </span>
+                            <div class="d-flex flex-stack flex-grow-1">
+                                <div class="fw-bold">
+                                    <h4 class="text-gray-900 fw-bolder">عملیات ثبت آزمایشگاه با موفقیت انجام شد</h4>
+                                    <div class="fs-6 text-gray-700">
+                                        جهت نمایش لیست آزمایشگاه ها میتوانید از طریق دکمه زیر اقدام نمایید.
+                                    </div> <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

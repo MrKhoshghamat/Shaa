@@ -151,7 +151,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     public async Task<RegisterWardResult> RegisterWard(RegisterLaboratory_WardViewModel model)
     {
-        if (await _wardRepository.IsExistWardByTitle(model.WardTitle!)) return RegisterWardResult.WardExists;
+        if (await _wardRepository.IsExistWardByTitle(model.WardTitle!, model.LaboratoryId)) return RegisterWardResult.WardExists;
 
         var ward = new Ward()
         {
@@ -174,18 +174,17 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     public async Task<RegisterEquipmentResult> RegisterEquipment(RegisterLaboratory_EquipmentViewModel model)
     {
-        if (await _equipmentRepository.IsExistEquipmentBySerialNumber(model.SerialNumber!))
+        if (await _equipmentRepository.IsExistEquipmentBySerialNumber(model.SerialNumber!, model.LaboratoryId))
             return RegisterEquipmentResult.EquipmentExists;
 
         var wardId = await _wardRepository.GetWardIdByRow((int)model.RelatedSectionId!);
 
-        var laboratoryId = await _equipmentRepository.GetLaboratoryIdByWardId(wardId);
         try
         {
             var equipment = new Equipment()
             {
                 Id = CodeGenerator.CreateId(),
-                LaboratoryId = (Guid)laboratoryId!,
+                LaboratoryId = model.LaboratoryId,
                 EquipmentTypeId = model.EquipmentTypeId,
                 Title = model.EquipmentTitle.SanitizeText().Trim(),
                 PersianTitle = model.PersianTitle!.SanitizeText().Trim(),
@@ -235,7 +234,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
     public async Task<RegisterAbilityResult> RegisterAbility(RegisterLaboratory_AbilityViewModel model)
     {
-        if (await _abilityRepository.IsExistAbilityByTitle(model.AbilityTitle!))
+        if (await _abilityRepository.IsExistAbilityByTitle(model.AbilityTitle!, model.LaboratoryId))
             return RegisterAbilityResult.AbilityExists;
         try
         { 

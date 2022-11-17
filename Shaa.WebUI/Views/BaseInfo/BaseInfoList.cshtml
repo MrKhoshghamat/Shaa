@@ -4,22 +4,10 @@
 
 @{
     ViewData["Title"] = "اطلاعات پایه";
-    // var passiveDefences = ViewData["PassiveDefences"] as List<SelectListViewModel>;
-    // var approvalAuthorities = ViewData["ApprovalAuthorities"] as List<SelectListViewModel>;
-    // var researchCenters = ViewData["ResearchCenters"] as List<SelectListViewModel>;
-    // var laboratoryTypes = ViewData["LaboratoryTypes"] as List<SelectListViewModel>;
-    // var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
-    // var equipmentTypes = ViewData["EquipmentTypes"] as List<SelectListViewModel>;
-    // var usageTypes = ViewData["UsageTypes"] as List<SelectListViewModel>;
-    // var countries = ViewData["Countries"] as List<SelectListViewModel>;
-    // var abilityTitles = ViewData["AbilityTitles"] as List<SelectListViewModel>;
-    // var equipmentSupplyTypes = ViewData["EquipmentSupplyTypes"] as List<SelectListViewModel>;
-    // var equipmentsStatus = ViewData["EquipmentsStatus"] as List<SelectListViewModel>;
-    // var employmentsStatus = ViewData["EmploymentsStatus"] as List<SelectListViewModel>;
 }
 
 <div class="card mb-7"> 
-    <form method="get" asp-action="BaseInfoList" asp-controller="Home" data-select2-id="select2-data-11-d5ab">
+    <form method="get" asp-action="BaseInfoList" asp-controller="Baseinfo" data-select2-id="select2-data-11-d5ab">
         <input type="hidden" id="BaseTableTypeId" name="BaseTableTypeId" value="@Model.BaseTableTypeId"/>
         <div class="card-body" data-select2-id="select2-data-10-gbgb">
             <div class="d-flex align-items-center">
@@ -64,7 +52,7 @@
     </div>
     <div class="card-body py-3">
         <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="table-content">
                 <thead>
                 <tr class="fw-bolder text-muted">
                     <th class="w-25px">

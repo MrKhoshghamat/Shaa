@@ -11,9 +11,9 @@ public class AbilityRepository : Repository<Ability, Guid>, IAbilityRepository
     {
     }
 
-    public async Task<bool> IsExistAbilityByTitle(string title)
+    public async Task<bool> IsExistAbilityByTitle(string title, Guid? laboratoryId)
     {
-        return await _dbSet.AnyAsync(p => p.Title == title);
+        return await _dbSet.AnyAsync(p => p.Title == title && p.LaboratoryId == laboratoryId);
     }
 
     public async Task<Ability> GetAbilityByTitle(string title)

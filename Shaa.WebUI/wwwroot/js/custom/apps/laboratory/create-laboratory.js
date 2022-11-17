@@ -329,3 +329,4 @@ function OpenAbilityWindow(modelId, laboratoryId) {
         InitComponents();
     }, "modal-xl")
 }
+

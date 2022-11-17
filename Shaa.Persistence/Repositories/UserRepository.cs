@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Shaa.Business.Extensions;
 using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Persistence.Data;
@@ -39,5 +41,10 @@ public class UserRepository : Repository<User, Guid>, IUserRepository
     public async Task<User> GetUserByActivationCode(string activationCode)
     {
         return await _dbSet.FirstOrDefaultAsync(p => p.EmailActivationCode == activationCode);
+    }
+
+    public async Task<User> GetUserById(Guid userId)
+    {
+        return await _dbSet.Where(p => p.Id == userId).FirstOrDefaultAsync();
     }
 }

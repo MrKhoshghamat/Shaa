@@ -11,9 +11,9 @@ public class WardRepository : Repository<Ward, Guid>, IWardRepository
     {
     }
 
-    public async Task<bool> IsExistWardByTitle(string title)
+    public async Task<bool> IsExistWardByTitle(string title, Guid? laboratoryId)
     {
-        return await _dbSet.AnyAsync(p => p.Title == title);
+        return await _dbSet.AnyAsync(p => p.Title == title && p.LaboratoryId == laboratoryId);
     }
 
     public async Task<Ward> GetWardByLaboratoryId(Guid laboratoryId)
@@ -21,9 +21,9 @@ public class WardRepository : Repository<Ward, Guid>, IWardRepository
         return await _dbSet.FirstOrDefaultAsync(p => p.LaboratoryId == laboratoryId);
     }
 
-    public async Task<IQueryable<Ward>> GetAllWards()
+    public async Task<IQueryable<Ward>> GetAllWards(Guid? laboratoryId)
     {
-        return _dbSet.AsQueryable();
+        return _dbSet.Where(p=>p.LaboratoryId == laboratoryId).AsQueryable();
     }
 
     public async Task<Guid?> GetWardIdByRow(int row)
