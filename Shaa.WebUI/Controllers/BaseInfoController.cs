@@ -29,13 +29,30 @@ public class BaseInfoController : BaseController
         return View(result);
     }
 
-    public async Task<IActionResult> BaseInfoWindow(FilterBaseInfoViewModel model)
+    [HttpPost]
+    public async Task<IActionResult> BaseInfoWindow(RegisterBaseInfoViewModel model)
     {
         return PartialView(model);
     }
 
-    public async Task<IActionResult> SaveBaseInfo(FilterAbilityViewModel model)
+    [HttpPost]
+    public async Task<IActionResult> SaveBaseInfo(RegisterBaseInfoViewModel model)
     {
-        return Ok(new Success() { Data = model });
+        if (!ModelState.IsValid)
+            return Ok(new HassError() { Data = model }
+                .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+
+        var result = await _baseInfoService.RegisterBaseInfo(model);
+
+        switch (result)
+        {
+            case RegisterBaseInfoResult.IsExistBaseInfo:
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "این عنوان در این نوع اطلاعات پایه قبلا ثبت شده است")));
+            case RegisterBaseInfoResult.Success:
+                return Ok(new Success() { Data = model });
+        }
+
+        return Ok(new HassError() { Data = model });
     }
 }

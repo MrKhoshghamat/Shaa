@@ -6,7 +6,7 @@
     ViewData["Title"] = "اطلاعات پایه";
 }
 
-<div class="card mb-7"> 
+<div class="card mb-7">
     <form method="get" asp-action="BaseInfoList" asp-controller="Baseinfo" data-select2-id="select2-data-11-d5ab">
         <input type="hidden" id="BaseTableTypeId" name="BaseTableTypeId" value="@Model.BaseTableTypeId"/>
         <div class="card-body" data-select2-id="select2-data-10-gbgb">
@@ -32,14 +32,14 @@
         </div>
     </form>
 </div>
-<div class="card mb-5 mb-xl-8">
+<div class="card mb-5 mb-xl-8" id="grid">
     <div class="card-header border-0 pt-5">
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bolder fs-3 mb-1">اطلاعات پایه</span>
             <span class="text-muted mt-1 fw-bold fs-7">تعریف اطلاعات پایه</span>
         </h3>
         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="برای افزودن اطلاعات پایه کلیک کنید">
-            <a href="#" class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
+            <a href="#" class="btn btn-sm btn-light btn-active-primary" onclick="OpenBaseInfoWindow('@Model.BaseTableTypeId')">
                 <span class="svg-icon svg-icon-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor"/>
@@ -116,12 +116,25 @@
     </div>
 </div>
 
+<script>
+        function OpenBaseInfoWindow(baseTableTypeId) {
+            openDialog("BaseInfo-dialog", 'اطلاعات پایه', '/BaseInfo/BaseInfoWindow', {
+                BaseTableTypeId: baseTableTypeId
+            }, function (res) {
+                InitComponents();
+            }, "modal-xl")
+        }
+    </script>
+
 @section Scripts
 {
-    <script src="/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="/js/widgets.bundle.js"></script>
-    <script src="/js/custom/widgets.js"></script>
-    <script src="/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="/js/custom/utilities/modals/create-app.js"></script>
-    <script src="/js/custom/utilities/modals/users-search.js"></script>
+    @* <script src="/plugins/custom/datatables/datatables.bundle.js"></script> *@
+    @* <script src="/js/widgets.bundle.js"></script> *@
+    @* <script src="/js/custom/widgets.js"></script> *@
+    @* <script src="/js/custom/utilities/modals/upgrade-plan.js"></script> *@
+    @* <script src="/js/custom/utilities/modals/create-app.js"></script> *@
+    @* <script src="/js/custom/utilities/modals/users-search.js"></script> *@
+    
+    
 }
+

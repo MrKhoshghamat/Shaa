@@ -7,6 +7,7 @@ public interface IBaseInfoService
 {
     Task<FilterBaseInfoViewModel> FilterBaseInfo(FilterBaseInfoViewModel filter);
     Task<int> GetBaseTableTypeId(int filter);
+    Task<RegisterBaseInfoResult> RegisterBaseInfo(RegisterBaseInfoViewModel baseInfo);
     Task<List<SelectListViewModel>> GetAllPassiveDefences(int? baseTableTypeId);
     Task<List<SelectListViewModel>> GetAllApprovalAuthorities(int? baseTableTypeId);
     Task<List<SelectListViewModel>> GetAllResearchCenters(int? baseTableTypeId);

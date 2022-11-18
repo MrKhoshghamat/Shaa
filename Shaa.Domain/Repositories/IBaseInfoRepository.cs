@@ -8,4 +8,5 @@ public interface IBaseInfoRepository : IRepository<BaseInfo, int>
     Task<IQueryable<BaseInfo>> GetAllBaseInfos();
     Task<int> GetBaseTableTypeId(int tableTypeId);
     Task<List<BaseInfo>> GetAllBaseInfoByBaseTableTypeId(int? baseTableTypeId);
+    Task<bool> IsExistedBaseInfoByTitleAndBaseTableTypeId(string title, int baseTableTypeId);
 }

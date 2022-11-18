@@ -30,4 +30,9 @@ public class BaseInfoRepository : Repository<BaseInfo, int>, IBaseInfoRepository
 
         return await baseInfos.ToListAsync();
     }
+
+    public async Task<bool> IsExistedBaseInfoByTitleAndBaseTableTypeId(string title, int baseTableTypeId)
+    {
+        return await _dbSet.AnyAsync(p => p.Title == title && p.BaseTableTypeId == baseTableTypeId);
+    }
 }

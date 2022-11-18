@@ -1,4 +1,4 @@
-﻿@model Shaa.Domain.ViewModels.BasicInfo.FilterBaseInfoViewModel
+﻿@model Shaa.Domain.ViewModels.BasicInfo.RegisterBaseInfoViewModel
 
 <form asp-controller="BaseInfo" asp-action="SaveBaseInfo" method="post"
       class="w-100 p-4 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_baseInfo_form">
@@ -7,66 +7,64 @@
     <div class="w-100">
         <div class="row mb-12">
             <div class="col-md-12 fv-row">
-                <label class="fs-6 fw-bold form-label mb-2">عنوانtable-content</label>
+                <label class="fs-6 fw-bold form-label mb-2">عنوان</label>
                 <input asp-for="Title" name="Title" class="form-control form-control-lg form-control-solid"/>
             </div>
-
-            <!--begin::Actions-->
             <div class="mt-5">
                 <a href="#" class="btn btn-danger float-end me-2" onclick="closeOpenDialogContent($('#kt_create_laboratory_baseInfo_form'))">انصراف</a>
-                <a href="#" class="btn btn-bg-success float-end me-2" onclick="AddNewBaseTable()">ثبت</a>
+                <a href="#" class="btn btn-bg-success float-end me-2" onclick="AddNewBaseInfo()">ثبت</a>
             </div>
-            <!--end::Actions-->
         </div>
     </div>
 </form>
 
+<script src="/plugins/custom/jquery/jquery.form.js"></script>
+<script src="/js/custom/utilities/util.js"></script>
 
 <script>
-    var baseInfo_form = document.querySelector('#kt_create_laboratory_baseInfo_form');
-    var BaseInfoWindow_Validation = FormValidation.formValidation(baseInfo_form, {
-        fields: {
-            WardTitle: { validators: { notEmpty: { message: "لطفا عنوان اطلاعات پایه را وارد کنید" } } },
-        },
-        plugins: {
-            trigger: new FormValidation.plugins.Trigger,
-            bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" })
-        }
-    });
-
-    var AddNewBaseTable = function() {
-        var baseTableType_id = $('#kt_create_laboratory_baseInfo_form #BaseTableTypeId').val();
-        BaseInfoWindow_Validation.validate().then((function(vr) {
-            if (vr === "Valid") {
-                $(baseInfo_form).ajaxSubmit({
-                    success: function(res) {
-                        debugger;
-                        if (res.success == false) {
-                            // failed();
-
-                            if (res.errors)
-                                ShowError(res.errors[0].message);
-                            else
-                                ShowSuccess('عملیات موفقیت آمیز نبود');
-
-                        } else {
-                            closeOpenDialogContent($('#kt_create_laboratory_baseInfo_form'));
-                            load_content('/BaseInfo/BaseInfoList', { baseTableTypeId: baseTableType_id }
-                                , function(data) {
-                                    $('#table-content').html(data);
-                                    InitComponents();
-                                    KTUtil.scrollTop();
-                                });
-
-                            if (res.success == true)
-                                ShowSuccess('اطلاعات با موفقیت ذخیره شد');
-                        }
-                    },
-                    error: function(e) {
+            var baseInfo_form = document.querySelector('#kt_create_laboratory_baseInfo_form');
+            var BaseInfoWindow_Validation = FormValidation.formValidation(baseInfo_form, {
+                fields: {
+                    Title: { validators: { notEmpty: { message: "لطفا عنوان اطلاعات پایه را وارد کنید" } } },
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger,
+                    bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" })
+                }
+            });
+    
+            var AddNewBaseInfo = function() {
+                var baseTableType_id = $('#kt_create_laboratory_baseInfo_form #BaseTableTypeId').val();
+                BaseInfoWindow_Validation.validate().then((function(vr) {
+                    if (vr === "Valid") {
+                        $(baseInfo_form).ajaxSubmit({
+                            success: function(res) {
+                                debugger;
+                                if (res.success == false) {
+                                    // failed();
+    
+                                    if (res.errors)
+                                        ShowError(res.errors[0].message);
+                                    else
+                                        ShowSuccess('عملیات موفقیت آمیز نبود');
+    
+                                } else {
+                                    closeOpenDialogContent($('#kt_create_laboratory_baseInfo_form'));
+                                    load_content('/BaseInfo/BaseInfoList', { baseTableTypeId: baseTableType_id }
+                                        , function(data) {
+                                        $('#grid').html(data);
+                                            InitComponents();
+                                            KTUtil.scrollTop();
+                                        });
+    
+                                    if (res.success == true)
+                                        ShowSuccess('اطلاعات با موفقیت ذخیره شد');
+                                }
+                            },
+                            error: function(e) {
+                            }
+                        });
                     }
-                });
+                }));
             }
-        }));
-    }
-
 </script>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shaa.Business.Security;
 using Shaa.Business.Services.Interfaces;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels.BasicInfo;
 using Shaa.Domain.ViewModels.Common;
@@ -69,6 +70,24 @@ public class BaseInfoService : IBaseInfoService
     public async Task<int> GetBaseTableTypeId(int baseTableTypeId)
     {
         return await _baseInfoRepository.GetBaseTableTypeId(baseTableTypeId);
+    }
+
+    public async Task<RegisterBaseInfoResult> RegisterBaseInfo(RegisterBaseInfoViewModel baseInfo)
+    {
+        if (await _baseInfoRepository.IsExistedBaseInfoByTitleAndBaseTableTypeId(baseInfo.Title,
+                baseInfo.BaseTableTypeId))
+            return RegisterBaseInfoResult.IsExistBaseInfo;
+
+        var baseInfoModel = new BaseInfo()
+        {
+            BaseTableTypeId = baseInfo.BaseTableTypeId,
+            Title = baseInfo.Title.SanitizeText().Trim()
+        };
+
+        await _baseInfoRepository.AddAsync(baseInfoModel);
+        await _baseInfoRepository.Save();
+
+        return RegisterBaseInfoResult.Success;
     }
 
     public async Task<List<SelectListViewModel>> GetAllPassiveDefences(int? baseTableTypeId)
