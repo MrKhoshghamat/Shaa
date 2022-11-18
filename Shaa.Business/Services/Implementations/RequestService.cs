@@ -21,7 +21,7 @@ public class RequestService : IRequestService
     public async Task<FilterRequestViewModel> FilterInboxRequest(FilterRequestViewModel filter)
     {
         var query = (await _requestRepository.GetAllRequest())
-            .Where(p => p.LaboratoryId == filter.LaboratoryId);
+            .Where(p => p.UserName != filter.UserName);
 
         // if (!string.IsNullOrEmpty(filter.Search))
         // {
@@ -31,7 +31,9 @@ public class RequestService : IRequestService
         var result = query
             .Select(s => new RequestListViewModel()
             {
+                TraceCode = s.TraceCode,
                 Title = s.Title,
+                LaboratoryTitle = s.Laboratory.Title
             }).AsQueryable();
 
         switch (filter.Sort)
@@ -51,7 +53,7 @@ public class RequestService : IRequestService
     public async Task<FilterRequestViewModel> FilterOutboxRequest(FilterRequestViewModel filter)
     {
         var query = (await _requestRepository.GetAllRequest())
-            .Where(p => p.UserName == filter.UserName && p.LaboratoryId != filter.LaboratoryId);
+             .Where(p => p.UserName == filter.UserName);
 
         // if (!string.IsNullOrEmpty(filter.Search))
         // {
@@ -61,8 +63,9 @@ public class RequestService : IRequestService
         var result = query
             .Select(s => new RequestListViewModel()
             {
+                TraceCode = s.TraceCode,
                 Title = s.Title,
-                //  AbilityId = s.Id
+                LaboratoryTitle = s.Laboratory.Title
             }).AsQueryable();
 
         switch (filter.Sort)

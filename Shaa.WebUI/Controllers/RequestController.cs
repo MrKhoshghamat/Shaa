@@ -35,23 +35,13 @@ public class RequestController : BaseController
     [HttpGet]
     public async Task<IActionResult> RequestIndex(FilterRequestViewModel filter)
     {
-        var inboxRequest = await _requestService.FilterInboxRequest(new FilterRequestViewModel()
-        {
-            Search = filter.Search,
-            Sort = filter.Sort,
-        });
+        var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
+        filter.User = user;
+        filter.UserName = user.GetUserName();
+        
+        var inboxRequest = await _requestService.FilterInboxRequest(filter);
 
-        var outBoxRequest = await _requestService.FilterOutboxRequest(new FilterRequestViewModel()
-        {
-            Search = filter.Search,
-            Sort = filter.Sort,
-        });
-
-        // CreateRequestViewModel requestViewModel = new CreateRequestViewModel();
-        // ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
-        // ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
-
-        // return View(requestViewModel);
+        var outBoxRequest = await _requestService.FilterOutboxRequest(filter);
 
         ViewData["InboxRequest"] = inboxRequest;
         ViewData["OutBoxRequest"] = outBoxRequest;
