@@ -18,11 +18,12 @@ var KTSignupGeneral = function () {
                     password: {
                         validators: {
                             notEmpty: {message: "لطفا کلمه عبور را وارد کنید"},
-                            callback: {
-                                message: "لطفا کلمه عبور معتبر وارد کنید", callback: function (e) {
-                                    if (e.value.length > 0) return r()
-                                }
-                            }
+                            //callback: {
+                            //    message: "لطفا کلمه عبور معتبر وارد کنید",
+                            //    callback: function (e) {
+                            //        if (e.value.length > 0) return r()
+                            //    }
+                            //}
                         }
                     },
                     nationalNo: {

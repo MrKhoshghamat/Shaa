@@ -50,12 +50,14 @@
     
                                 } else {
                                     closeOpenDialogContent($('#kt_create_laboratory_baseInfo_form'));
-                                    load_content('/BaseInfo/BaseInfoList', { baseTableTypeId: baseTableType_id }
-                                        , function(data) {
-                                        $('#grid').html(data);
-                                            InitComponents();
-                                            KTUtil.scrollTop();
-                                        });
+
+                                    document.location.reload();
+                                    //load_content('/BaseInfo/BaseInfoList', { baseTableTypeId: baseTableType_id }
+                                    //    , function(data) {
+                                    //    $('#BaseInfoListContainer').html(data);
+                                    //        InitComponents();
+                                    //        KTUtil.scrollTop();
+                                    //    });
     
                                     if (res.success == true)
                                         ShowSuccess('اطلاعات با موفقیت ذخیره شد');
