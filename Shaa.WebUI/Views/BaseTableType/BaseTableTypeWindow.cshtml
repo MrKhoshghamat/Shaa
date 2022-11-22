@@ -1,0 +1,70 @@
+﻿@model Shaa.Domain.ViewModels.BaseTableType.RegisterBaseTableTypeViewModel
+
+<form asp-controller="BaseTableType" asp-action="SaveBaseTableType" method="post"
+      class="w-100 p-4 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_baseTableType_form">
+    <input asp-for="Id" type="hidden"/>
+    <div class="w-100">
+        <div class="row mb-12">
+            <div class="col-md-12 fv-row">
+                <label class="fs-6 fw-bold form-label mb-2">عنوان</label>
+                <input asp-for="Title" name="Title" class="form-control form-control-lg form-control-solid"/>
+            </div>
+            <div class="mt-5">
+                <a href="#" class="btn btn-danger float-end me-2" onclick="closeOpenDialogContent($('#kt_create_laboratory_baseTableType_form'))">انصراف</a>
+                <a href="#" class="btn btn-bg-success float-end me-2" onclick="AddNewBaseTableType()">ثبت</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="/plugins/custom/jquery/jquery.form.js"></script>
+<script src="/js/custom/utilities/util.js"></script>
+
+<script>
+            var baseTableType_form = document.querySelector('#kt_create_laboratory_baseTableType_form');
+            var BaseTableTypeWindow_Validation = FormValidation.formValidation(baseTableType_form, {
+                fields: {
+                    Title: { validators: { notEmpty: { message: "لطفا عنوان نوع اطلاعات پایه را وارد کنید" } } },
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger,
+                    bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" })
+                }
+            });
+    
+            var AddNewBaseTableType = function() {
+                // var id = $('#kt_create_laboratory_baseTableType_form #Id').val();
+                BaseTableTypeWindow_Validation.validate().then((function(vr) {
+                    if (vr === "Valid") {
+                        $(baseTableType_form).ajaxSubmit({
+                            success: function(res) {
+                                debugger;
+                                if (res.success == false) {
+                                    // failed();
+    
+                                    if (res.errors)
+                                        ShowError(res.errors[0].message);
+                                    else
+                                        ShowSuccess('عملیات موفقیت آمیز نبود');
+    
+                                } else {
+                                    closeOpenDialogContent($('#kt_create_laboratory_baseTableType_form'));
+                                    document.location.reload();
+                                    // load_content('/BaseTableType/BaseTableTypeList'
+                                    //     , function(data) {
+                                    //     $('#grid').html(data);
+                                    //         InitComponents();
+                                    //         KTUtil.scrollTop();
+                                    //     });
+    
+                                    if (res.success == true)
+                                        ShowSuccess('اطلاعات با موفقیت ذخیره شد');
+                                }
+                            },
+                            error: function(e) {
+                            }
+                        });
+                    }
+                }));
+            }
+</script>

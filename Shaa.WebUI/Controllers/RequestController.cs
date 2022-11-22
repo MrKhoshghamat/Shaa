@@ -57,6 +57,7 @@ public class RequestController : BaseController
         CreateRequestViewModel requestViewModel = new CreateRequestViewModel();
         ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
         ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
+        ViewData["Projects"] = await _baseInfoService.GetAllProjects((int)BaseTableTypeId.Projects);
 
         var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
         requestViewModel.User = user;
@@ -81,7 +82,16 @@ public class RequestController : BaseController
 
         var result = await _requestService.RegisterRequest(model);
 
-        return Ok(new Success() { Data = result });
+        switch (result)
+        {
+            case RequestResult.IsExist:
+                return Ok(new HassError() { Data = model }
+                    .AddError(new ModelError("*", "این درخواست با این شماره نامه قبلا ثبت شده است")));
+            case RequestResult.Success:
+                return Ok(new Success() { Data = model });
+        }
+
+        return Ok(new HassError() { Data = model });
 
     }
 

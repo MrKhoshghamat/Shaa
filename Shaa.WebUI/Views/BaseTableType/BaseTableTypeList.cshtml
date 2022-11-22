@@ -1,12 +1,48 @@
-﻿@using Shaa.Domain.ViewModels.BasicInfo;
-@model FilterWardViewModel
+﻿@using Shaa.Domain.ViewModels.BasicInfo
+@using static Shaa.Domain.Entities.BaseTableType
+@using Shaa.Domain.ViewModels.BaseTableType
+@model Shaa.Domain.ViewModels.BaseTableType.FilterBaseTableTypeViewModel
 
-<div class="w-100 p-4 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ward_partial_form">
-    <input asp-for="LaboratoryId" type="hidden"/>
-    <div class="card mb-5 mb-xl-8">
+
+@{
+    ViewData["Title"] = "اطلاعات پایه";
+}
+
+<div id="BaseInfoListContainer">
+
+    @* <div class="card mb-7"> *@
+    @*     <form method="get" asp-action="BaseInfoList" asp-controller="Baseinfo" data-select2-id="select2-data-11-d5ab"> *@
+    @*         <input type="hidden" id="BaseTableTypeId" name="BaseTableTypeId" value="@Model.BaseTableTypeId" /> *@
+    @*         <div class="card-body" data-select2-id="select2-data-10-gbgb"> *@
+    @*             <div class="d-flex align-items-center"> *@
+    @*                 <div class="position-relative w-md-400px me-md-2"> *@
+    @*                     <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6"> *@
+    @*                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> *@
+    @*                             <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect> *@
+    @*                             <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"></path> *@
+    @*                         </svg> *@
+    @*                     </span> *@
+    @*                     <input type="text" class="form-control form-control-solid ps-10" name="Title" value="@Model.Title" placeholder="جستجو" id="Title"> *@
+    @*                 </div> *@
+    @*                 <div class="d-flex align-items-center"> *@
+    @*                     <button type="submit" class="btn btn-primary me-5">جستجو</button> *@
+    @*                 </div> *@
+    @*                 <div class="col-lg-4" data-select2-id="select2-data-131-76hf"> *@
+    @*                     <select asp-for="Sort" asp-items="Html.GetEnumSelectList(typeof(FilterBaseInfoEnum))" class="form-select form-select-solid select2-hidden-accessible" data-control="select2" data-placeholder="درحال پردازش" data-hide-search="true" data-select2-id="select2-data-10-udrz" tabindex="-1" aria-hidden="true"> *@
+    @*                     </select> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </form> *@
+    @* </div> *@
+    <div class="card mb-5 mb-xl-8" id="grid">
         <div class="card-header border-0 pt-5">
-            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="برای افزودن بخش کلیک کنید">
-                <a href="#" class="btn btn-sm btn-light btn-active-primary" onclick="OpenWardWindow(null,'@Model.LaboratoryId')">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label fw-bolder fs-3 mb-1">نوع اطلاعات پایه</span>
+                <span class="text-muted mt-1 fw-bold fs-7">تعریف نوع اطلاعات پایه</span>
+            </h3>
+            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="برای افزودن اطلاعات پایه کلیک کنید">
+                <a href="#" class="btn btn-sm btn-light btn-active-primary" onclick="OpenBaseTableTypeWindow('@Model.Id')">
                     <span class="svg-icon svg-icon-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor"/>
@@ -19,7 +55,7 @@
         </div>
         <div class="card-body py-3">
             <div class="table-responsive">
-                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="table-content">
                     <thead>
                     <tr class="fw-bolder text-muted">
                         <th class="w-25px">
@@ -27,14 +63,14 @@
                                 <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check"/>
                             </div>
                         </th>
-                        <th class="min-w-300px">عنوان بخش</th>
+                        <th class="min-w-300px">عنوان</th>
                         <th class="min-w-100px text-end">عملیات</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if (Model.Entities.Any())
                     {
-                        foreach (WardListViewModel ward in Model.Entities)
+                        foreach (BaseTableTypeListViewModel baseTableType in Model.Entities)
                         {
                             <tr>
                                 <td>
@@ -43,7 +79,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">@ward.Title</a>
+                                    <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">@baseTableType.Title</a>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end flex-shrink-0">
@@ -101,8 +137,8 @@
                                     else
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" asp-controller="Laboratory" asp-action="WardPartial"
-                                               asp-route-laboratoryId="@Model.LaboratoryId" asp-route-CurrentPage="@i">
+                                            <a class="page-link" asp-controller="BaseTableType" asp-action="BaseTableTypeList"
+                                               asp-route-BaseTableTypeId="@Model.Id" asp-route-CurrentPage="@i">
                                                 @i
                                             </a>
                                         </li>
@@ -119,4 +155,14 @@
             </div>
         </div>
     </div>
+    <script>
+        function OpenBaseTableTypeWindow(id) {
+                    openDialog("BaseInfo-dialog", 'اطلاعات پایه', '/BaseTableType/BaseTableTypeWindow', {
+                        Id: id
+                    }, function(res) {
+                        InitComponents();
+                    }, "modal-xl")
+                }
+    </script>
+
 </div>

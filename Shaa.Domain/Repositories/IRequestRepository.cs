@@ -6,4 +6,5 @@ namespace Shaa.Domain.Repositories;
 public interface IRequestRepository : IRepository<Request, Guid>
 {
     Task<IQueryable<Request>> GetAllRequest();
+    Task<bool> IsExistRequestByRequestNo(string requestNo);
 }

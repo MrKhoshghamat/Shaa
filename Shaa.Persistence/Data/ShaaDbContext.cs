@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -144,6 +147,7 @@ namespace Shaa.Persistence.Data
                     .HasColumnName("PurchasePrice/Construction");
 
                 entity.Property(e => e.Row).ValueGeneratedOnAdd();
+                entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.SerialNumber)
                     .HasMaxLength(100)
@@ -239,7 +243,6 @@ namespace Shaa.Persistence.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.Row).ValueGeneratedOnAdd();
-                
                 entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
@@ -299,10 +302,15 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_Request_Laboratory");
 
                 entity.HasOne(d => d.RequestType)
-                    .WithMany(p => p.Requests)
+                    .WithMany(p => p.RequestRequestTypes)
                     .HasForeignKey(d => d.RequestTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_BaseInfo");
+
+                entity.HasOne(d => d.StatusNavigation)
+                    .WithMany(p => p.RequestStatusNavigations)
+                    .HasForeignKey(d => d.Status)
+                    .HasConstraintName("FK_Request_BaseInfo1");
             });
 
             modelBuilder.Entity<RequestIndicator>(entity =>
@@ -377,6 +385,7 @@ namespace Shaa.Persistence.Data
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Row).ValueGeneratedOnAdd();
+                entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 

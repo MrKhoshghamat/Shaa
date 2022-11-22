@@ -16,8 +16,14 @@ public class CreateRequestViewModel
     public string? Title { get; set; }
     public string? Description { get; set; }
     public int RequestTypeId { get; set; }
-    public string? LetterPath { get; set; } 
-    
+    public string? LetterPath { get; set; }
+    public string? TraceCode { get; set; }
     public string? IndicatorNo { get; set; }
     public User? User { get; set; }
+}
+
+public enum RequestResult
+{
+    IsExist,
+    Success
 }

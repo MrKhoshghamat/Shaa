@@ -99,6 +99,43 @@
                     }
                     </tbody>
                 </table>
+                <div>
+                    @if (Model.Entities.Any())
+                    {
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">قبلی</a>
+                                </li>
+
+                                @for (int i = 1; i <= Model.TotalPage; i++)
+                                {
+                                    if (i == Model.CurrentPage)
+                                    {
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#">
+                                                @i <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="Laboratory" asp-action="EquipmentPartial"
+                                               asp-route-laboratoryId="@Model.LaboratoryId" asp-route-CurrentPage="@i">
+                                                @i
+                                            </a>
+                                        </li>
+                                    }
+                                }
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#">بعدی</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    }
+                </div>
             </div>
         </div>
     </div>

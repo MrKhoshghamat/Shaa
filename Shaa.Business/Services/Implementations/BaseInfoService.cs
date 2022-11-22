@@ -235,9 +235,31 @@ public class BaseInfoService : IBaseInfoService
 
     public async Task<List<SelectListViewModel>> GetAllRequestTypes(int? baseTableTypeId)
     {
-        var RequestTypes = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+        var requestTypes = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
 
-        return RequestTypes.Select(s => new SelectListViewModel()
+        return requestTypes.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
+
+    public async Task<List<SelectListViewModel>> GetAllRequestStatus(int? baseTableTypeId)
+    {
+        var requestStatus = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+
+        return requestStatus.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
+
+    public async Task<List<SelectListViewModel>> GetAllProjects(int? baseTableTypeId)
+    {
+        var projects = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+
+        return projects.Select(s => new SelectListViewModel()
         {
             Id = s.Id,
             Title = s.Title

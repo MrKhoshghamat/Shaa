@@ -20,9 +20,11 @@ namespace Shaa.Domain.Entities
         public string? LetterPath { get; set; }
         public DateTime RequestDate { get; set; }
         public string TraceCode { get; set; } = null!;
+        public int? Status { get; set; }
 
         public virtual Laboratory Laboratory { get; set; } = null!;
         public virtual BaseInfo RequestType { get; set; } = null!;
+        public virtual BaseInfo? StatusNavigation { get; set; }
         public virtual ICollection<RequestIndicator> RequestIndicators { get; set; }
     }
 }

@@ -5,6 +5,8 @@
     ViewData["Title"] = "ثبت درخواست";
     var laboratories = ViewData["Laboratories"] as List<SelectListViewModel>;
     var requestTypes = ViewData["RequestTypes"] as List<SelectListViewModel>;
+    var projects = ViewData["Projects"] as List<SelectListViewModel>;
+    // var requestsStatus = ViewData["RequestStatus"] as List<SelectListViewModel>;
 }
 
 @* <div class="content d-flex flex-column flex-column-fluid" id="kt_content"> *@
@@ -60,11 +62,11 @@
                                 <div class="row mb-12">
                                     <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">عنوان درخواست کننده</label>
-                                        <input asp-for="UserName" name="UserName" value="@Model.User?.GetUserName()" class="form-control form-control-lg form-control-solid"/>
+                                        <input asp-for="UserName" style="pointer-events: none" name="UserName" value="@Model.User?.GetUserName()" class="form-control form-control-lg form-control-solid"/>
                                     </div>
                                     <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">شماره نامه درخواست</label>
-                                        <input asp-for="IndicatorNo" value="@ViewBag.RequestNo" name="IndicatorNo" class="form-control form-control-lg form-control-solid"/>
+                                        <input asp-for="IndicatorNo" name="IndicatorNo" class="form-control form-control-lg form-control-solid"/>
                                     </div>
                                 </div>
                                 <div class="row mb-12">
@@ -127,21 +129,21 @@
                                             }
                                         </select>
                                     </div>
-                                    <div class="col-md-6 fv-row">
+                                    <div class="col-md-6 fv-row make-hidden">
                                         <label class="required fs-6 fw-bold form-label mb-2">انتخاب پروژه</label>
-                                        <select id="ProjectId" name="ProjectId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                                        <select id="ProjectSelection" name="ProjectSelection" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                                             <option></option>
-                                            @if (requestTypes != null && requestTypes.Any())
+                                            @if (projects != null && projects.Any())
                                             {
-                                                foreach (var requestType in requestTypes)
+                                                foreach (var project in projects)
                                                 {
-                                                    <option value="@requestType.Id">@requestType.Title</option>
+                                                    <option value="@project.Id">@project.Title</option>
                                                 }
                                             }
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-12 project">
+                                <div class="row mb-12 make-hidden">
                                     <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">عنوان پروژه</label>
                                         <input id="ProjectTitle" href="#" name="ProjectTitle" class="form-control form-control-lg form-control-solid"/>
@@ -234,15 +236,18 @@
             }));
         }
         
-        $(document).ready(function (){
-            $('#ProjectId').change(function () {
-                if ($(this).text() == 'غیر پروژه ای') {
-                    $('.project').hide();
-                } else {
-                    $('.project').show();
-                }
-            })
+$(function() {
+            $('.make-hidden').hide();
+            $('#RequestTypeId').change(function () {
+                var requestTypeVal = $('#RequestTypeId').val();
+                if (requestTypeVal != undefined || requestTypeVal != 'undefined') {
+                    if (requestTypeVal == 69) {
+                        $('.make-hidden').show();
+                    } else if (requestTypeVal == '' || requestTypeVal == 70){
+                        $('.make-hidden').hide();
+                    }
+                } 
+            });
         });
-        
     </script>
 }

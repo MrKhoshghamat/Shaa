@@ -1,4 +1,6 @@
-﻿namespace Shaa.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shaa.Domain;
 
 public enum BaseTableTypeId
 {
@@ -14,5 +16,14 @@ public enum BaseTableTypeId
     EquipmentSupplyType = 10,
     EquipmentStatus = 11,
     EmploymentStatus = 12,
-    RequestType = 13
+    RequestType = 13,
+    Projects = 14
+}
+
+public enum RequestStatus
+{
+    [Display(Name = "ثبت اولیه")] InitialRegistration = 1,
+    [Display(Name = "تایید شده")] Confirmed = 2,
+    [Display(Name = "انجام شده")] Done = 3,
+    [Display(Name = "رد شده")] Rejected = 4
 }

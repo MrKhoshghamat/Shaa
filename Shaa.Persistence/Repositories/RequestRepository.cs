@@ -17,4 +17,8 @@ public class RequestRepository : Repository<Request, Guid>, IRequestRepository
         return _dbSet.AsQueryable();
     }
 
+    public async Task<bool> IsExistRequestByRequestNo(string requestNo)
+    {
+        return await _dbSet.AnyAsync(p => p.IndicatorNo == requestNo);
+    }
 }
