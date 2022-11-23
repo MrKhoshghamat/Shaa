@@ -238,7 +238,7 @@ public class LaboratoryController : BaseController
         ViewData["Countries"] =
             await _baseInfoService.GetAllCountries((int)BaseTableTypeId.CountryId);
 
-        ViewData["RelatedSection"] =
+        ViewData["Wards"] =
             await _baseInfoService.GetAllWards(model.LaboratoryId);
 
         ViewData["EquipmentsStatus"] =
@@ -332,7 +332,7 @@ public class LaboratoryController : BaseController
         {
             case RegisterAbilityResult.AbilityExists:
                 return Ok(new HassError() { Data = model }
-                    .AddError(new ModelError("*", "تجهیزی با این مشخصات قبلا ثبت شده است")));
+                    .AddError(new ModelError("*", "توانمندی با این مشخصات قبلا ثبت شده است")));
             case RegisterAbilityResult.Success:
                 return Ok(new Success() { Data = model });
         }

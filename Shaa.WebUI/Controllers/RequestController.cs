@@ -73,9 +73,6 @@ public class RequestController : BaseController
     {
         if (model.LetterPath == null) model.LetterPath = "DefaultRequestPath.docs";
 
-        var laboratory = await _laboratoryRepository.GetByRow(model.LaboratoryRow);
-        model.LaboratoryId = laboratory.Id;
-
         if (!ModelState.IsValid)
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));

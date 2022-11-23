@@ -7,7 +7,6 @@ public class CreateRequestViewModel
 {
     public Guid? Id { get; set; }
     public Guid? LaboratoryId { get; set; }
-    public int LaboratoryRow { get; set; }
     public string? UserName { get; set; }
     
     [RegularExpression(@"^\d{4}/((0[1-9])|(1[012]))/((0[1-9]|[12]\d)|3[01])$",

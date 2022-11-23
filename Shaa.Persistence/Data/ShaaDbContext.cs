@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -146,9 +143,6 @@ namespace Shaa.Persistence.Data
                     .HasMaxLength(50)
                     .HasColumnName("PurchasePrice/Construction");
 
-                entity.Property(e => e.Row).ValueGeneratedOnAdd();
-                entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
-
                 entity.Property(e => e.SerialNumber)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -241,9 +235,6 @@ namespace Shaa.Persistence.Data
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.Property(e => e.Row).ValueGeneratedOnAdd();
-                entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 
@@ -383,9 +374,6 @@ namespace Shaa.Persistence.Data
                 entity.ToTable("Ward", "Lab");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Row).ValueGeneratedOnAdd();
-                entity.Property(e => e.Row).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Title).HasMaxLength(255);
 

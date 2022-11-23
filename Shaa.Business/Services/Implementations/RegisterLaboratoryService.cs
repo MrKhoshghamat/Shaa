@@ -177,8 +177,6 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
         if (await _equipmentRepository.IsExistEquipmentBySerialNumber(model.SerialNumber!, model.LaboratoryId))
             return RegisterEquipmentResult.EquipmentExists;
 
-        var wardId = await _wardRepository.GetWardIdByRow((int)model.RelatedSectionId!);
-
         try
         {
             var equipment = new Equipment()
@@ -200,9 +198,8 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
                 ExploitationDate = model.ExploitationDate!.SanitizeText().ToMiladi(),
                 EmploymentStatusId = model.EmploymentStatusId,
                 SupplyTypeId = model.SupplyTypeId,
-                WardId = wardId,
+                WardId = model.WardId,
                 EquipmentImage = model.EquipmentImage,
-                RelatedSectionId = model.RelatedSectionId,
                 BaitulMalNo = model.BaitulMalNo!.SanitizeText().Trim(),
                 EquipmentStatusId = model.EquipmentStatusId,
                 PurchasePriceConstruction = model.PurchasePriceConstruction!.SanitizeText().Trim(),
@@ -255,12 +252,10 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
             await _abilityRepository.AddAsync(ability);
             await _abilityRepository.Save();
 
-            var equipmentId = await _equipmentRepository.GetEquipmentIdByRow(model.EquipmentId);
-
             var equipmentAbilityModel = new EquipmentAbility()
             {
                 AbilityId = ability.Id,
-                EquipmentId = equipmentId
+                EquipmentId = model.EquipmentId
             };
 
             await _equipmentAbilityRepository.AddAsync(equipmentAbilityModel);

@@ -24,7 +24,6 @@ namespace Shaa.Domain.Entities
         public string? ImagePath { get; set; }
         public string? Address { get; set; }
         public string? Description { get; set; }
-        public int Row { get; set; }
 
         public virtual BaseInfo? ApprovalAuthority { get; set; }
         public virtual BaseInfo LaboratoryType { get; set; } = null!;

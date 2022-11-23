@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "ثبت درخواست";
-    var laboratories = ViewData["Laboratories"] as List<SelectListViewModel>;
+    var laboratories = ViewData["Laboratories"] as List<GuidSelectListViewModel>;
     var requestTypes = ViewData["RequestTypes"] as List<SelectListViewModel>;
     var projects = ViewData["Projects"] as List<SelectListViewModel>;
     // var requestsStatus = ViewData["RequestStatus"] as List<SelectListViewModel>;
@@ -47,7 +47,7 @@
                                 <div class="row mb-12">
                                     <div class="col-md-12 fv-row">
                                         <label class="required fs-6 fw-bold form-label mb-2">آزمایشگاه</label>
-                                        <select asp-for="LaboratoryRow" name="LaboratoryRow" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                                        <select asp-for="LaboratoryId" name="LaboratoryId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
                                             <option></option>
                                             @if (laboratories != null && laboratories.Any())
                                             {

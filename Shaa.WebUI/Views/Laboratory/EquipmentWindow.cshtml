@@ -4,7 +4,7 @@
     var equipmentTypes = ViewData["EquipmentTypes"] as List<SelectListViewModel>;
     var countries = ViewData["Countries"] as List<SelectListViewModel>;
     var equipmentSupplyTypes = ViewData["EquipmentSupplyTypes"] as List<SelectListViewModel>;
-    var relatedSections = ViewData["RelatedSection"] as List<SelectListViewModel>;
+    var wards = ViewData["Wards"] as List<GuidSelectListViewModel>;
     var equipmentsStatus = ViewData["EquipmentsStatus"] as List<SelectListViewModel>;
     var employmentsStatus = ViewData["EmploymentsStatus"] as List<SelectListViewModel>;
     var usageTypes = ViewData["UsageTypeId"] as List<SelectListViewModel>;
@@ -15,7 +15,7 @@
       method="post"
       class="w-100 pt-15 px-20 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_equipment_form">
 <<input asp-for="LaboratoryId" type="hidden" />
-<input asp-for="WardId" name="WardId" id="WardId" type="hidden"/>
+@* <input asp-for="WardId" name="WardId" id="WardId" type="hidden"/> *@
 <div class="w-100">
 <div class="row mb-12">
     <div class="col-md-6 fv-row">
@@ -98,13 +98,13 @@
     </div>
     <div class="col-md-4 fv-row">
         <label class="required fs-6 fw-bold form-label mb-2">بخش مرتبط</label>
-        <select asp-for="RelatedSectionId" name="RelatedSectionId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+        <select asp-for="WardId" name="WardId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
             <option></option>
-            @if (relatedSections != null && relatedSections.Any())
+            @if (wards != null && wards.Any())
             {
-                foreach (var relatedSection in relatedSections)
+                foreach (var ward in wards)
                 {
-                    <option value="@relatedSection.Id">@relatedSection.Title</option>
+                    <option value="@ward.Id">@ward.Title</option>
                 }
             }
         </select>

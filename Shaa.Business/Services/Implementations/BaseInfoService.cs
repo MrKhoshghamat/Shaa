@@ -266,35 +266,35 @@ public class BaseInfoService : IBaseInfoService
         }).ToList();
     }
 
-    public async Task<List<SelectListViewModel>> GetAllWards(Guid? laboratoryId)
+    public async Task<List<GuidSelectListViewModel>> GetAllWards(Guid? laboratoryId)
     {
         var wards = await _wardRepository.GetAllWards(laboratoryId);
 
-        return wards.Select(s => new SelectListViewModel()
+        return wards.Select(s => new GuidSelectListViewModel()
         {
-            Id = s.Row,
+            Id = s.Id,
             Title = s.Title
         }).ToList();
     }
 
-    public async Task<List<SelectListViewModel>> GetAllEquipments(Guid? laboratoryId)
+    public async Task<List<GuidSelectListViewModel>> GetAllEquipments(Guid? laboratoryId)
     {
         var equipments = await _equipmentRepository.GetAllEquipments(laboratoryId);
 
-        return equipments.Select(s => new SelectListViewModel()
+        return equipments.Select(s => new GuidSelectListViewModel()
         {
-            Id = s.Row,
+            Id = s.Id,
             Title = s.PersianTitle!
         }).ToList();
     }
 
-    public async Task<List<SelectListViewModel>> GetAllLaboratories()
+    public async Task<List<GuidSelectListViewModel>> GetAllLaboratories()
     {
         var laboratories = await _mainInfoRepository.GetAllLaboratories();
 
-        return laboratories.Select(s => new SelectListViewModel()
+        return laboratories.Select(s => new GuidSelectListViewModel()
         {
-            Id = s.Row,
+            Id = s.Id,
             Title = s.Title
         }).ToList();
     }
