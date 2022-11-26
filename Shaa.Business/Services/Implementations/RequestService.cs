@@ -21,8 +21,16 @@ public class RequestService : IRequestService
 
     public async Task<FilterRequestViewModel> FilterInboxRequest(FilterRequestViewModel filter)
     {
-        var query = (await _requestRepository.GetAllRequest())
-            .Where(p => p.UserName != filter.UserName && p.Status == 1);
+        var query = (await _requestRepository.GetAllRequest());
+
+        if (filter.IsOutBox == true)
+        {
+            query = query.Where(p => p.UserId == filter.UserId /*&& p.Status == 18*/);
+        }
+        else
+        {
+            query = query.Where(p => p.UserId != filter.UserId /*&& p.Status == 18*/);
+        }
 
         // if (!string.IsNullOrEmpty(filter.Search))
         // {
@@ -32,10 +40,12 @@ public class RequestService : IRequestService
         var result = query
             .Select(s => new RequestListViewModel()
             {
+                RequestId = s.Id,
                 TraceCode = s.TraceCode,
                 Title = s.Title,
                 LaboratoryTitle = s.Laboratory.Title,
-                StatusTitle = s.StatusNavigation!.Title
+                StatusId = s.Status,
+                StatusTitle = ((RequestStatus)s.Status!).GetDisplayName()
             }).AsQueryable();
 
         switch (filter.Sort)
@@ -55,13 +65,13 @@ public class RequestService : IRequestService
     public async Task<FilterRequestViewModel> FilterOutboxRequest(FilterRequestViewModel filter)
     {
         var query = (await _requestRepository.GetAllRequest())
-             .Where(p => p.UserName == filter.UserName && p.Status == (int)RequestStatus.InitialRegistration);
+            .Where(p => p.UserName == filter.UserName && p.Status == (int)RequestStatus.InitialRegistration);
 
         // if (!string.IsNullOrEmpty(filter.Search))
         // {
         //     query = query.Where(p => p.Title.Contains(filter.Search.SanitizeText().Trim()));
         // }
-        
+
         var result = query
             .Select(s => new RequestListViewModel()
             {
@@ -88,7 +98,7 @@ public class RequestService : IRequestService
     public async Task<RequestResult> RegisterRequest(CreateRequestViewModel model)
     {
         if (await _requestRepository.IsExistRequestByRequestNo(model.IndicatorNo)) return RequestResult.IsExist;
-        
+
         try
         {
             var traceCode = CodeGenerator.CreateRequestTraceCode(model.IndicatorNo!);
@@ -97,6 +107,7 @@ public class RequestService : IRequestService
             {
                 Id = CodeGenerator.CreateId(),
                 LaboratoryId = (Guid)model.LaboratoryId!,
+                UserId = (Guid)model.UserId!,
                 UserName = model.UserName!,
                 IndicatorNo = model.IndicatorNo!,
                 Title = model.Title!,
@@ -122,7 +133,7 @@ public class RequestService : IRequestService
             await _requestIndicatorRepository.Save();
 
             model.TraceCode = request.TraceCode;
-            
+
             return RequestResult.Success;
         }
         catch (Exception e)
@@ -131,4 +142,27 @@ public class RequestService : IRequestService
             throw;
         }
     }
+
+    public async Task<Request> GetForCheckRequest(Guid Id)
+    {
+        return await _requestRepository.GetForCheckRequest(Id);
+    }
+
+    public async Task<bool> AcceptRequest(Guid Id,string DescForCheck)
+    {
+        var model =  await _requestRepository.GetForCheckRequest(Id);
+        model.Status = (int)RequestStatus.Confirmed;
+        model.DescForCheck = DescForCheck;
+        await _requestRepository.UpdateAsync(model); 
+        return true;
+    }
+
+    public async Task<bool> RejectRequest(Guid Id,string DescForCheck)
+    {
+        var model =  await _requestRepository.GetForCheckRequest(Id);
+        model.Status = (int)RequestStatus.Rejected;
+        model.DescForCheck = DescForCheck;
+        await _requestRepository.UpdateAsync(model); 
+        return true;
+    } 
 }

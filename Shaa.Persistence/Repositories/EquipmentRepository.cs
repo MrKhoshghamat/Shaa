@@ -38,16 +38,4 @@ public class EquipmentRepository : Repository<Equipment, Guid>, IEquipmentReposi
         return _dbSet.Where(p=>p.LaboratoryId == laboratoryId).AsQueryable();
     }
 
-    public async Task<Guid> GetEquipmentIdByRow(int row)
-    {
-        var equipment = await _dbSet.FirstOrDefaultAsync(p => p.Row == row);
-        var equipmentId = equipment!.Id;
-        return equipmentId;
-    }
-    
-    public async Task<Equipment> GetEquipmentByRow(int row)
-    {
-        var equipment = await _dbSet.FirstOrDefaultAsync(p => p.Row == row);
-        return equipment;
-    }
 }

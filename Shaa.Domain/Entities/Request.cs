@@ -12,6 +12,7 @@ namespace Shaa.Domain.Entities
 
         public Guid Id { get; set; }
         public Guid LaboratoryId { get; set; }
+        public Guid UserId { get; set; }
         public string UserName { get; set; } = null!;
         public string IndicatorNo { get; set; } = null!;
         public string Title { get; set; } = null!;
@@ -21,10 +22,10 @@ namespace Shaa.Domain.Entities
         public DateTime RequestDate { get; set; }
         public string TraceCode { get; set; } = null!;
         public int? Status { get; set; }
-
+        public string? DescForCheck { get; set; } 
         public virtual Laboratory Laboratory { get; set; } = null!;
         public virtual BaseInfo RequestType { get; set; } = null!;
-        public virtual BaseInfo? StatusNavigation { get; set; }
+        public virtual User User { get; set; } = null!;
         public virtual ICollection<RequestIndicator> RequestIndicators { get; set; }
     }
 }

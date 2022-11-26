@@ -12,6 +12,11 @@ public class RequestRepository : Repository<Request, Guid>, IRequestRepository
        
     } 
     
+    public async Task<Request> GetForCheckRequest(Guid id)
+    {
+        return await _dbSet.Include(p => p.Laboratory).FirstOrDefaultAsync(p => p.Id == id);
+    }
+    
     public async Task<IQueryable<Request>> GetAllRequest()
     {
         return _dbSet.AsQueryable();

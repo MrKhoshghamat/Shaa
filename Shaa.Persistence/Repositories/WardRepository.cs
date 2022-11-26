@@ -25,11 +25,4 @@ public class WardRepository : Repository<Ward, Guid>, IWardRepository
     {
         return _dbSet.Where(p=>p.LaboratoryId == laboratoryId).AsQueryable();
     }
-
-    public async Task<Guid?> GetWardIdByRow(int row)
-    {
-        var ward = await _dbSet.FirstOrDefaultAsync(p => p.Row == row);
-        var wardId = ward.Id;
-        return wardId;
-    }
 }

@@ -7,5 +7,8 @@ public interface IRequestService
 {
     Task<FilterRequestViewModel> FilterInboxRequest(FilterRequestViewModel filter);
     Task<FilterRequestViewModel> FilterOutboxRequest(FilterRequestViewModel filter);
-    Task<RequestResult> RegisterRequest(CreateRequestViewModel model);
+    Task<RequestResult> RegisterRequest(CreateRequestViewModel model); 
+    Task<Request> GetForCheckRequest(Guid Id);
+    Task<bool> AcceptRequest(Guid Id,string DescForCheck);
+    Task<bool> RejectRequest(Guid Id,string DescForCheck);
 }

@@ -31,23 +31,35 @@ public class RequestController : BaseController
 
     #endregion
 
-
     [HttpGet]
-    public async Task<IActionResult> RequestIndex(FilterRequestViewModel filter)
+    public async Task<IActionResult> RequestIndex()
+    {
+        // var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
+        // filter.User = user;
+        // filter.UserName = user.GetUserName();
+        //
+        // var inboxRequest = await _requestService.FilterInboxRequest(filter);
+        //
+        // var outBoxRequest = await _requestService.FilterOutboxRequest(filter);
+        //
+        // ViewData["InboxRequest"] = inboxRequest;
+        // ViewData["OutBoxRequest"] = outBoxRequest;
+        //
+
+        return View();
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> RequestIndexPartial(FilterRequestViewModel filter)
     {
         var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
         filter.User = user;
         filter.UserName = user.GetUserName();
-        
-        var inboxRequest = await _requestService.FilterInboxRequest(filter);
+        filter.UserId = user.Id;
+        var requestList = await _requestService.FilterInboxRequest(filter);
 
-        var outBoxRequest = await _requestService.FilterOutboxRequest(filter);
-
-        ViewData["InboxRequest"] = inboxRequest;
-        ViewData["OutBoxRequest"] = outBoxRequest;
-
-
-        return View();
+        return PartialView(requestList);
     }
 
 
@@ -77,6 +89,8 @@ public class RequestController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
+        model.UserId = HttpContext.User.GetUserId();
+
         var result = await _requestService.RegisterRequest(model);
 
         switch (result)
@@ -89,7 +103,57 @@ public class RequestController : BaseController
         }
 
         return Ok(new HassError() { Data = model });
+    }
 
+
+    [HttpPost]
+    public async Task<IActionResult> CheckRequestWindow(Guid? Id)
+    {
+        var request = await _requestService.GetForCheckRequest((Guid)Id);
+        //GetForCheckRequest
+        CheckRequestViewModel requestViewModel = new CheckRequestViewModel()
+        {
+            Id = request.Id,
+            LaboratoryId = request.LaboratoryId,
+            LaboratoryTitle = request.Laboratory.Title,
+            UserName = request.UserName,
+            UserId = request.UserId,
+            //RequestDate = request.RequestDate,
+            Title = request.Title,
+            Description = request.Description,
+            RequestTypeId = request.RequestTypeId,
+            LetterPath = request.LetterPath,
+            TraceCode = request.TraceCode,
+            IndicatorNo = request.IndicatorNo,
+            //User = request.User,
+        };
+
+        ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
+        ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
+        ViewData["Projects"] = await _baseInfoService.GetAllProjects((int)BaseTableTypeId.Projects);
+
+        var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
+        requestViewModel.User = user;
+
+        ViewBag.RequestNo = CodeGenerator.CreateRequestNo();
+
+        return PartialView(requestViewModel);
+    }
+
+    [HttpPost]
+    // [Authorize]
+    public async Task<IActionResult> CheckRequest(Guid id ,bool accept,string descForCheck)
+    {
+        if (accept)
+        {
+              await _requestService.AcceptRequest(id,descForCheck);
+        }
+        else
+        {
+            await _requestService.RejectRequest(id,descForCheck);
+        }
+ 
+        return Ok(new Success() { });
     }
 
     [HttpGet]

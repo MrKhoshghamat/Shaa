@@ -5,6 +5,11 @@ namespace Shaa.Domain.Entities
 {
     public partial class User
     {
+        public User()
+        {
+            Requests = new HashSet<Request>();
+        }
+
         public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
@@ -27,5 +32,6 @@ namespace Shaa.Domain.Entities
         public virtual BaseInfo? City { get; set; }
         public virtual BaseInfo? Country { get; set; }
         public virtual Department? Department { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

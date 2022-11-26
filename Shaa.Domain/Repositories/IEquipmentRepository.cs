@@ -9,6 +9,4 @@ public interface IEquipmentRepository : IRepository<Equipment, Guid>
     Task<Equipment> GetEquipmentBySerialNumber(string serialnumber);
     Task<Guid?> GetLaboratoryIdByWardId(Guid? wardId);
     Task<IQueryable<Equipment>> GetAllEquipments(Guid? laboratoryId);
-    Task<Guid> GetEquipmentIdByRow(int row);
-    Task<Equipment> GetEquipmentByRow(int row);
 }

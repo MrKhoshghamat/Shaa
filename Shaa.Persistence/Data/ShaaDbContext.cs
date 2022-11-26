@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -27,12 +30,7 @@ namespace Shaa.Persistence.Data
         public virtual DbSet<Ward> Wards { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR;");
-            }
+        { 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -293,15 +291,16 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_Request_Laboratory");
 
                 entity.HasOne(d => d.RequestType)
-                    .WithMany(p => p.RequestRequestTypes)
+                    .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.RequestTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_BaseInfo");
 
-                entity.HasOne(d => d.StatusNavigation)
-                    .WithMany(p => p.RequestStatusNavigations)
-                    .HasForeignKey(d => d.Status)
-                    .HasConstraintName("FK_Request_BaseInfo1");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Request_User");
             });
 
             modelBuilder.Entity<RequestIndicator>(entity =>
