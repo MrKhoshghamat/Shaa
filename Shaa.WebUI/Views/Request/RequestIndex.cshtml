@@ -53,7 +53,6 @@
 
                 </div>
                 <!--end::Header-->
-
                 <!--begin::Body-->
                 <div class="card-body">
                     <!--begin::Tab Content (ishlamayabdi)-->
@@ -79,24 +78,59 @@
 </div>
 
 @section Scripts
-{
+    {
     <script>
-      $(document).ready(function (){
-          $('#request_tab1_content').load('/Request/RequestIndexPartial',{IsOutBox : true},function (){
-              
-           });
-          
-           $('#request_tab2_content').load('/Request/RequestIndexPartial',{IsOutBox : false},function (){
-                    
-           });
-      })
-   
-      function OpenCheckWindow(requestId) {
-          openDialog("CheckRequest-dialog", 'مشاهده درخواست', '/Request/CheckRequestWindow', {
-              Id: requestId
-          }, function (res) {
-              InitComponents();
-          }, "modal-xl")
-      } 
-</script>
+        $(document).ready(function() {
+            $('#request_tab1_content').load('/Request/RequestIndexPartial', { IsOutBox: true }, function() {
+
+            });
+
+            $('#request_tab2_content').load('/Request/RequestIndexPartial', { IsOutBox: false }, function() {
+
+            });
+        })
+
+        function OpenCheckWindow(requestId) {
+            openDialog("CheckRequest-dialog", 'مشاهده درخواست', '/Request/CheckRequestWindow', {
+                Id: requestId
+            }, function(res) {
+                InitComponents();
+            }, "modal-xl")
+        }
+
+        function OpenRequestInfoWindow(requestId,title) {
+            openDialog("RequestInfo-dialog", title, '/Request/RequestInfoWindow', {
+                Id: requestId
+            }, function(res) {
+                InitComponents();
+            }, "modal-xl")
+        }
+ 
+        function SetRequestStatus(rid,rs) {
+            $.ajax({
+                url: '/Request/SetRequestStatus',
+                method: 'POST',
+                data: {
+                    id: rid,
+                    requestStatus: rs
+                },
+                success: function(res) { 
+                    if (res.success == false) { 
+                        if (res.errors)
+                            ShowError(res.errors[0].message);
+                        else
+                            ShowSuccess('عملیات موفقیت آمیز نبود');
+                    } else {
+                        if (res.success == true) {
+                            ShowSuccess('عملیات با موفقیت انجام شد'); 
+                            $('#request_tab2_content').load('/Request/RequestIndexPartial', { IsOutBox: false }, function() { });
+                        } 
+                    }
+                },
+                error: function(e) {
+                    err(e);
+                }
+            });
+        }
+    </script>
 }

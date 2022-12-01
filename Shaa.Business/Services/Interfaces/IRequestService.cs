@@ -1,4 +1,5 @@
-﻿using Shaa.Domain.Entities;
+﻿using Shaa.Domain;
+using Shaa.Domain.Entities;
 using Shaa.Domain.ViewModels.Req;
 
 namespace Shaa.Business.Services.Interfaces;
@@ -11,4 +12,5 @@ public interface IRequestService
     Task<Request> GetForCheckRequest(Guid Id);
     Task<bool> AcceptRequest(Guid Id,string DescForCheck);
     Task<bool> RejectRequest(Guid Id,string DescForCheck);
+    Task<bool> SetRequestStatus(Guid Id, RequestStatus requestStatus);
 }

@@ -141,18 +141,58 @@ public class RequestController : BaseController
     }
 
     [HttpPost]
+    public async Task<IActionResult> RequestInfoWindow(Guid? Id)
+    {
+        var request = await _requestService.GetForCheckRequest((Guid)Id);
+ 
+        CheckRequestViewModel requestViewModel = new CheckRequestViewModel()
+        {
+            Id = request.Id,
+            LaboratoryId = request.LaboratoryId,
+            LaboratoryTitle = request.Laboratory.Title,
+            UserName = request.UserName,
+            UserId = request.UserId, 
+            Title = request.Title,
+            Description = request.Description,
+            RequestTypeId = request.RequestTypeId,
+            LetterPath = request.LetterPath,
+            TraceCode = request.TraceCode,
+            IndicatorNo = request.IndicatorNo, 
+        };
+
+        ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
+        ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
+        ViewData["Projects"] = await _baseInfoService.GetAllProjects((int)BaseTableTypeId.Projects);
+
+        var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
+        requestViewModel.User = user;
+
+        //ViewBag.RequestNo = CodeGenerator.CreateRequestNo();
+
+        return PartialView(requestViewModel);
+    }
+
+    [HttpPost]
     // [Authorize]
-    public async Task<IActionResult> CheckRequest(Guid id ,bool accept,string descForCheck)
+    public async Task<IActionResult> CheckRequest(Guid id, bool accept, string descForCheck)
     {
         if (accept)
         {
-              await _requestService.AcceptRequest(id,descForCheck);
+            await _requestService.AcceptRequest(id, descForCheck);
         }
         else
         {
-            await _requestService.RejectRequest(id,descForCheck);
+            await _requestService.RejectRequest(id, descForCheck);
         }
- 
+
+        return Ok(new Success() { });
+    }
+
+    [HttpPost]
+    // [Authorize]
+    public async Task<IActionResult> SetRequestStatus(Guid id, byte requestStatus)
+    {
+        await _requestService.SetRequestStatus(id, (RequestStatus) requestStatus);
         return Ok(new Success() { });
     }
 

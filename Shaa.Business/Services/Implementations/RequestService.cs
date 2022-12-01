@@ -164,5 +164,13 @@ public class RequestService : IRequestService
         model.DescForCheck = DescForCheck;
         await _requestRepository.UpdateAsync(model); 
         return true;
-    } 
+    }
+
+    public async Task<bool> SetRequestStatus(Guid Id, RequestStatus requestStatus)
+    {
+        var model = await _requestRepository.GetForCheckRequest(Id);
+        model.Status = (byte)requestStatus; 
+        await _requestRepository.UpdateAsync(model);
+        return true;
+    }
 }
