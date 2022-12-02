@@ -18,6 +18,7 @@ public class CheckRequestViewModel
 
     public string? Title { get; set; }
     public string? Description { get; set; }
+    public string? DescForCheck { get; set; }
     public int RequestTypeId { get; set; }
     public string? LetterPath { get; set; }
     public string? TraceCode { get; set; }

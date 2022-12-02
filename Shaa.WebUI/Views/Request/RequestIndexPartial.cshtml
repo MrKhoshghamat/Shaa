@@ -98,7 +98,7 @@
                                                 }
                                                 else if (baseInfoModel.StatusId == (int)Shaa.Domain.RequestStatus.Confirmed)
                                                 {
-                                                    <a class="btn btn-sm btn-light btn-active-primary mx-1">  ثبت خدمات آزمایشگاهی  </a>
+                                                    <a class="btn btn-sm btn-light btn-active-primary mx-1" href="#" onclick="OpenRequestServiceWindow('@(baseInfoModel.RequestId)')">  ثبت خدمات آزمایشگاهی  </a>
                                                     <a class="btn btn-sm btn-light btn-active-primary mx-1" href="#"
                                                         onclick="SetRequestStatus('@(baseInfoModel.RequestId)',@((int)Shaa.Domain.RequestStatus.Done))">  انجام شده  </a>
                                                 }

@@ -158,6 +158,7 @@ public class RequestController : BaseController
             LetterPath = request.LetterPath,
             TraceCode = request.TraceCode,
             IndicatorNo = request.IndicatorNo, 
+            DescForCheck = request.DescForCheck
         };
 
         ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();

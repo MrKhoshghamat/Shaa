@@ -98,37 +98,61 @@
             }, "modal-xl")
         }
 
-        function OpenRequestInfoWindow(requestId,title) {
+        function OpenRequestInfoWindow(requestId, title) {
             openDialog("RequestInfo-dialog", title, '/Request/RequestInfoWindow', {
                 Id: requestId
             }, function(res) {
                 InitComponents();
             }, "modal-xl")
         }
- 
-        function SetRequestStatus(rid,rs) {
-            $.ajax({
-                url: '/Request/SetRequestStatus',
-                method: 'POST',
-                data: {
-                    id: rid,
-                    requestStatus: rs
+
+        function OpenRequestServiceWindow(requestId) {
+            openDialog("RequestService-dialog", 'ثبت خدمات آزمایشگاهی', '/LaboratoryService/Index', {
+                Id: requestId
+            }, function(res) {
+                InitComponents();
+            }, "modal-xl")
+        }
+
+        function SetRequestStatus(rid, rs) {
+
+            swal({
+                title: "درخواست به انجام شده تغییر یابد ؟",
+                text: "قبل از انجام این عمل از ثبت خدمات برای این درخواست مطمئن شوید!",
+                //icon: "info",
+                buttons: {
+                    confirm: { text: 'تغییر به انجام شده', className: 'sweet-warning' },
+                    cancel: 'انصراف'
                 },
-                success: function(res) { 
-                    if (res.success == false) { 
-                        if (res.errors)
-                            ShowError(res.errors[0].message);
-                        else
-                            ShowSuccess('عملیات موفقیت آمیز نبود');
-                    } else {
-                        if (res.success == true) {
-                            ShowSuccess('عملیات با موفقیت انجام شد'); 
-                            $('#request_tab2_content').load('/Request/RequestIndexPartial', { IsOutBox: false }, function() { });
-                        } 
-                    }
-                },
-                error: function(e) {
-                    err(e);
+                dangerMode: true,
+            }).then((willChange) => {
+                if (willChange) {
+                    $.ajax({
+                        url: '/Request/SetRequestStatus',
+                        method: 'POST',
+                        data: {
+                            id: rid,
+                            requestStatus: rs
+                        },
+                        success: function(res) {
+                            if (res.success == false) {
+                                if (res.errors)
+                                    ShowError(res.errors[0].message);
+                                else
+                                    ShowSuccess('عملیات موفقیت آمیز نبود');
+                            } else {
+                                if (res.success == true) {
+                                    ShowSuccess('عملیات با موفقیت انجام شد');
+                                    $('#request_tab2_content').load('/Request/RequestIndexPartial', { IsOutBox: false }, function() { });
+                                }
+                            }
+                        },
+                        error: function(e) {
+                            err(e);
+                        }
+                    });
+                } else {
+
                 }
             });
         }

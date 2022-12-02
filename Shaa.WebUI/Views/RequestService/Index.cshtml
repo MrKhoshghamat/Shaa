@@ -1,0 +1,101 @@
+﻿<div class="card" id="RequestServiceIndex">
+    <!--begin::Header-->
+    <div class="card-header position-relative py-0 border-bottom-2">
+        <!--begin::Nav-->
+        <ul class="nav nav-stretch nav-pills nav-pills-custom d-flex mt-3">
+            <!--begin::Nav item-->
+            <li class="nav-item p-0 ms-0 me-8">
+                <!--begin::Nav link-->
+                <a class="nav-link btn btn-color-muted px-0 active" data-bs-toggle="tab" href="#laboratory_info_tab_content">
+                    <!--begin::Title-->
+                    <span class="nav-text fw-bold fs-4 mb-3">اطلاعات درخواست</span>
+                    <!--end::Title-->
+                    <!--begin::Bullet-->
+                    <span class="bullet-custom position-absolute z-index-2 w-100 h-2px top-100 bottom-n100 bg-primary rounded"></span>
+                    <!--end::Bullet-->
+                </a>
+                <!--end::Nav link-->
+            </li>
+            <!--end::Nav item-->
+            <!--begin::Nav item-->
+            <li class="nav-item p-0 ms-0 me-8">
+                <!--begin::Nav link-->
+                <a class="nav-link btn btn-color-muted px-0" data-bs-toggle="tab" href="#laboratory_service_tab_content">
+                    <!--begin::Title-->
+                    <span class="nav-text fw-bold fs-4 mb-3">خدمات ارائه شده</span>
+                    <!--end::Title-->
+                    <!--begin::Bullet-->
+                    <span class="bullet-custom position-absolute z-index-2 w-100 h-2px top-100 bottom-n100 bg-primary rounded"></span>
+                    <!--end::Bullet-->
+                </a>
+                <!--end::Nav link-->
+            </li>
+            <!--end::Nav item-->
+            <!--begin::Nav item-->
+            <li class="nav-item p-0 ms-0 me-8">
+                <!--begin::Nav link-->
+                <a class="nav-link btn btn-color-muted px-0" data-bs-toggle="tab" href="#laboratory_attachment_tab_content">
+                    <!--begin::Title-->
+                    <span class="nav-text fw-bold fs-4 mb-3">پیوست</span>
+                    <!--end::Title-->
+                    <!--begin::Bullet-->
+                    <span class="bullet-custom position-absolute z-index-2 w-100 h-2px top-100 bottom-n100 bg-primary rounded"></span>
+                    <!--end::Bullet-->
+                </a>
+                <!--end::Nav link-->
+            </li>
+            <!--end::Nav item-->
+        </ul>
+
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body">
+        <!--begin::Tab Content-->
+        <div class="tab-content mb-2">
+            <!--begin::Tap pane-->
+            <div class="tab-pane fade active show" id="laboratory_info_tab_content">
+            </div>
+            <!--end::Tap pane-->
+            <!--begin::Tap pane-->
+            <div class="tab-pane fade" id="laboratory_service_tab_content">
+            </div>
+            <!--end::Tap pane-->
+            <!--begin::Tap pane-->
+            <div class="tab-pane fade" id="laboratory_attachment_tab_content">
+                <div id="request_tab2_content"></div>
+            </div>
+            <!--end::Tap pane-->
+        </div>
+        <!--end::Tab Content-->
+    </div>
+    <!--end: Card Body-->
+
+    <div class="card-footer p-0">
+
+        <!--begin::Actions-->
+        <div class="float-end mt-5">
+            <a class="btn btn-danger me-2" onclick="closeOpenDialogContent($('#RequestServiceIndex'));">
+                <span class="menu-title">بستن</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $('#laboratory_info_tab_content').load('/RequestService/RequestInfoTab', { id: '@(ViewBag.Id)' }, function() {
+
+        });
+
+        $('#laboratory_service_tab_content').load('/RequestService/RequestInfoTab', { id: '@(ViewBag.Id)' }, function() {
+
+        });
+
+        $('#laboratory_attachment_tab_content').load('/RequestService/RequestInfoTab', { id: '@(ViewBag.Id)' }, function() {
+
+        });
+    })
+</script>
