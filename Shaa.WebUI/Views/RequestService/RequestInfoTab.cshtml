@@ -8,7 +8,7 @@
     var projects = ViewData["Projects"] as List<SelectListViewModel>;
 }
 
-<div class="post d-flex flex-column-fluid" id="kt_post">
+<form class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
 
         <div class="stepper stepper-links d-flex flex-column" id="kt_request_info">
@@ -64,7 +64,7 @@
                         <div class="row mb-12">
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-bold form-label mb-2">توضیحات</label>
-                                <textarea style="pointer-events: none"  asp-for="DescForCheck" name="DescForCheck"  class="form-control form-control-lg form-control-solid" rows="5"></textarea>
+                                <textarea style="pointer-events: none" asp-for="DescForCheck" name="DescForCheck" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -74,4 +74,4 @@
         </div>
 
     </div>
-</div>
+</form>

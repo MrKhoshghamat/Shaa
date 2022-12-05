@@ -5,6 +5,7 @@ using Shaa.Business.Services.Interfaces;
 using Shaa.Domain;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels.Req;
+using Shaa.Domain.ViewModels.ReqService;
 
 namespace Shaa.WebUI.Controllers;
 
@@ -13,14 +14,20 @@ public class RequestServiceController : BaseController
     #region Ctor
 
     private readonly IBaseInfoService _baseInfoService;
-    private readonly IRequestService _requestService; 
-    private readonly IUserRepository _userRepository; 
+    private readonly IRequestService _requestService;
+    private readonly IRequestServiceService _requestServiceService;
+    private readonly IUserRepository _userRepository;
 
-    public RequestServiceController(IBaseInfoService baseInfoService, IRequestService requestService, IUserRepository userRepository)
+    public RequestServiceController(
+        IBaseInfoService baseInfoService,
+        IRequestService requestService,
+        IRequestServiceService requestServiceService,
+        IUserRepository userRepository)
     {
         _baseInfoService = baseInfoService;
-        _requestService = requestService; 
-        _userRepository = userRepository; 
+        _requestService = requestService;
+        _requestServiceService = requestServiceService;
+        _userRepository = userRepository;
     }
 
     #endregion
@@ -58,58 +65,57 @@ public class RequestServiceController : BaseController
         ViewData["Projects"] = await _baseInfoService.GetAllProjects((int)BaseTableTypeId.Projects);
 
         var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
-        requestViewModel.User = user; 
+        requestViewModel.User = user;
 
         return PartialView(requestViewModel);
     }
-    
-    public async Task<IActionResult> RequestServiceTab()
+
+    //public async Task<IActionResult> RequestServiceTab()
+    //{
+
+    //    return PartialView();
+    //}
+
+
+    #region RequestService
+
+
+    [HttpPost]
+    public async Task<IActionResult> ListTab(Guid id)
     {
-        ViewData["Services"] = await _baseInfoService.GetAllServices((int)BaseTableTypeId.Service);
-
-        return PartialView();
+        var filterModel = new FilterRequestServiceViewModel() { RequestId = id };
+        return PartialView(filterModel);
     }
- 
 
-    #region LaboratoryService
 
-    [HttpPost] 
-    public async Task<IActionResult> ListTab(Guid Id)
-    {  
-        //var result = //await _wardService.FilterWard(filter);
-        return PartialView(); 
+    [HttpPost]
+    public async Task<IActionResult> ListData(Guid id)
+    {
+        var filterModel = new FilterRequestServiceViewModel() { RequestId = id };
+        var result = await _requestServiceService.FilterWard(filterModel);
+        return PartialView(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> LaboratoryServiceWindow(Guid? Id)
+    public async Task<IActionResult> RequestServiceWindow(Guid Id)
     {
-        return PartialView();
+        ViewData["Services"] = await _baseInfoService.GetAllServices((int)BaseTableTypeId.Service);
+        return PartialView(new RegisterRequestServiceViewModel() { RequestId = Id });
     }
- 
-    public async Task<IActionResult> SaveLaboratoryService(/*RegisterLaboratory_WardViewModel model*/)
+
+    public async Task<IActionResult> SaveRequestService(RegisterRequestServiceViewModel model)
     {
-        //if (!ModelState.IsValid)
-        //    return Ok(new HassError() { Data = model }
-        //        .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
+        if (!ModelState.IsValid)
+            return Ok(new HassError() { Data = model }
+                .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
-        //var result = await _registerLaboratoryService.RegisterWard(model);
-
-        //switch (result)
-        //{
-        //    case RegisterWardResult.WardExists:
-        //        return Ok(new HassError() { Data = model }
-        //            .AddError(new ModelError("*", "بخشی با این عنوان قبلا ثبت شده است")));
-        //    case RegisterWardResult.Success:
-        //        return Ok(new Success() { Data = model });
-        //}
-
-        //return BadRequest(model);
+        await _requestServiceService.RegisterRequestService(model);
 
         return Ok(new Success() { });
     }
 
     #endregion
- 
+
     // [HttpPost]
     // public async Task<IActionResult> AttachmentTab(Guid Id)
     // { 

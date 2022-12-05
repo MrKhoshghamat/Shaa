@@ -1,0 +1,115 @@
+﻿@model Shaa.Domain.ViewModels.ReqService.RegisterRequestServiceViewModel
+
+@{
+    ViewData["Title"] = "ثبت خدمات";
+    var services = ViewData["Services"] as List<SelectListViewModel>;
+}
+
+<form asp-controller="RequestService" asp-action="SaveRequestService" class="post d-flex flex-column-fluid" id="RequestServiceWindowBox"> 
+    <div id="kt_content_container" class="container-xxl">
+        <input type="hidden" id="RequestId" name="RequestId" value="@Model.RequestId" />
+        <div class="stepper stepper-links d-flex flex-column" id="kt_request_info">
+            <div asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post"
+                 class="w-100 pt-5 px-5 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_form">
+                <div class="row mb-12">
+                    <div class="col-md-12 fv-row">
+                        <label class="required fs-6 fw-bold form-label mb-2">عنوان خدمات ارائه شده</label>
+                        <select asp-for="ServiceId" name="ServiceId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                            <option></option>
+                            @if (services != null && services.Any())
+                            {
+                                foreach (var service in services)
+                                {
+                                    <option value="@service.Id">@service.Title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-12">
+                    <div class="col-md-6 fv-row">
+                        <label class="required fs-6 fw-bold form-label mb-2">هزینه کل</label>
+                        <input asp-for="TotalCost" name="TotalCost" class="form-control form-control-lg form-control-solid number-separator" />
+                    </div>
+                    <div class="col-md-6 fv-row">
+                        <label class="required fs-6 fw-bold form-label mb-2">مبلغ دریافتی</label>
+                        <input asp-for="RecievedPayment" name="RecievedPayment" class="form-control form-control-lg form-control-solid number-separator" />
+                    </div>
+                </div>
+                <div class="row mb-12">
+                    <div class="col-md-6 fv-row">
+                        <label class="required fs-6 fw-bold form-label mb-2">تعداد نمونه</label>
+                        <div class="input-group">
+                            <input asp-for="SampleCount" name="SampleCount" class="form-control form-control-lg form-control-solid" aria-describedby="label-count" />
+                            <span class="input-group-text" id="label-count">تعداد</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 fv-row">
+                        <label class="required fs-6 fw-bold form-label mb-2">عنوان نمونه</label>
+                        <input asp-for="SampleTitle" name="SampleTitle" class="form-control form-control-lg form-control-solid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer p-0">
+
+            <!--begin::Actions-->
+
+            <div class="float-end mt-5">
+                <a class="btn btn-danger me-2" onclick="closeOpenDialogContent($('#RequestServiceWindowBox'));">
+                    <span class="menu-title">انصراف</span>
+                </a>
+            </div>
+
+             <div class="float-end mt-5">
+                <a class="btn btn-success me-2" onclick="AddNewRequestService();">
+                    <span class="menu-title">ثبت</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    var request_service_form = document.querySelector('#RequestServiceWindowBox');
+    var request_service_form_Validation = FormValidation.formValidation(request_service_form, {
+        fields: {
+            ServiceId: { validators: { notEmpty: { message: "لطفا خدمت ارائه شده را انتخاب کنید" } } },
+        },
+        plugins: {
+            trigger: new FormValidation.plugins.Trigger,
+            bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" })
+        }
+    });
+
+    var AddNewRequestService = function() { 
+        request_service_form_Validation.validate().then((function(vr) {
+            if (vr === "Valid") {
+                $(request_service_form).ajaxSubmit({
+                    success: function(res) {
+                        debugger;
+                        if (res.success == false) {
+                            // failed();
+
+                            if (res.errors)
+                                ShowError(res.errors[0].message);
+                            else
+                                ShowSuccess('عملیات موفقیت آمیز نبود');
+
+                        } else {
+                            closeOpenDialogContent($('#RequestServiceWindowBox'));
+                            LoadRequestServiceData();
+
+                            if (res.success == true)
+                                ShowSuccess('اطلاعات با موفقیت ذخیره شد');
+                        }
+                    },
+                    error: function(e) {
+                    }
+                });
+            }
+        }));
+    } 
+</script>

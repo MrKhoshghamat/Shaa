@@ -1,13 +1,15 @@
-﻿@using Shaa.Domain.ViewModels.BasicInfo;
-@model FilterRequestServiceViewModel
+﻿@using Shaa.Domain.ViewModels.Attachment;
+@model FilterAttachmentViewModel
 
-<div class="w-100 p-4 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_laboratory_ward_partial_form">
-    <input asp-for="RequestId" type="hidden" />
+
+<div class="w-100 p-4 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+    @*    <input asp-for="RequestId" type="hidden" />*@
     <div class="card mb-5 mb-xl-8">
         <div class="card-header border-0 pt-5">
             <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="برای افزودن خدمت کلیک کنید">
-                <a href="#" class="btn btn-sm btn-light btn-active-primary" onclick="OpenAddRequestServiceWindow('@Model.RequestId')">
+                <a href="#" class="btn btn-sm btn-light btn-active-primary" onclick="OpenAddAttachmentWindow('@Model.EntityName','@Model.EntityRecordId')">
                     <span class="svg-icon svg-icon-3">
+                        0
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
                             <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
@@ -17,26 +19,27 @@
                 </a>
             </div>
         </div>
-        <div class="card-body py-3" id="request_service_tab_list">
+        <div class="card-body py-3" id="attachment_tab_list">
         </div>
     </div>
 </div>
 
 
 <script>
-    function LoadRequestServiceData() {
-        $('#request_service_tab_list').load('/RequestService/ListData', { id: '@(Model.RequestId)' }, function() {
+    function LoadAttachmentData() {
+        $('#attachment_tab_list').load('/Attachment/ListData', { entityName: '@(Model.EntityName)', entityRecordId: '@Model.EntityRecordId' }, function() {
 
         });
     }
 
     $(document).ready(function() {
-        LoadRequestServiceData();
+        LoadAttachmentData();
     })
 
-    function OpenAddRequestServiceWindow(requestId) {
-        openDialog("AddRequestService-dialog", 'افزودن خدمت کلیک کنید', '/RequestService/RequestServiceWindow', {
-            Id: requestId
+    function OpenAddAttachmentWindow(name, recordId) {
+        openDialog("AddAttachment-dialog", 'افزودن فایل', '/Attachment/AttachmentWindow', {
+            entityName: name,
+            entityRecordId: recordId
         }, function(res) {
             InitComponents();
         }, "modal-xl")

@@ -14,5 +14,6 @@ namespace Shaa.Domain.Entities
     public partial class Request : IIdentityObject<Guid> { }
     public partial class RequestIndicator : IIdentityObject<long> { }
     public partial class Attachment : IIdentityObject<long> { }
+    public partial class RequestService : IIdentityObject<Guid> { }
 
 }

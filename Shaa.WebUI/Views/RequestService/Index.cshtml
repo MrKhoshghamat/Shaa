@@ -50,7 +50,7 @@
     </div>
     <!--end::Header-->
     <!--begin::Body-->
-    <div class="card-body">
+    <div class="card-body p-0">
         <!--begin::Tab Content-->
         <div class="tab-content mb-2">
             <!--begin::Tap pane-->
@@ -90,12 +90,12 @@
 
         });
 
-        $('#request_service_tab_content').load('/RequestService/RequestServiceTab', { }, function() {
+        $('#request_service_tab_content').load('/RequestService/ListTab', { id: '@(ViewBag.Id)' }, function() {
 
         });
 
-        $('#laboratory_attachment_tab_content').load('/RequestService/RequestInfoTab', { id: '@(ViewBag.Id)' }, function() {
+        $('#laboratory_attachment_tab_content').load('/Attachment/ListTab', { entityName : 'RequestService' ,  entityRecordId: '@(ViewBag.Id)' }, function() {
 
         });
     })
-</script>
+</script> 

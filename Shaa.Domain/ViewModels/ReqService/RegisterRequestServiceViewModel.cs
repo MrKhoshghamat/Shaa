@@ -2,6 +2,7 @@
 
 public class RegisterRequestServiceViewModel
 {
+    public Guid Id { get; set; }
     public Guid RequestId { get; set; }
     public int ServiceId { get; set; }
     public long? TotalCost { get; set; }

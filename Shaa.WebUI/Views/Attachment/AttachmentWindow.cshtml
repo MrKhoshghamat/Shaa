@@ -1,0 +1,113 @@
+﻿@using Shaa.Domain.ViewModels.Attachment
+
+@model FilterAttachmentViewModel
+
+@{
+    ViewData["Title"] = "ثبت خدمات";
+}
+
+<form asp-controller="Attachment" asp-action="SaveAttachment" class="post d-flex flex-column-fluid" id="AttachmentForm">
+    <div id="kt_content_container" class="container-xxl">
+        <input type="hidden" id="EntityName" name="EntityName" value="@Model.EntityName" />
+        <input type="hidden" id="EntityRecordId" name="EntityRecordId" value="@Model.EntityRecordId" />
+
+        <div class="stepper stepper-links d-flex flex-column" id="kt_request_info">
+            <div asp-action="RegisterLaboratory" asp-controller="Laboratory" method="post"
+                 class="w-100 pt-5 px-5 pb-10 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_create_account_form">
+ 
+                <div class="row mb-12">
+                    <div class="col-md-12 fv-row">
+                        <label class="required fs-6 fw-bold form-label mb-2">لطفا فایل مورد نظر را انتخاب نمایید</label>
+                        <input type="file" id="AttachmentFile" name="AttachmentFile" />
+                    </div>
+                </div>
+ 
+                @* <div class="row mb-12">
+                <div class="col-md-12 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">عنوان خدمات ارائه شده</label>
+                <select asp-for="ServiceId" name="ServiceId" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="انتخاب..." data-allow-clear="true" data-hide-search="true">
+                <option></option>
+                @if (services != null && services.Any())
+                {
+                foreach (var service in services)
+                {
+                <option value="@service.Id">@service.Title</option>
+                }
+                }
+                </select>
+                </div>
+                </div>
+                <div class="row mb-12">
+                <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">هزینه کل</label>
+                <input asp-for="TotalCost" name="TotalCost" class="form-control form-control-lg form-control-solid number-separator" />
+                </div>
+                <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-bold form-label mb-2">مبلغ دریافتی</label>
+                <input asp-for="RecievedPayment" name="RecievedPayment" class="form-control form-control-lg form-control-solid number-separator" />
+                </div>
+                </div>*@
+            </div>
+        </div>
+
+        <div class="card-footer p-0">
+
+            <!--begin::Actions-->
+
+            <div class="float-end mt-5">
+                <a class="btn btn-danger me-2" onclick="closeOpenDialogContent($('#AttachmentForm'));">
+                    <span class="menu-title">انصراف</span>
+                </a>
+            </div>
+
+            <div class="float-end mt-5">
+                <a class="btn btn-success me-2" onclick="AddAttachment();">
+                    <span class="menu-title">ثبت</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    var attachment_form = document.querySelector('#AttachmentForm');
+    var attachment_form_Validation = FormValidation.formValidation(attachment_form, {
+        fields: {
+            // ServiceId: { validators: { notEmpty: { message: "لطفا خدمت ارائه شده را انتخاب کنید" } } },
+        },
+        plugins: {
+            trigger: new FormValidation.plugins.Trigger,
+            bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" })
+        }
+    });
+
+    var AddAttachment = function() {
+        attachment_form_Validation.validate().then((function(vr) {
+            if (vr === "Valid") {
+                $(attachment_form).ajaxSubmit({
+                    success: function(res) {
+                        debugger;
+                        if (res.success == false) {
+                            // failed();
+
+                            if (res.errors)
+                                ShowError(res.errors[0].message);
+                            else
+                                ShowSuccess('عملیات موفقیت آمیز نبود');
+
+                        } else {
+                            closeOpenDialogContent($('#AttachmentForm'));
+                            LoadAttachmentData();
+
+                            if (res.success == true)
+                                ShowSuccess('اطلاعات با موفقیت ذخیره شد');
+                        }
+                    },
+                    error: function(e) {
+                    }
+                });
+            }
+        }));
+    }
+</script>

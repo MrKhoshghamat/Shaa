@@ -1,5 +1,7 @@
 ﻿using Shaa.Business.Services.Interfaces;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
+using Shaa.Domain.ViewModels.Attachment;
 
 namespace Shaa.Business.Services.Implementations;
 
@@ -15,5 +17,65 @@ public class AttachmentService : IAttachmentService
     }
 
     #endregion
-    
+
+    public async Task<FilterAttachmentViewModel> Filter(FilterAttachmentViewModel filter)
+    {
+        var query = _attachmentRepository.GetAllAttachment(null);
+
+        //switch (filter.Sort)
+        //{
+        //    case FilterEnum.AlphabeticASC:
+        //        query = query.OrderBy(p => p.Service.Title);
+        //        break;
+        //    case FilterEnum.AlphabeticDESC:
+        //        query = query.OrderByDescending(p => p.Service.Title);
+        //        break;
+        //}
+
+        var result = query.Select(p => new AttachmentViewModel()
+        {
+            Id = p.Id,
+            EntityName = p.EntityName,
+            EntityRecordId = p.EntityRecordId,
+            FileType = p.FileType,
+            FileSize = p.FileSize,
+            FileName = p.FileName,
+            Description = p.Description,
+            DeletedDate = p.DeletedDate,
+            RegisterTime = p.RegisterTime,
+            UserId = p.UserId,
+            UniqueId = p.UniqueId,
+        }).AsQueryable();
+
+        await filter.SetPaging(result);
+        return filter;
+    }
+
+    public async Task RegisterRequestService(AttachmentViewModel model, byte[] fileContent)
+    {
+        var requestService = new Attachment()
+        {
+            EntityName = model.EntityName,
+            EntityRecordId = model.EntityRecordId,
+            FileType = model.FileType,
+            FileSize = model.FileSize,
+            FileName = model.FileName,
+            Description = model.Description,
+            DeletedDate = model.DeletedDate,
+            RegisterTime = model.RegisterTime,
+            UserId = model.UserId,
+            UniqueId = model.UniqueId,
+        };
+
+        requestService.AttachmentContent = new AttachmentContent()
+        {
+            IdNavigation = requestService,
+            FileContent = fileContent
+        };
+
+        await _attachmentRepository.AddAsync(requestService);
+        await _attachmentRepository.Save();
+
+        model.Id = requestService.Id;
+    }
 }

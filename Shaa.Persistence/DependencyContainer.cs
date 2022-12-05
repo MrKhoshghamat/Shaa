@@ -25,6 +25,8 @@ public static class DependencyContainer
         services.AddScoped<IEquipmentAbilityRepository, EquipmentAbilityRepository>();
         services.AddScoped<IRequestRepository, RequestRepository>();
         services.AddScoped<IRequestIndicatorRepository, RequestIndicatorRepository>();
+        services.AddScoped<IRequestServiceRepository, RequestServiceRepository>();
+        services.AddScoped<IAttachmentRepository, AttachmentRepository>();
 
         #endregion
 
@@ -38,6 +40,8 @@ public static class DependencyContainer
         services.AddScoped<IEquipmentService, EquipmentService>();
         services.AddScoped<IAbilityService, AbilityService>();
         services.AddScoped<IRequestService, RequestService>();
+        services.AddScoped<IRequestServiceService, RequestServiceService>();
+        services.AddScoped<IAttachmentService, AttachmentService>();
 
         #endregion
     }

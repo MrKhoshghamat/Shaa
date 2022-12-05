@@ -1,8 +1,10 @@
-﻿namespace Shaa.Domain.ViewModels.Attachment;
+﻿using Shaa.Domain.ViewModels.Common;
 
-public class FilterAttachmentViewModel
+namespace Shaa.Domain.ViewModels.Attachment;
+
+public class FilterAttachmentViewModel : PagingViewModel<AttachmentViewModel>
 {
-    public long Id { get; set; }
-    public byte[] FileContent { get; set; } = null!;
-    public Guid? requestId { get; set; }
+    public string EntityName { get; set; }
+    public string EntityRecordId { get; set; }
+    public FilterEnum Sort { get; set; }
 }

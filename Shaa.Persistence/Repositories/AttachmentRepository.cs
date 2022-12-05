@@ -9,4 +9,11 @@ public class AttachmentRepository : Repository<Attachment, long>, IAttachmentRep
     public AttachmentRepository(ShaaDbContext context) : base(context)
     {
     }
+
+    public IQueryable<Attachment> GetAllAttachment(Guid? id)
+    {
+        return _dbSet 
+          //  .Where(p => p.RequestId == requestId)
+            .AsQueryable();
+    }
 }
