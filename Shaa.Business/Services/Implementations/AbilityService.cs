@@ -25,7 +25,11 @@ public class AbilityService : IAbilityService
             .Select(s => new AbilityListViewModel()
             {
                 Title = s.Title,
-                AbilityId = s.Id
+                FurtherDetailsAndProcedure = s.FurtherDetailsAndProcedure,
+                ImplementationTime = s.ImplementationTime.ToString(),
+                AbilityId = s.Id,
+                
+                
             }).AsQueryable();
 
         switch (filter.Sort)

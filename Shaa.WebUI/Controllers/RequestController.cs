@@ -83,7 +83,7 @@ public class RequestController : BaseController
     // [Authorize]
     public async Task<IActionResult> CreateRequest(CreateRequestViewModel model)
     {
-        if (model.LetterPath == null) model.LetterPath = "DefaultRequestPath.docs";
+        // if (model.LetterPath == null) model.LetterPath = "DefaultRequestPath.docs";
 
         if (!ModelState.IsValid)
             return Ok(new HassError() { Data = model }

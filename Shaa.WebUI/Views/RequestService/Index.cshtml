@@ -20,7 +20,7 @@
             <!--begin::Nav item-->
             <li class="nav-item p-0 ms-0 me-8">
                 <!--begin::Nav link-->
-                <a class="nav-link btn btn-color-muted px-0" data-bs-toggle="tab" href="#laboratory_service_tab_content">
+                <a class="nav-link btn btn-color-muted px-0" data-bs-toggle="tab" href="#request_service_tab_content">
                     <!--begin::Title-->
                     <span class="nav-text fw-bold fs-4 mb-3">خدمات ارائه شده</span>
                     <!--end::Title-->
@@ -58,7 +58,7 @@
             </div>
             <!--end::Tap pane-->
             <!--begin::Tap pane-->
-            <div class="tab-pane fade" id="laboratory_service_tab_content">
+            <div class="tab-pane fade" id="request_service_tab_content">
             </div>
             <!--end::Tap pane-->
             <!--begin::Tap pane-->
@@ -90,7 +90,7 @@
 
         });
 
-        $('#laboratory_service_tab_content').load('/RequestService/RequestInfoTab', { id: '@(ViewBag.Id)' }, function() {
+        $('#request_service_tab_content').load('/RequestService/RequestServiceTab', { }, function() {
 
         });
 

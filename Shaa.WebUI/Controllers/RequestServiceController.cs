@@ -62,6 +62,13 @@ public class RequestServiceController : BaseController
 
         return PartialView(requestViewModel);
     }
+    
+    public async Task<IActionResult> RequestServiceTab()
+    {
+        ViewData["Services"] = await _baseInfoService.GetAllServices((int)BaseTableTypeId.Service);
+
+        return PartialView();
+    }
  
 
     #region LaboratoryService
@@ -103,10 +110,10 @@ public class RequestServiceController : BaseController
 
     #endregion
  
-    [HttpPost]
-    public async Task<IActionResult> AttachmentTab(Guid Id)
-    { 
-        return PartialView();
-    } 
+    // [HttpPost]
+    // public async Task<IActionResult> AttachmentTab(Guid Id)
+    // { 
+    //     return PartialView();
+    // } 
 
 }

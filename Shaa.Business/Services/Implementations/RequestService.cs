@@ -113,7 +113,7 @@ public class RequestService : IRequestService
                 Title = model.Title!,
                 Description = model.Description!,
                 RequestTypeId = model.RequestTypeId,
-                LetterPath = model.LetterPath,
+                // LetterPath = model.LetterPath,
                 RequestDate = model.RequestDate?.ToMiladi() ?? DateTime.Now,
                 TraceCode = traceCode,
                 Status = (int)RequestStatus.InitialRegistration

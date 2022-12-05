@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -18,6 +15,8 @@ namespace Shaa.Persistence.Data
         }
 
         public virtual DbSet<Ability> Abilities { get; set; } = null!;
+        public virtual DbSet<Attachment> Attachments { get; set; } = null!;
+        public virtual DbSet<AttachmentContent> AttachmentContents { get; set; } = null!;
         public virtual DbSet<BaseInfo> BaseInfos { get; set; } = null!;
         public virtual DbSet<BaseTableType> BaseTableTypes { get; set; } = null!;
         public virtual DbSet<Department> Departments { get; set; } = null!;
@@ -26,11 +25,17 @@ namespace Shaa.Persistence.Data
         public virtual DbSet<Laboratory> Laboratories { get; set; } = null!;
         public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<RequestIndicator> RequestIndicators { get; set; } = null!;
+        public virtual DbSet<RequestService> RequestServices { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Ward> Wards { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        { 
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,6 +63,54 @@ namespace Shaa.Persistence.Data
                     .HasForeignKey(d => d.LaboratoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ability_Laboratory");
+            });
+
+            modelBuilder.Entity<Attachment>(entity =>
+            {
+                entity.ToTable("Attachment");
+
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EntityRecordId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FileSize)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FileType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RegisterTime).HasColumnType("datetime");
+
+                entity.Property(e => e.UniqueId).HasDefaultValueSql("(newid())");
+            });
+
+            modelBuilder.Entity<AttachmentContent>(entity =>
+            {
+                entity.ToTable("AttachmentContent");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.AttachmentContent)
+                    .HasForeignKey<AttachmentContent>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AttachmentContent_Attachment");
             });
 
             modelBuilder.Entity<BaseInfo>(entity =>
@@ -290,6 +343,11 @@ namespace Shaa.Persistence.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_Laboratory");
 
+                entity.HasOne(d => d.RequestAttachment)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.RequestAttachmentId)
+                    .HasConstraintName("FK_Request_Attachment1");
+
                 entity.HasOne(d => d.RequestType)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.RequestTypeId)
@@ -316,6 +374,27 @@ namespace Shaa.Persistence.Data
                     .HasForeignKey(d => d.RequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RequestIndicator_Request");
+            });
+
+            modelBuilder.Entity<RequestService>(entity =>
+            {
+                entity.ToTable("RequestService", "Lab");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.SampleTitle).HasMaxLength(255);
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.RequestServices)
+                    .HasForeignKey(d => d.RequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RequestService_Request");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.RequestServices)
+                    .HasForeignKey(d => d.ServiceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RequestService_BaseInfo");
             });
 
             modelBuilder.Entity<User>(entity =>

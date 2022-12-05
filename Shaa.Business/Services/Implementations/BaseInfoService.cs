@@ -244,6 +244,17 @@ public class BaseInfoService : IBaseInfoService
         }).ToList();
     }
 
+    public async Task<List<SelectListViewModel>> GetAllServices(int? baseTableTypeId)
+    {
+        var services = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);
+
+        return services.Select(s => new SelectListViewModel()
+        {
+            Id = s.Id,
+            Title = s.Title
+        }).ToList();
+    }
+
     public async Task<List<SelectListViewModel>> GetAllRequestStatus(int? baseTableTypeId)
     {
         var requestStatus = await _baseInfoRepository.GetAllBaseInfoByBaseTableTypeId(baseTableTypeId);

@@ -18,7 +18,8 @@ public enum BaseTableTypeId
     EquipmentStatus = 11,
     EmploymentStatus = 12,
     RequestType = 13,
-    Projects = 14
+    Projects = 14,
+    Service = 15
 }
 
 public enum RequestStatus
