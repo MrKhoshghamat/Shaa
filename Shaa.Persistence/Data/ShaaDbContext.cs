@@ -23,10 +23,14 @@ namespace Shaa.Persistence.Data
         public virtual DbSet<Equipment> Equipment { get; set; } = null!;
         public virtual DbSet<EquipmentAbility> EquipmentAbilities { get; set; } = null!;
         public virtual DbSet<Laboratory> Laboratories { get; set; } = null!;
+        public virtual DbSet<Permission> Permissions { get; set; } = null!;
         public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<RequestIndicator> RequestIndicators { get; set; } = null!;
         public virtual DbSet<RequestService> RequestServices { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
+        public virtual DbSet<RolePermission> RolePermissions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
         public virtual DbSet<Ward> Wards { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -317,6 +321,17 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_Laboratory_BaseInfo3");
             });
 
+            modelBuilder.Entity<Permission>(entity =>
+            {
+                entity.ToTable("Permission");
+
+                entity.Property(e => e.Code).HasMaxLength(255);
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Request>(entity =>
             {
                 entity.ToTable("Request", "Lab");
@@ -397,6 +412,34 @@ namespace Shaa.Persistence.Data
                     .HasConstraintName("FK_RequestService_BaseInfo");
             });
 
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Role");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Title).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<RolePermission>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("RolePermission");
+
+                entity.HasOne(d => d.Permission)
+                    .WithMany()
+                    .HasForeignKey(d => d.PermissionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RolePermission_Permission");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany()
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RolePermission_Role");
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
@@ -445,6 +488,25 @@ namespace Shaa.Persistence.Data
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.DepartmentId)
                     .HasConstraintName("FK_User_Department");
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("UserRole");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany()
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserRole_Role");
+
+                entity.HasOne(d => d.User)
+                    .WithMany()
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserRole_User");
             });
 
             modelBuilder.Entity<Ward>(entity =>
