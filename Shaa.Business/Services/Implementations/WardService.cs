@@ -27,7 +27,7 @@ public class WardService : IWardService
             {
                 Title = s.Title,
                 WardId = s.Id
-            }).AsQueryable();
+            }).OrderBy(p=>p.Title).AsQueryable();
 
         switch (filter.Sort)
         {

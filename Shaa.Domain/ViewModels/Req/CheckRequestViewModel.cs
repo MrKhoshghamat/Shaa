@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Shaa.Domain.Entities;
+using Shaa.Domain.ViewModels.BasicInfo;
 
 namespace Shaa.Domain.ViewModels.Req;
 
@@ -24,4 +25,7 @@ public class CheckRequestViewModel
     public string? TraceCode { get; set; }
     public string? IndicatorNo { get; set; }
     public User? User { get; set; }
+
+    public FilterRequestServiceViewModel FilterRequestServiceViewModel { get; set; }
+
 }

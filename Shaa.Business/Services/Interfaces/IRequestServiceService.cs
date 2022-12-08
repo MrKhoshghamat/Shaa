@@ -4,7 +4,7 @@ namespace Shaa.Business.Services.Interfaces;
 
 public interface IRequestServiceService
 {
-    Task<FilterRequestServiceViewModel> FilterWard(FilterRequestServiceViewModel filter);
+    Task<FilterRequestServiceViewModel> FilterRequestService(FilterRequestServiceViewModel filter);
     Task RegisterRequestService(RegisterRequestServiceViewModel model);
 
     //Task<FilterRequestViewModel> FilterInboxRequest(FilterRequestViewModel filter);

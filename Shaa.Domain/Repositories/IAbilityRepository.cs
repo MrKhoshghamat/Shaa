@@ -5,7 +5,7 @@ namespace Shaa.Domain.Repositories;
 
 public interface IAbilityRepository : IRepository<Ability, Guid>
 {
-    Task<bool> IsExistAbilityByTitle(string title, Guid? laboratoryId);
-    Task<Ability> GetAbilityByTitle(string title);
+    Task<bool> IsExistAbilityByTitle(int title, Guid? laboratoryId);
+    Task<Ability> GetAbilityByTitle(int title);
     Task<IQueryable<Ability>> GetAllAbility();
 }

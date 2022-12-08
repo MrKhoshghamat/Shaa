@@ -31,7 +31,7 @@ public class EquipmentService : IEquipmentService
                 InstallationDate = DateExtensions.ToShamsi((DateTime)s.InstallationDate!),
                 SupplyType = s.SupplyType.Title,
                 PurchasePriceConstruction = s.PurchasePriceConstruction,
-            }).AsQueryable();
+            }).OrderBy(p=>p.Title).AsQueryable();
 
         switch (filter.Sort)
         {

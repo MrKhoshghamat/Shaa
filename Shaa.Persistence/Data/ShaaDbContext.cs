@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Shaa.Domain.Entities;
 
 namespace Shaa.Persistence.Data
@@ -60,13 +63,17 @@ namespace Shaa.Persistence.Data
 
                 entity.Property(e => e.ImplementationTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Title).HasMaxLength(255);
-
                 entity.HasOne(d => d.Laboratory)
                     .WithMany(p => p.Abilities)
                     .HasForeignKey(d => d.LaboratoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ability_Laboratory");
+
+                entity.HasOne(d => d.TitleNavigation)
+                    .WithMany(p => p.Abilities)
+                    .HasForeignKey(d => d.Title)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ability_BaseInfo");
             });
 
             modelBuilder.Entity<Attachment>(entity =>

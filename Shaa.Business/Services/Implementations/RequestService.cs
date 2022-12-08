@@ -79,7 +79,7 @@ public class RequestService : IRequestService
                 Title = s.Title,
                 LaboratoryTitle = s.Laboratory.Title,
                 StatusTitle = "ثبت اولیه"
-            }).AsQueryable();
+            }).OrderBy(s=> s.Title).AsQueryable();
 
         switch (filter.Sort)
         {

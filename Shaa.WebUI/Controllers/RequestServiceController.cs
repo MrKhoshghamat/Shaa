@@ -92,7 +92,7 @@ public class RequestServiceController : BaseController
     public async Task<IActionResult> ListData(Guid id)
     {
         var filterModel = new FilterRequestServiceViewModel() { RequestId = id };
-        var result = await _requestServiceService.FilterWard(filterModel);
+        var result = await _requestServiceService.FilterRequestService(filterModel);
         return PartialView(result);
     }
 

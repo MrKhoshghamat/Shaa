@@ -15,9 +15,9 @@ public class RequestServiceService : IRequestServiceService
         _requestServiceRepository = requestServiceRepository;
     }
 
-    public async Task<FilterRequestServiceViewModel> FilterWard(FilterRequestServiceViewModel filter)
+    public async Task<FilterRequestServiceViewModel> FilterRequestService(FilterRequestServiceViewModel filter)
     {
-        var query = _requestServiceRepository.GetAllRequestServices(filter.RequestId);
+        var query = _requestServiceRepository.GetAllRequestServices(filter.RequestId).OrderBy(s => s.Service.Title);
 
         switch (filter.Sort)
         {
@@ -37,7 +37,7 @@ public class RequestServiceService : IRequestServiceService
             RecievedPayment = p.RecievedPayment,
             SampleCount = p.SampleCount,
             SampleTitle = p.SampleTitle,
-        }).AsQueryable();
+        }).OrderBy(s => s.ServiceTitle).AsQueryable();
 
         await filter.SetPaging(result);
         return filter;
@@ -47,7 +47,7 @@ public class RequestServiceService : IRequestServiceService
     {
         var requestService = new RequestService()
         {
-            Id = CodeGenerator.CreateId(),  
+            Id = CodeGenerator.CreateId(),
             RequestId = model.RequestId,
             ServiceId = model.ServiceId,
             TotalCost = model.TotalCost,
@@ -61,5 +61,4 @@ public class RequestServiceService : IRequestServiceService
 
         model.Id = requestService.Id;
     }
-
 }

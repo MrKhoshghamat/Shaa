@@ -17,16 +17,18 @@ public class RequestController : BaseController
     private readonly ILaboratoryRepository _laboratoryRepository;
     private readonly IUserRepository _userRepository;
     private readonly IRequestRepository _requestRepository;
+    private readonly IRequestServiceService _requestServiceService;
 
     public RequestController(IBaseInfoService baseInfoService, IRequestService requestService,
         ILaboratoryRepository laboratoryRepository,
-        IUserRepository userRepository, IRequestRepository requestRepository)
+        IUserRepository userRepository, IRequestRepository requestRepository, IRequestServiceService requestServiceService)
     {
         _baseInfoService = baseInfoService;
         _requestService = requestService;
         _laboratoryRepository = laboratoryRepository;
         _userRepository = userRepository;
         _requestRepository = requestRepository;
+        _requestServiceService = requestServiceService;
     }
 
     #endregion
@@ -144,6 +146,7 @@ public class RequestController : BaseController
     public async Task<IActionResult> RequestInfoWindow(Guid? Id)
     {
         var request = await _requestService.GetForCheckRequest((Guid)Id);
+        
  
         CheckRequestViewModel requestViewModel = new CheckRequestViewModel()
         {
@@ -158,15 +161,22 @@ public class RequestController : BaseController
             LetterPath = request.LetterPath,
             TraceCode = request.TraceCode,
             IndicatorNo = request.IndicatorNo, 
-            DescForCheck = request.DescForCheck
+            DescForCheck = request.DescForCheck,
         };
 
         ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
         ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
         ViewData["Projects"] = await _baseInfoService.GetAllProjects((int)BaseTableTypeId.Projects);
 
+        var filterModel = new FilterRequestServiceViewModel() { RequestId = (Guid)requestViewModel.Id };
+        var result = await _requestServiceService.FilterRequestService(filterModel);
+
+        requestViewModel.FilterRequestServiceViewModel = result;
+        
         var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
         requestViewModel.User = user;
+        
+        
 
         //ViewBag.RequestNo = CodeGenerator.CreateRequestNo();
 

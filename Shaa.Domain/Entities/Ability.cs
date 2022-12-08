@@ -11,7 +11,7 @@ namespace Shaa.Domain.Entities
         }
 
         public Guid Id { get; set; }
-        public string Title { get; set; } = null!;
+        public int Title { get; set; }
         public Guid LaboratoryId { get; set; }
         public string? FurtherDetailsAndProcedure { get; set; }
         public string? DescriptionOfConsumables { get; set; }
@@ -23,6 +23,7 @@ namespace Shaa.Domain.Entities
         public string? FileAttachment { get; set; }
 
         public virtual Laboratory Laboratory { get; set; } = null!;
+        public virtual BaseInfo TitleNavigation { get; set; } = null!;
         public virtual ICollection<EquipmentAbility> EquipmentAbilities { get; set; }
     }
 }

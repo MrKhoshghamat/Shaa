@@ -43,7 +43,7 @@ public class BaseInfoTypeService : IBaseInfoTypeService
             .Select(s => new BaseTableTypeListViewModel()
             {
                 Title = s.Title
-            }).AsQueryable();
+            }).OrderBy(p=>p.Title).AsQueryable();
 
         await filter.SetPaging(result);
 

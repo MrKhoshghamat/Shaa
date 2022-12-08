@@ -7,6 +7,7 @@ namespace Shaa.Domain.Entities
     {
         public BaseInfo()
         {
+            Abilities = new HashSet<Ability>();
             Departments = new HashSet<Department>();
             EquipmentCountries = new HashSet<Equipment>();
             EquipmentEmploymentStatuses = new HashSet<Equipment>();
@@ -31,6 +32,7 @@ namespace Shaa.Domain.Entities
         public string Title { get; set; } = null!;
 
         public virtual BaseTableType BaseTableType { get; set; } = null!;
+        public virtual ICollection<Ability> Abilities { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Equipment> EquipmentCountries { get; set; }
         public virtual ICollection<Equipment> EquipmentEmploymentStatuses { get; set; }

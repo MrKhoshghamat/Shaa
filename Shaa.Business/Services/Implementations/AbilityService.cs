@@ -16,15 +16,11 @@ public class AbilityService : IAbilityService
     {
         var query = (await _abilityRepository.GetAllAbility()).Where(p => p.LaboratoryId == filter.LaboratoryId);
 
-        if (!string.IsNullOrEmpty(filter.Search))
-        {
-            query = query.Where(p => p.Title.Contains(filter.Search.SanitizeText().Trim()));
-        }
 
         var result = query
             .Select(s => new AbilityListViewModel()
             {
-                Title = s.Title,
+                Title = s.TitleNavigation.Title,
                 FurtherDetailsAndProcedure = s.FurtherDetailsAndProcedure,
                 ImplementationTime = s.ImplementationTime.ToString(),
                 AbilityId = s.Id,

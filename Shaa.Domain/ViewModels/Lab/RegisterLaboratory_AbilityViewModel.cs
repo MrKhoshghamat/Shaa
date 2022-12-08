@@ -4,7 +4,7 @@ namespace Shaa.Domain.ViewModels.Lab;
 
 public class RegisterLaboratory_AbilityViewModel
 {
-    public string AbilityTitle { get; set; } = null!;
+    public int AbilityTitle { get; set; }
     public string? FurtherDetailsAndProcedure { get; set; }
     public string? DescriptionOfConsumables { get; set; }
     public string? ConsumableCost { get; set; }

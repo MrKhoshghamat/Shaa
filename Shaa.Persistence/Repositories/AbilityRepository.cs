@@ -11,12 +11,12 @@ public class AbilityRepository : Repository<Ability, Guid>, IAbilityRepository
     {
     }
 
-    public async Task<bool> IsExistAbilityByTitle(string title, Guid? laboratoryId)
+    public async Task<bool> IsExistAbilityByTitle(int title, Guid? laboratoryId)
     {
         return await _dbSet.AnyAsync(p => p.Title == title && p.LaboratoryId == laboratoryId);
     }
 
-    public async Task<Ability> GetAbilityByTitle(string title)
+    public async Task<Ability> GetAbilityByTitle(int title)
     {
         return await _dbSet.FirstOrDefaultAsync(p => p.Title == title);
     }
