@@ -12,11 +12,14 @@ public class RequestService : IRequestService
 {
     private readonly IRequestRepository _requestRepository;
     private readonly IRequestIndicatorRepository _requestIndicatorRepository;
+    private readonly IUserRepository _userRepository;
 
-    public RequestService(IRequestRepository requestRepository, IRequestIndicatorRepository requestIndicatorRepository)
+    public RequestService(IRequestRepository requestRepository, IRequestIndicatorRepository requestIndicatorRepository,
+        IUserRepository userRepository)
     {
         _requestRepository = requestRepository;
         _requestIndicatorRepository = requestIndicatorRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<FilterRequestViewModel> FilterInboxRequest(FilterRequestViewModel filter)
@@ -79,7 +82,7 @@ public class RequestService : IRequestService
                 Title = s.Title,
                 LaboratoryTitle = s.Laboratory.Title,
                 StatusTitle = "ثبت اولیه"
-            }).OrderBy(s=> s.Title).AsQueryable();
+            }).OrderBy(s => s.Title).AsQueryable();
 
         switch (filter.Sort)
         {
@@ -113,7 +116,7 @@ public class RequestService : IRequestService
                 Title = model.Title!,
                 Description = model.Description!,
                 RequestTypeId = model.RequestTypeId,
-                // LetterPath = model.LetterPath,
+                LetterPath = model.FinalPath,
                 RequestDate = model.RequestDate?.ToMiladi() ?? DateTime.Now,
                 TraceCode = traceCode,
                 Status = (int)RequestStatus.InitialRegistration
@@ -148,29 +151,39 @@ public class RequestService : IRequestService
         return await _requestRepository.GetForCheckRequest(Id);
     }
 
-    public async Task<bool> AcceptRequest(Guid Id,string DescForCheck)
+    public async Task<bool> AcceptRequest(Guid Id, string DescForCheck)
     {
-        var model =  await _requestRepository.GetForCheckRequest(Id);
+        var model = await _requestRepository.GetForCheckRequest(Id);
         model.Status = (int)RequestStatus.Confirmed;
         model.DescForCheck = DescForCheck;
-        await _requestRepository.UpdateAsync(model); 
+        await _requestRepository.UpdateAsync(model);
         return true;
     }
 
-    public async Task<bool> RejectRequest(Guid Id,string DescForCheck)
+    public async Task<bool> RejectRequest(Guid Id, string DescForCheck)
     {
-        var model =  await _requestRepository.GetForCheckRequest(Id);
+        var model = await _requestRepository.GetForCheckRequest(Id);
         model.Status = (int)RequestStatus.Rejected;
         model.DescForCheck = DescForCheck;
-        await _requestRepository.UpdateAsync(model); 
+        await _requestRepository.UpdateAsync(model);
         return true;
     }
 
     public async Task<bool> SetRequestStatus(Guid Id, RequestStatus requestStatus)
     {
         var model = await _requestRepository.GetForCheckRequest(Id);
-        model.Status = (byte)requestStatus; 
+        model.Status = (byte)requestStatus;
         await _requestRepository.UpdateAsync(model);
         return true;
+    }
+
+    public async Task SaveLetter(Guid requestId, string fileName)
+    {
+        var request = await _requestRepository.GetByIdAsync(requestId);
+
+        request.LetterPath = fileName;
+
+        await _requestRepository.UpdateAsync(request);
+        await _requestRepository.Save();
     }
 }

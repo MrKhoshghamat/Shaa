@@ -9,6 +9,16 @@
     // var requestsStatus = ViewData["RequestStatus"] as List<SelectListViewModel>;
 }
 
+@section Styles
+{
+    <style>
+        .display-none {
+            display: none !important; 
+        }
+    </style>
+}
+
+
 @* <div class="content d-flex flex-column flex-column-fluid" id="kt_content"> *@
 <form asp-action="CreateRequest"
       asp-controller="Request"
@@ -84,7 +94,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 fv-row">
-                                        <div class="dropzone dz-clickable" id="kt_modal_create_project_settings_logo">
+                                        <input asp-for="FinalPath" type="hidden"/>
+                                        <input onchange="UploadLetter('@Url.Action("SaveLetter", "Request")')" type="file" id="LetterPath" accept=".png, .jpg, .jpeg, .pdf" class="display-none"/>
+                                        <div class="dropzone dz-clickable" id="kt_modal_create_project_settings_logo" onclick="OpenLetterInput()">
                                             <div class="dz-message needsclick">
                                                 <span class="svg-icon svg-icon-3hx svg-icon-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -248,6 +260,55 @@ $(function() {
                 } 
             });
         });
+        
+        function OpenLetterInput() {
+            $("#LetterPath").click();
+        }
+        
+        function UploadLetter(url) {
+            var letterInput = document.getElementById("LetterPath");
+            if (letterInput.files.length) {
+                var file = letterInput.files[0];
+                var formData = new FormData();
+                
+                formData.append("letterPath", file);
+                
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        console.log(response)
+                        if (response.status === "Success") {
+                            $('#FinalPath').val(response.letterPath);
+                            swal({
+                                title: "موفق",
+                                text: "نامه با موفقیت ذخیره شد.",
+                                icon: "success",
+                                button: "باشه",
+                            });
+                        } else {
+                            swal({
+                                title: "خطا",
+                                text: "فرمت فایل ارسال شده معتبر نمیباشد.",
+                                icon: "error",
+                                button: "باشه",
+                            });
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            title: "خطا",
+                            text: "عملیات با خطا مواجه شد",
+                            icon: "error",
+                            button: "باشه",
+                        });
+                    }
+                });
+            }
+        }
     
     </script>
 }

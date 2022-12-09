@@ -9,7 +9,7 @@ namespace Shaa.Business.Extensions
         {
             if (validFormats != null && validFormats.Any())
             {
-                var fileFormat = Path.GetExtension(file.FileName);
+                var fileFormat = Path.GetExtension(file.FileName).ToLower();
 
                 if (validFormats.All(s => s != fileFormat))
                 {

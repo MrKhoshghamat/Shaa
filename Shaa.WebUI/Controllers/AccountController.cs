@@ -2,7 +2,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Shaa.Business.Extensions;
 using Shaa.Business.Services.Interfaces;
+using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels;
 using Shaa.WebUI.ActionFilters;
 
@@ -13,10 +15,12 @@ namespace Shaa.WebUI.Controllers
         #region Ctor
 
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IUserRepository userRepository)
         {
             _userService = userService;
+            _userRepository = userRepository;
         }
 
         #endregion
@@ -128,5 +132,6 @@ namespace Shaa.WebUI.Controllers
         }
 
         #endregion
+
     }
 }

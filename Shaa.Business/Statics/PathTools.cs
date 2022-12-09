@@ -17,6 +17,12 @@ public static class PathTools
         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/content/equipment/");
 
     public static readonly string DefaultEquipmentPath = "/content/equipment/";
+    
+    
+    
+    public static readonly string DefaultLetterPath = "DefaultLetterPath.png";
+    public static readonly string DefaultLetterServerPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/content/request/");
+    public static readonly string LetterPath = "/content/request/";
 
     #endregion
     

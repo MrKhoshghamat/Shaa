@@ -2,6 +2,7 @@
 using Shaa.Business.Extensions;
 using Shaa.Business.Generators;
 using Shaa.Business.Services.Interfaces;
+using Shaa.Business.Statics;
 using Shaa.Domain;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels.Req;
@@ -21,7 +22,8 @@ public class RequestController : BaseController
 
     public RequestController(IBaseInfoService baseInfoService, IRequestService requestService,
         ILaboratoryRepository laboratoryRepository,
-        IUserRepository userRepository, IRequestRepository requestRepository, IRequestServiceService requestServiceService)
+        IUserRepository userRepository, IRequestRepository requestRepository,
+        IRequestServiceService requestServiceService)
     {
         _baseInfoService = baseInfoService;
         _requestService = requestService;
@@ -86,7 +88,6 @@ public class RequestController : BaseController
     public async Task<IActionResult> CreateRequest(CreateRequestViewModel model)
     {
         // if (model.LetterPath == null) model.LetterPath = "DefaultRequestPath.docs";
-
         if (!ModelState.IsValid)
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
@@ -146,21 +147,21 @@ public class RequestController : BaseController
     public async Task<IActionResult> RequestInfoWindow(Guid? Id)
     {
         var request = await _requestService.GetForCheckRequest((Guid)Id);
-        
- 
+
+
         CheckRequestViewModel requestViewModel = new CheckRequestViewModel()
         {
             Id = request.Id,
             LaboratoryId = request.LaboratoryId,
             LaboratoryTitle = request.Laboratory.Title,
             UserName = request.UserName,
-            UserId = request.UserId, 
+            UserId = request.UserId,
             Title = request.Title,
             Description = request.Description,
             RequestTypeId = request.RequestTypeId,
             LetterPath = request.LetterPath,
             TraceCode = request.TraceCode,
-            IndicatorNo = request.IndicatorNo, 
+            IndicatorNo = request.IndicatorNo,
             DescForCheck = request.DescForCheck,
         };
 
@@ -172,11 +173,10 @@ public class RequestController : BaseController
         var result = await _requestServiceService.FilterRequestService(filterModel);
 
         requestViewModel.FilterRequestServiceViewModel = result;
-        
+
         var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
         requestViewModel.User = user;
-        
-        
+
 
         //ViewBag.RequestNo = CodeGenerator.CreateRequestNo();
 
@@ -203,7 +203,7 @@ public class RequestController : BaseController
     // [Authorize]
     public async Task<IActionResult> SetRequestStatus(Guid id, byte requestStatus)
     {
-        await _requestService.SetRequestStatus(id, (RequestStatus) requestStatus);
+        await _requestService.SetRequestStatus(id, (RequestStatus)requestStatus);
         return Ok(new Success() { });
     }
 
@@ -213,5 +213,31 @@ public class RequestController : BaseController
         ViewBag.TraceCode = traceCode;
 
         return View();
+    }
+
+    public async Task<IActionResult> SaveLetter(IFormFile letterPath)
+    {
+        var fileName = Guid.NewGuid() + Path.GetExtension(letterPath.FileName);
+
+        var validFormats = new List<string>()
+        {
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".pdf"
+        };
+
+        var result = letterPath.UploadFile(fileName, PathTools.DefaultLetterServerPath, validFormats);
+
+        if (!result)
+        {
+            return new JsonResult(new { status = "Error" });
+        }
+
+        // await _requestService.SaveLetter(requestId, fileName);
+        var finalPath = PathTools.DefaultLetterServerPath + fileName;
+
+        TempData[SuccessMessage] = "عملیات با موفقیت انجام شد.";
+        return new JsonResult(new { status = "Success", letterPath = finalPath.ToLower() });
     }
 }

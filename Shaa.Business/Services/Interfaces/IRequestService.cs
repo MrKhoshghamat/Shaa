@@ -13,4 +13,5 @@ public interface IRequestService
     Task<bool> AcceptRequest(Guid Id,string DescForCheck);
     Task<bool> RejectRequest(Guid Id,string DescForCheck);
     Task<bool> SetRequestStatus(Guid Id, RequestStatus requestStatus);
+    Task SaveLetter(Guid requestId, string fileName);
 }

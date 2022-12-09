@@ -19,7 +19,7 @@ public class CreateRequestViewModel
     public int RequestTypeId { get; set; }
     public string? TraceCode { get; set; }
     public string? IndicatorNo { get; set; }
-    public byte[]? FileContent { get; set; }
+    public string? FinalPath { get; set; }
     public User? User { get; set; }
 }
 
