@@ -5,6 +5,7 @@ using Shaa.Business.Statics;
 using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels;
+using Shaa.Domain.ViewModels.Authorization;
 
 namespace Shaa.Business.Services.Implementations;
 
@@ -25,7 +26,7 @@ public class UserService : IUserService
 
     public async Task<RegisterResult> RegisterUser(RegisterViewModel register)
     {
-        if(await _userRepository.IsExistByNationalNo(register.NationalNo))
+        if (await _userRepository.IsExistByNationalNo(register.NationalNo))
             return RegisterResult.UserExists;
 
         var password = PasswordHelper.EncodePasswordMd5(register.Password.SanitizeText().ToLower());
@@ -44,7 +45,7 @@ public class UserService : IUserService
 
         return RegisterResult.Success;
     }
-    
+
 
     #endregion
 
@@ -71,5 +72,38 @@ public class UserService : IUserService
         return await _userRepository.GetUserByNationNo(nationalNo);
     }
 
+
     #endregion
+    public async Task<FilterUserRoleViewModel> Filter(FilterUserRoleViewModel filter)
+    {
+        var query = await _userRepository.GetAllUsers();
+
+        //if (!string.IsNullOrEmpty(filter.Title))
+        //{
+        //    query = query.Where(p => p.Title.Contains(filter.Title.SanitizeText().Trim()));
+        //}
+
+        //switch (filter.Sort)
+        //{
+        //    case FilterEnum.AlphabeticASC:
+        //        query = query.OrderBy(p => p.Title);
+        //        break;
+        //    case FilterEnum.AlphabeticDESC:
+        //        query = query.OrderByDescending(p => p.Title);
+        //        break;
+        //}
+
+        var result = query
+            .Select(s => new UserRoleViewModel()
+            {
+                UserId = s.Id,
+                UserName = s.FirstName + " " + s.LastName,
+                //PermissionId = s.Roles,
+                //PermissionName = ,
+            }).OrderBy(p => p.UserId).AsQueryable();
+ 
+        await filter.SetPaging(result);
+ 
+        return filter;
+    }
 }

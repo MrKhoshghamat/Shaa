@@ -12,47 +12,64 @@ namespace Shaa.WebUI.Controllers
 {
     public class AuthorizationController : Controller
     {
-        // #region Ctor
+        #region Ctor
 
-        // private readonly IAuthorizationService _authorizationService;
-        // private readonly IUserRepository _userRepository;
-        //
-        // public AuthorizationController(IAuthorizationService authorizationService, IUserRepository userRepository)
-        // {
-        //     _authorizationService = authorizationService;
-        //     _userRepository = userRepository;
-        // }
-        //
-        // #endregion
-        //
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
+
+        public AuthorizationController(
+            IUserService userService,
+            IAuthorizationService authorizationService,
+              IUserRepository userRepository)
+        {
+            _userService = userService;
+            _authorizationService = authorizationService;
+            _userRepository = userRepository;
+        }
+
+        #endregion
+
         [HttpGet]
         public IActionResult AuthorizationIndex()
         {
             return View();
         }
-        //
-        // [HttpPost]
-        // public async Task<IActionResult> RoleIndexPartial(FilterRoleViewModel filter)
-        // {
-        //     var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
-        //     filter.User = user;
-        //     filter.UserName = user.GetUserName();
-        //     filter.UserId = user.Id;
-        //     var requestList = await _requestService.FilterInboxRequest(filter);
-        //
-        //     return PartialView(requestList);
-        // }
-        //
-        // public async Task<IActionResult> UserPermissionIndexPartial(FilterUserPermissionViewModel filter)
-        // {
-        //     var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
-        //     filter.User = user;
-        //     filter.UserName = user.GetUserName();
-        //     filter.UserId = user.Id;
-        //     
-        //     var permission = await _
-        // }
-        //
+
+        [HttpPost]
+        public async Task<IActionResult> RoleIndexPartial(FilterRoleViewModel filter)
+        {
+            //var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
+            //filter.User = user;
+            //filter.UserName = user.GetUserName();
+            //filter.UserId = user.Id;
+
+            var requestList = await _authorizationService.Filter(filter);
+
+            return PartialView(requestList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserRoleIndexPartial(FilterUserRoleViewModel filter)
+        { 
+            var requestList = await _userService.Filter(filter);
+
+            return PartialView(requestList);
+        }
+
+
+        //public async Task<IActionResult> UserPermissionIndexPartial(FilterUserPermissionViewModel filter)
+        //{
+        //    var user = await _userRepository.GetUserById(HttpContext.User.GetUserId());
+        //    filter.User = user;
+        //    filter.UserName = user.GetUserName();
+        //    filter.UserId = user.Id;
+
+        //    var permission = await _
+
+        //        return PartialView(requestList);
+        //}
+
         // [HttpGet]
         // public async Task<IActionResult> CreateRole()
         // {

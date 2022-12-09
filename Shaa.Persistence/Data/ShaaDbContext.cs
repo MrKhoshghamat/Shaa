@@ -31,18 +31,11 @@ namespace Shaa.Persistence.Data
         public virtual DbSet<RequestIndicator> RequestIndicators { get; set; } = null!;
         public virtual DbSet<RequestService> RequestServices { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
-        public virtual DbSet<RolePermission> RolePermissions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
-        public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
         public virtual DbSet<Ward> Wards { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-93MQ3R6\\SQL_DEV2019;Initial Catalog = Shaa;User ID=sa;Password=#1234HuneR@1234HuneR;");
-            }
+        { 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -337,6 +330,19 @@ namespace Shaa.Persistence.Data
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.HasMany(d => d.Roles)
+                    .WithMany(p => p.Permissions)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "RolePermission",
+                        l => l.HasOne<Role>().WithMany().HasForeignKey("RoleId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_RolePermission_Role"),
+                        r => r.HasOne<Permission>().WithMany().HasForeignKey("PermissionId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_RolePermission_Permission"),
+                        j =>
+                        {
+                            j.HasKey("PermissionId", "RoleId");
+
+                            j.ToTable("RolePermission");
+                        });
             });
 
             modelBuilder.Entity<Request>(entity =>
@@ -428,25 +434,6 @@ namespace Shaa.Persistence.Data
                 entity.Property(e => e.Title).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<RolePermission>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("RolePermission");
-
-                entity.HasOne(d => d.Permission)
-                    .WithMany()
-                    .HasForeignKey(d => d.PermissionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_RolePermission_Permission");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany()
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_RolePermission_Role");
-            });
-
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
@@ -495,25 +482,19 @@ namespace Shaa.Persistence.Data
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.DepartmentId)
                     .HasConstraintName("FK_User_Department");
-            });
 
-            modelBuilder.Entity<UserRole>(entity =>
-            {
-                entity.HasNoKey();
+                entity.HasMany(d => d.Roles)
+                    .WithMany(p => p.Users)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "UserRole",
+                        l => l.HasOne<Role>().WithMany().HasForeignKey("RoleId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_UserRole_Role"),
+                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_UserRole_User"),
+                        j =>
+                        {
+                            j.HasKey("UserId", "RoleId");
 
-                entity.ToTable("UserRole");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany()
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserRole_Role");
-
-                entity.HasOne(d => d.User)
-                    .WithMany()
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserRole_User");
+                            j.ToTable("UserRole");
+                        });
             });
 
             modelBuilder.Entity<Ward>(entity =>

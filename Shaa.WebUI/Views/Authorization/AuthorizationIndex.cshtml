@@ -82,11 +82,11 @@
     <script src="/plugins/custom/jquery/jquery.form.js"></script>
     <script>
         $(document).ready(function() {
-            $('#authorization_tab1_content').load('/Authorization/AuthorizationIndexPartial', { IsPermission: true }, function() {
+            $('#authorization_tab1_content').load('/Authorization/RoleIndexPartial', {}, function() {
 
             });
 
-            $('#authorization_tab2_content').load('/Authorization/AuthorizationIndexPartial', { IsPermission: false }, function() {
+            $('#authorization_tab2_content').load('/Authorization/UserRoleIndexPartial', {}, function() {
 
             });
         })

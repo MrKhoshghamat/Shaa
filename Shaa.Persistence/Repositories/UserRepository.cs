@@ -13,7 +13,7 @@ public class UserRepository : Repository<User, Guid>, IUserRepository
 
     public UserRepository(ShaaDbContext context) : base(context)
     {
-       
+
     }
 
     #endregion
@@ -30,7 +30,7 @@ public class UserRepository : Repository<User, Guid>, IUserRepository
 
     public async Task<User> GetUserByEmail(string email)
     {
-        return await _dbSet.FirstOrDefaultAsync(p => p.Email== email);
+        return await _dbSet.FirstOrDefaultAsync(p => p.Email == email);
     }
 
     public async Task<User?> GetUserByNationNo(string? nationalNo)
@@ -46,5 +46,16 @@ public class UserRepository : Repository<User, Guid>, IUserRepository
     public async Task<User> GetUserById(Guid userId)
     {
         return await _dbSet.Where(p => p.Id == userId).FirstOrDefaultAsync();
+    }
+
+    public User GetUserWithRolePermissionById(Guid userId)
+    {
+        return _dbSet.Where(p => p.Id == userId)
+            .Include(p => p.Roles).ThenInclude(p => p.Permissions).FirstOrDefault();
+    }
+
+    public async Task<IQueryable<User>> GetAllUsers()
+    {
+        return _dbSet.AsQueryable();
     }
 }

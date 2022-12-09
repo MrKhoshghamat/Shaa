@@ -1,5 +1,6 @@
 ﻿using Shaa.Domain.Entities;
 using Shaa.Domain.ViewModels;
+using Shaa.Domain.ViewModels.Authorization;
 
 namespace Shaa.Business.Services.Interfaces;
 
@@ -17,4 +18,7 @@ public interface IUserService
     Task<User?> GetUserByNationalNo(string nationalNo);
 
     #endregion
+
+
+    Task<FilterUserRoleViewModel> Filter(FilterUserRoleViewModel filter);
 }

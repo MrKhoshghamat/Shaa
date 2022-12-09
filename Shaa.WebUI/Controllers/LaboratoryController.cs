@@ -5,6 +5,7 @@ using Shaa.Business.Statics;
 using Shaa.Domain;
 using Shaa.Domain.ViewModels;
 using Shaa.Domain.ViewModels.Lab;
+using Shaa.WebUI.ActionFilters;
 
 namespace Shaa.WebUI.Controllers;
 
@@ -38,6 +39,7 @@ public class LaboratoryController : BaseController
 
     [HttpGet]
     [Authorize]
+    [CustomAutorize("LaboratoryIndex")]
     public async Task<IActionResult> LaboratoryIndex(FilterLaboratoryViewModel filter)
     {
         var result = await _registerLaboratoryService.FilterLaboratory(filter);
@@ -254,7 +256,7 @@ public class LaboratoryController : BaseController
             await _baseInfoService.GetAllUsageTypes((int)BaseTableTypeId.UsageType);
 
         return PartialView(new RegisterLaboratory_EquipmentViewModel()
-            { Id = model.Id, LaboratoryId = model.LaboratoryId });
+        { Id = model.Id, LaboratoryId = model.LaboratoryId });
     }
 
     [HttpPost]
@@ -311,7 +313,7 @@ public class LaboratoryController : BaseController
         ViewData["AbilityTitles"] =
             await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
 
-        
+
 
         return PartialView(model);
     }

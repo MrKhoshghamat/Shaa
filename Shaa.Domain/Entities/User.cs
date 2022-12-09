@@ -8,6 +8,7 @@ namespace Shaa.Domain.Entities
         public User()
         {
             Requests = new HashSet<Request>();
+            Roles = new HashSet<Role>();
         }
 
         public Guid Id { get; set; }
@@ -33,5 +34,7 @@ namespace Shaa.Domain.Entities
         public virtual BaseInfo? Country { get; set; }
         public virtual Department? Department { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
+
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }
