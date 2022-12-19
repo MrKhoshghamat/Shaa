@@ -20,7 +20,8 @@ public class AttachmentService : IAttachmentService
 
     public async Task<FilterAttachmentViewModel> Filter(FilterAttachmentViewModel filter)
     {
-        var query = _attachmentRepository.GetAllAttachment(null);
+        var query = _attachmentRepository.GetAllAttachment(null)
+            .Where(p => p.EntityName == filter.EntityName && p.EntityRecordId == filter.EntityRecordId);
 
         //switch (filter.Sort)
         //{
@@ -51,7 +52,7 @@ public class AttachmentService : IAttachmentService
         return filter;
     }
 
-    public async Task RegisterRequestService(AttachmentViewModel model, byte[] fileContent)
+    public async Task AddAttachment(AttachmentViewModel model, byte[] fileContent)
     {
         var requestService = new Attachment()
         {
@@ -77,5 +78,19 @@ public class AttachmentService : IAttachmentService
         await _attachmentRepository.Save();
 
         model.Id = requestService.Id;
+    }
+
+    public async Task<Attachment?> GetAttachment(Guid Id, bool withContent = false)
+    {
+        var dbModel = await _attachmentRepository.GetAttachment(Id, withContent);
+        return dbModel;
+    }
+
+    public async Task DeleteAttachment(Guid Id)
+    {
+        var dbModel = await _attachmentRepository.GetAttachment(Id, true);
+
+        await _attachmentRepository.DeleteAttachmentAsync(dbModel!);
+        await _attachmentRepository.Save();
     }
 }

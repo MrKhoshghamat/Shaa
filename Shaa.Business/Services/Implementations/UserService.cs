@@ -55,7 +55,7 @@ public class UserService : IUserService
     {
         var user = await _userRepository.GetUserByNationNo(login.NationalNo);
 
-        if (user.Equals(null))
+        if (user == null)
             return LoginResult.UserNotFound;
 
         var hashedPassword = PasswordHelper.EncodePasswordMd5(login.Password.SanitizeText().ToLower());

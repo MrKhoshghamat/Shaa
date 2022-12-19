@@ -47,9 +47,9 @@ namespace Shaa.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveAttachment(AttachmentViewModel model, IFormFile attachmentFile)
         {
-           /* if (!ModelState.IsValid)
-                return Ok(new HassError() { Data = model }
-                    .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));*/
+            /* if (!ModelState.IsValid)
+                 return Ok(new HassError() { Data = model }
+                     .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));*/
 
             // if (attachmentFile != null && attachmentFile.Length > 0)
             // var isAudioFile = true;//request.File.ContentType.ToLower().Contains("audio");
@@ -72,7 +72,7 @@ namespace Shaa.WebUI.Controllers
                 bytes = ms.ToArray();
             }
 
-            await _attachmentService.RegisterRequestService(model, bytes);
+            await _attachmentService.AddAttachment(model, bytes);
 
             //switch (result)
             //{
@@ -84,6 +84,20 @@ namespace Shaa.WebUI.Controllers
             //}
 
             return Ok(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAttachment(Guid uniqueId)
+        {
+            await _attachmentService.DeleteAttachment(uniqueId);
+            return Ok(true);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadAttachment(Guid Id)
+        {
+            var dbModel = await _attachmentService.GetAttachment(Id, true);
+            return File(dbModel.AttachmentContent.FileContent, dbModel.FileType);
         }
     }
 

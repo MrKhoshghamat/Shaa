@@ -44,4 +44,48 @@
             InitComponents();
         }, "modal-xl")
     }
+
+    function DeleteAttachment(id) {
+        swal({
+            title: "آیا فایل مورد نظر را حذف می کنید ؟",
+            text: "قبل از حذف از انجام این عمل مطمئن شوید!",
+            //icon: "info",
+            buttons: {
+                confirm: { text: 'حذف', className: 'sweet-warning' },
+                cancel: 'انصراف'
+            },
+            dangerMode: true,
+        }).then((willChange) => {
+            if (willChange) {
+                $.ajax({
+                    url: '/Attachment/DeleteAttachment',
+                    method: 'POST',
+                    data: {
+                        uniqueId: id
+                    },
+                    success: function(res) {
+                        ShowSuccess('عملیات با موفقیت انجام شد');
+                        LoadAttachmentData();
+
+                        //if (res.success == false) {
+                        //    if (res.errors)
+                        //        ShowError(res.errors[0].message);
+                        //    else
+                        //        ShowSuccess('عملیات موفقیت آمیز نبود');
+                        //} else {
+                        //    if (res.success == true) {
+                        //        ShowSuccess('عملیات با موفقیت انجام شد');
+                        //        LoadAttachmentData();
+                        //    }
+                        //}
+                    },
+                    error: function(e) {
+                        console.log('error : ', e);
+                    }
+                });
+            } else {
+
+            }
+        });
+    }
 </script>

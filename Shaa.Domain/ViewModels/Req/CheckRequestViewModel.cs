@@ -24,6 +24,7 @@ public class CheckRequestViewModel
     public string? LetterPath { get; set; }
     public string? TraceCode { get; set; }
     public string? IndicatorNo { get; set; }
+    public Guid? RequestAttachmentUniqueId { get; set; }
     public User? User { get; set; }
 
     public FilterRequestServiceViewModel FilterRequestServiceViewModel { get; set; }

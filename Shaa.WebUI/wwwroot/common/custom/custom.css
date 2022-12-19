@@ -3,7 +3,7 @@
 }
 
 .mb-12 {
-    margin-bottom: 1rem!important;
+    margin-bottom: 1rem !important;
 }
 
 .stepper.stepper-links .stepper-nav .stepper-item {
@@ -14,15 +14,17 @@
     padding-right: 2rem;
 }
 
+.swal-text {
+    text-align: right !important;
+}
+
 /*.select2-dropdown {*/
 /*    z-index: 9001;*/
 /*}*/
-
 /*.stepper.stepper-links .stepper-nav { 
     margin: 0px 100px;
     justify-content: space-between; 
 }*/
-
 .sk-cube-grid {
     width: 100px;
     height: 100px;

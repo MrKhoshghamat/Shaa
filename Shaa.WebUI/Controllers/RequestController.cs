@@ -128,6 +128,7 @@ public class RequestController : BaseController
             LetterPath = request.LetterPath,
             TraceCode = request.TraceCode,
             IndicatorNo = request.IndicatorNo,
+            RequestAttachmentUniqueId = request.RequestAttachment?.UniqueId,
             //User = request.User,
         };
 
@@ -163,6 +164,7 @@ public class RequestController : BaseController
             TraceCode = request.TraceCode,
             IndicatorNo = request.IndicatorNo,
             DescForCheck = request.DescForCheck,
+            RequestAttachmentUniqueId = request.RequestAttachment?.UniqueId
         };
 
         ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
