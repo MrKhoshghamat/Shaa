@@ -77,6 +77,10 @@
     var request_service_form_Validation = FormValidation.formValidation(request_service_form, {
         fields: {
             ServiceId: { validators: { notEmpty: { message: "لطفا خدمت ارائه شده را انتخاب کنید" } } },
+            TotalCost: { validators: { notEmpty: { message: "لطفا هزینه کلی را انتخاب کنید" } } },
+            RecievedPayment: { validators: { notEmpty: { message: "لطفا مبلغ دریافتی را انتخاب کنید" } } },
+            SampleCount: { validators: { notEmpty: { message: "لطفا تعداد نمونه را انتخاب کنید" } } },
+            SampleTitle: { validators: { notEmpty: { message: "لطفا عنوان نمونه را انتخاب کنید" } } },
         },
         plugins: {
             trigger: new FormValidation.plugins.Trigger,
