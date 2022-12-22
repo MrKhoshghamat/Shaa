@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shaa.Business.Generators;
 using Shaa.Business.Services.Interfaces;
 using Shaa.Business.Statics;
 using Shaa.Domain;
 using Shaa.Domain.ViewModels;
+using Shaa.Domain.ViewModels.Attachment;
 using Shaa.Domain.ViewModels.Lab;
 using Shaa.WebUI.ActionFilters;
 
@@ -18,13 +20,15 @@ public class LaboratoryController : BaseController
     private readonly IWardService _wardService;
     private readonly IEquipmentService _equipmentService;
     private readonly IAbilityService _abilityService;
+    private readonly IAttachmentService _attachmentService;
 
     public LaboratoryController(
         IBaseInfoService baseInfoService,
         IRegisterLaboratoryService registerLaboratoryService,
         IWardService wardService,
         IEquipmentService equipmentService,
-        IAbilityService abilityService
+        IAbilityService abilityService,
+        IAttachmentService attachmentService
     )
     {
         _baseInfoService = baseInfoService;
@@ -32,8 +36,9 @@ public class LaboratoryController : BaseController
         _wardService = wardService;
         _equipmentService = equipmentService;
         _abilityService = abilityService;
+        _attachmentService = attachmentService;
     }
-
+     
     #endregion
 
 
@@ -125,7 +130,7 @@ public class LaboratoryController : BaseController
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> MainPartial(RegisterLaboratory_MainViewModel model)
+    public async Task<IActionResult> MainPartial(RegisterLaboratory_MainViewModel model, IFormFile attachmentFile)
     {
         if (model.LaboratoryImagePath == null) model.LaboratoryImagePath = PathTools.DefaultLabImage;
 
@@ -133,9 +138,35 @@ public class LaboratoryController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
+ 
+        #region Create Attachment
+        byte[] bytes;
+        AttachmentViewModel am = new AttachmentViewModel()
+        {
+            EntityName = "Equipment",
+            FileName = attachmentFile.FileName,
+            FileType = attachmentFile.ContentType,
+            FileSize = attachmentFile.Length.ToString(),
+            Description = "",
+            RegisterTime = DateTime.Now,
+            UniqueId = CodeGenerator.CreateId()
+        };
+
+        using (var ms = new MemoryStream())
+        {
+            ms.Position = 0;
+            attachmentFile.CopyTo(ms);
+            bytes = ms.ToArray();
+        }
+
+        #endregion 
+ 
         var result = (model.Id != null)
             ? await _registerLaboratoryService.UpdateMainInfo(model)
             : await _registerLaboratoryService.RegisterMainInfo(model);
+
+        am.EntityRecordId = model.Id.ToString();
+        await _attachmentService.AddAttachment(am, bytes);
 
         switch (result)
         {
@@ -261,7 +292,7 @@ public class LaboratoryController : BaseController
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> SaveEquipment(RegisterLaboratory_EquipmentViewModel model)
+    public async Task<IActionResult> SaveEquipment(RegisterLaboratory_EquipmentViewModel model, IFormFile attachmentFile)
     {
         if (model.EquipmentImage == null) model.EquipmentImage = PathTools.DefaultLabPath;
 
@@ -269,7 +300,31 @@ public class LaboratoryController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
+        #region Create Attachment
+        byte[] bytes;
+        AttachmentViewModel am = new AttachmentViewModel()
+        {
+            EntityName = "Equipment", 
+            FileName = attachmentFile.FileName,
+            FileType = attachmentFile.ContentType,
+            FileSize = attachmentFile.Length.ToString(),
+            Description = "",
+            RegisterTime = DateTime.Now,
+            UniqueId = CodeGenerator.CreateId()
+        };
+
+        using (var ms = new MemoryStream())
+        {
+            ms.Position = 0;
+            attachmentFile.CopyTo(ms);
+            bytes = ms.ToArray();
+        }
+
+        #endregion
+
         var result = await _registerLaboratoryService.RegisterEquipment(model);
+        am.EntityRecordId = model.Id.ToString();
+        await _attachmentService.AddAttachment(am, bytes);
 
         switch (result)
         {

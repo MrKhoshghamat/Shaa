@@ -18,10 +18,9 @@ namespace Shaa.WebUI.Controllers
         }
 
         #endregion
-
-
+  
         [HttpPost]
-        public async Task<IActionResult> ListTab(string entityName, string entityRecordId)
+        public async Task<IActionResult> ListTab(string entityName, string entityRecordId,int viewMode = 1)
         {
             var filterModel = new FilterAttachmentViewModel()
             {
@@ -29,13 +28,16 @@ namespace Shaa.WebUI.Controllers
                 EntityRecordId = entityRecordId
             };
 
+            ViewBag.ViewMode = viewMode;
+
             return PartialView(filterModel);
         }
-
+ 
         [HttpPost]
-        public async Task<IActionResult> ListData(FilterAttachmentViewModel model)
+        public async Task<IActionResult> ListData(FilterAttachmentViewModel model, int viewMode = 1)
         {
             var result = await _attachmentService.Filter(model);
+            ViewBag.ViewMode = viewMode;
             return PartialView(result);
         }
 

@@ -103,7 +103,7 @@
                                             <th class="min-w-120px">هزینه دریافتی</th>
                                             <th class="min-w-120px">تعداد نمونه</th>
                                             <th class="min-w-120px">عنوان نمونه</th>
-                                            <th class="min-w-120px text-end">عملیات</th>
+                                         @*   <th class="min-w-120px text-end">عملیات</th>*@
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -132,7 +132,7 @@
                                                     <td>
                                                         <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">@ward.SampleTitle</a>
                                                     </td>
-                                                    <td>
+                                                   @* <td>
                                                         <div class="d-flex justify-content-end flex-shrink-0">
                                                             <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                                 <span class="svg-icon svg-icon-3">
@@ -161,7 +161,7 @@
                                                             </a>
                                                         </div>
                                                     </td>
-                                                </tr>
+*@                                                </tr>
                                             }
                                         }
                                     </tbody>
@@ -205,6 +205,12 @@
                                 </div>*@
                             </div>
                         </div>
+
+
+                        <div>
+                            <div id="request_services_attachment">
+                            </div>
+                        </div>
                         <!--begin::Actions-->
                         <div class="float-end mt-5">
                             <a class="btn btn-danger me-2" onclick="closeOpenDialogContent($('#content-RequestInfo-dialog'));">
@@ -221,3 +227,11 @@
     </div>
 
 </div>
+
+<script>
+    $(function() {
+        $('#request_services_attachment').load('/Attachment/ListTab', { entityName: 'RequestService', entityRecordId: '@(Model.Id)', viewMode: 2 }, function() {
+
+        });
+    });
+</script>

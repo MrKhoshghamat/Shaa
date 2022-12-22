@@ -80,6 +80,32 @@ public class AttachmentService : IAttachmentService
         model.Id = requestService.Id;
     }
 
+    public Attachment CreateAttachment(AttachmentViewModel model, byte[] fileContent)
+    {
+        var attachment = new Attachment()
+        {
+            EntityName = model.EntityName,
+            EntityRecordId = model.EntityRecordId,
+            FileType = model.FileType,
+            FileSize = model.FileSize,
+            FileName = model.FileName,
+            Description = model.Description,
+            DeletedDate = model.DeletedDate,
+            RegisterTime = model.RegisterTime,
+            UserId = model.UserId,
+            UniqueId = model.UniqueId,
+        };
+
+        attachment.AttachmentContent = new AttachmentContent()
+        {
+            IdNavigation = attachment,
+            FileContent = fileContent
+        };
+
+        return attachment;
+    }
+
+
     public async Task<Attachment?> GetAttachment(Guid Id, bool withContent = false)
     {
         var dbModel = await _attachmentRepository.GetAttachment(Id, withContent);

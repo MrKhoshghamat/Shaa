@@ -285,7 +285,7 @@ public class BaseInfoService : IBaseInfoService
         {
             Id = s.Id,
             Title = s.Title
-        }).ToList();
+        }).OrderBy(p => p.Title).ToList();
     }
 
     public async Task<List<GuidSelectListViewModel>> GetAllEquipments(Guid? laboratoryId)

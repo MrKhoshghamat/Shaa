@@ -5,6 +5,7 @@ using Shaa.Business.Services.Interfaces;
 using Shaa.Business.Statics;
 using Shaa.Domain;
 using Shaa.Domain.Repositories;
+using Shaa.Domain.ViewModels.Attachment;
 using Shaa.Domain.ViewModels.Req;
 
 namespace Shaa.WebUI.Controllers;
@@ -19,11 +20,13 @@ public class RequestController : BaseController
     private readonly IUserRepository _userRepository;
     private readonly IRequestRepository _requestRepository;
     private readonly IRequestServiceService _requestServiceService;
+    private readonly IAttachmentService _attachmentService;
 
     public RequestController(IBaseInfoService baseInfoService, IRequestService requestService,
         ILaboratoryRepository laboratoryRepository,
         IUserRepository userRepository, IRequestRepository requestRepository,
-        IRequestServiceService requestServiceService)
+        IRequestServiceService requestServiceService,
+        IAttachmentService attachmentService)
     {
         _baseInfoService = baseInfoService;
         _requestService = requestService;
@@ -31,7 +34,9 @@ public class RequestController : BaseController
         _userRepository = userRepository;
         _requestRepository = requestRepository;
         _requestServiceService = requestServiceService;
+        _attachmentService = attachmentService;
     }
+
 
     #endregion
 
@@ -68,10 +73,12 @@ public class RequestController : BaseController
 
 
     [HttpGet]
-    public async Task<IActionResult> CreateRequest()
+    public async Task<IActionResult> CreateRequest(string id)
     {
         CreateRequestViewModel requestViewModel = new CreateRequestViewModel();
-        ViewData["Laboratories"] = await _baseInfoService.GetAllLaboratories();
+
+        var laboratories = await _baseInfoService.GetAllLaboratories();
+        ViewData["Laboratories"] = string.IsNullOrWhiteSpace(id) ? laboratories : laboratories.Where(p => p.Id == Guid.Parse(id)).ToList();
         ViewData["RequestTypes"] = await _baseInfoService.GetAllRequestTypes((int)BaseTableTypeId.RequestType);
         ViewData["Projects"] = await _baseInfoService.GetAllProjects((int)BaseTableTypeId.Projects);
 
@@ -85,7 +92,7 @@ public class RequestController : BaseController
 
     [HttpPost]
     // [Authorize]
-    public async Task<IActionResult> CreateRequest(CreateRequestViewModel model)
+    public async Task<IActionResult> CreateRequest(CreateRequestViewModel model, IFormFile attachmentFile)
     {
         // if (model.LetterPath == null) model.LetterPath = "DefaultRequestPath.docs";
         if (!ModelState.IsValid)
@@ -94,7 +101,32 @@ public class RequestController : BaseController
 
         model.UserId = HttpContext.User.GetUserId();
 
-        var result = await _requestService.RegisterRequest(model);
+        #region Create Attachment
+        byte[] bytes;
+        AttachmentViewModel am = new AttachmentViewModel()
+        {
+            EntityName = "Request",
+            EntityRecordId = "0",
+            FileName = attachmentFile.FileName,
+            FileType = attachmentFile.ContentType,
+            FileSize = attachmentFile.Length.ToString(),
+            Description = "",
+            RegisterTime = DateTime.Now,
+            UniqueId = CodeGenerator.CreateId()
+        };
+
+        using (var ms = new MemoryStream())
+        {
+            ms.Position = 0;
+            attachmentFile.CopyTo(ms);
+            bytes = ms.ToArray();
+        }
+
+        #endregion
+
+        var attachment = _attachmentService.CreateAttachment(am, bytes);
+
+        var result = await _requestService.RegisterRequest(model, attachment);
 
         switch (result)
         {
@@ -239,7 +271,7 @@ public class RequestController : BaseController
         // await _requestService.SaveLetter(requestId, fileName);
         var finalPath = PathTools.DefaultLetterServerPath + fileName;
 
-        TempData[SuccessMessage] = "عملیات با موفقیت انجام شد.";
+        //TempData[SuccessMessage] = "عملیات با موفقیت انجام شد.";
         return new JsonResult(new { status = "Success", letterPath = finalPath.ToLower() });
     }
 }

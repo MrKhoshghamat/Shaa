@@ -17,13 +17,13 @@ namespace Shaa.Business.Extensions
         }
 
         public static string GetUserName(this User user)
-        {
-            if (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName))
+        { 
+            if (!string.IsNullOrEmpty(user?.FirstName) && !string.IsNullOrEmpty(user?.LastName))
             {
                 return $"{user.FirstName} {user.LastName}";
             }
 
-            var email = user.Email.Split("@")[0];
+            var email = user?.Email?.Split("@")[0];
 
             return email;
         }

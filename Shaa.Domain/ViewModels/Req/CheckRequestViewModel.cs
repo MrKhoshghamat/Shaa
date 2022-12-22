@@ -26,7 +26,8 @@ public class CheckRequestViewModel
     public string? IndicatorNo { get; set; }
     public Guid? RequestAttachmentUniqueId { get; set; }
     public User? User { get; set; }
-
     public FilterRequestServiceViewModel FilterRequestServiceViewModel { get; set; }
+
+    //public List<Entities.Attachment> ServiceAttachments { get; set; }
 
 }

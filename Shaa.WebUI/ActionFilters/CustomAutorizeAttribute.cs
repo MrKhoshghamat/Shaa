@@ -24,7 +24,7 @@ namespace Shaa.WebUI.ActionFilters
 
             if (!permissions.Any(p => p.Code == _permissionCode))
             {
-                context.HttpContext.Response.StatusCode = 403;
+                //context.HttpContext.Response.StatusCode = 403;
             }
         }
     }

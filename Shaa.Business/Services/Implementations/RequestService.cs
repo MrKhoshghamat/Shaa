@@ -51,15 +51,17 @@ public class RequestService : IRequestService
                 StatusTitle = ((RequestStatus)s.Status!).GetDisplayName()
             }).AsQueryable();
 
-        switch (filter.Sort)
-        {
-            case FilterEnum.AlphabeticASC:
-                query = query.OrderBy(p => p.Title);
-                break;
-            case FilterEnum.AlphabeticDESC:
-                query = query.OrderByDescending(p => p.Title);
-                break;
-        }
+        query = query.OrderByDescending(p => p.RequestDate);
+
+        //switch (filter.Sort)
+        //{
+        //    case FilterEnum.AlphabeticASC:
+        //        query = query.OrderBy(p => p.Title);
+        //        break;
+        //    case FilterEnum.AlphabeticDESC:
+        //        query = query.OrderByDescending(p => p.Title);
+        //        break;
+        //}
 
         await filter.SetPaging(result);
         return filter;
@@ -98,7 +100,7 @@ public class RequestService : IRequestService
         return filter;
     }
 
-    public async Task<RequestResult> RegisterRequest(CreateRequestViewModel model)
+    public async Task<RequestResult> RegisterRequest(CreateRequestViewModel model, Attachment attachment)
     {
         if (await _requestRepository.IsExistRequestByRequestNo(model.IndicatorNo)) return RequestResult.IsExist;
 
@@ -119,12 +121,14 @@ public class RequestService : IRequestService
                 LetterPath = model.FinalPath,
                 RequestDate = model.RequestDate?.ToMiladi() ?? DateTime.Now,
                 TraceCode = traceCode,
-                Status = (int)RequestStatus.InitialRegistration
+                Status = (int)RequestStatus.InitialRegistration,
+                RequestAttachment = attachment
             };
 
             await _requestRepository.AddAsync(request);
             await _requestRepository.Save();
 
+            attachment.EntityRecordId = request.Id.ToString();
             var requestIndicator = new RequestIndicator()
             {
                 RequestId = request.Id,
@@ -136,6 +140,7 @@ public class RequestService : IRequestService
             await _requestIndicatorRepository.Save();
 
             model.TraceCode = request.TraceCode;
+            model.Id = request.Id;
 
             return RequestResult.Success;
         }

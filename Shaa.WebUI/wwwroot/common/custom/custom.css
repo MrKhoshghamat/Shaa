@@ -6,6 +6,10 @@
     margin-bottom: 1rem !important;
 }
 
+#AttachmentFile {
+    width: 100%;
+}
+
 .stepper.stepper-links .stepper-nav .stepper-item {
     padding-left: 2rem;
     position: relative;
