@@ -4,6 +4,7 @@ using Shaa.Business.Generators;
 using Shaa.Business.Services.Interfaces;
 using Shaa.Business.Statics;
 using Shaa.Domain;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels.Attachment;
 using Shaa.Domain.ViewModels.Req;
@@ -102,29 +103,38 @@ public class RequestController : BaseController
         model.UserId = HttpContext.User.GetUserId();
 
         #region Create Attachment
-        byte[] bytes;
-        AttachmentViewModel am = new AttachmentViewModel()
-        {
-            EntityName = "Request",
-            EntityRecordId = "0",
-            FileName = attachmentFile.FileName,
-            FileType = attachmentFile.ContentType,
-            FileSize = attachmentFile.Length.ToString(),
-            Description = "",
-            RegisterTime = DateTime.Now,
-            UniqueId = CodeGenerator.CreateId()
-        };
 
-        using (var ms = new MemoryStream())
+        AttachmentViewModel am = null;
+        byte[] bytes = new byte[] {};
+        Attachment attachment = null;
+
+        if (attachmentFile != null)
         {
-            ms.Position = 0;
-            attachmentFile.CopyTo(ms);
-            bytes = ms.ToArray();
+            am = new AttachmentViewModel()
+            {
+                EntityName = "Request",
+                EntityRecordId = "0",
+                FileName = attachmentFile.FileName,
+                FileType = attachmentFile.ContentType,
+                FileSize = attachmentFile.Length.ToString(),
+                Description = "",
+                RegisterTime = DateTime.Now,
+                UniqueId = CodeGenerator.CreateId()
+            };
+
+            using (var ms = new MemoryStream())
+            {
+                ms.Position = 0;
+                attachmentFile.CopyTo(ms);
+                bytes = ms.ToArray();
+            }
+            
+            attachment = _attachmentService.CreateAttachment(am, bytes);
+
         }
+        
 
         #endregion
-
-        var attachment = _attachmentService.CreateAttachment(am, bytes);
 
         var result = await _requestService.RegisterRequest(model, attachment);
 

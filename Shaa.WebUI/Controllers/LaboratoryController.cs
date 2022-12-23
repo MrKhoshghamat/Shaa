@@ -38,7 +38,7 @@ public class LaboratoryController : BaseController
         _abilityService = abilityService;
         _attachmentService = attachmentService;
     }
-     
+
     #endregion
 
 
@@ -138,35 +138,44 @@ public class LaboratoryController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
- 
-        #region Create Attachment
-        byte[] bytes;
-        AttachmentViewModel am = new AttachmentViewModel()
-        {
-            EntityName = "Equipment",
-            FileName = attachmentFile.FileName,
-            FileType = attachmentFile.ContentType,
-            FileSize = attachmentFile.Length.ToString(),
-            Description = "",
-            RegisterTime = DateTime.Now,
-            UniqueId = CodeGenerator.CreateId()
-        };
 
-        using (var ms = new MemoryStream())
+        #region Create Attachment
+
+        byte[] bytes = new byte[] { };
+        AttachmentViewModel am = null;
+
+        if (attachmentFile != null)
         {
-            ms.Position = 0;
-            attachmentFile.CopyTo(ms);
-            bytes = ms.ToArray();
+            am = new AttachmentViewModel()
+            {
+                EntityName = "Equipment",
+                FileName = attachmentFile.FileName,
+                FileType = attachmentFile.ContentType,
+                FileSize = attachmentFile.Length.ToString(),
+                Description = "",
+                RegisterTime = DateTime.Now,
+                UniqueId = CodeGenerator.CreateId()
+            };
+
+            using (var ms = new MemoryStream())
+            {
+                ms.Position = 0;
+                attachmentFile.CopyTo(ms);
+                bytes = ms.ToArray();
+            }
         }
 
-        #endregion 
- 
+        #endregion
+
         var result = (model.Id != null)
             ? await _registerLaboratoryService.UpdateMainInfo(model)
             : await _registerLaboratoryService.RegisterMainInfo(model);
 
-        am.EntityRecordId = model.Id.ToString();
-        await _attachmentService.AddAttachment(am, bytes);
+        if (attachmentFile != null)
+        {
+            am.EntityRecordId = model.Id.ToString();
+            await _attachmentService.AddAttachment(am, bytes);
+        }
 
         switch (result)
         {
@@ -217,7 +226,11 @@ public class LaboratoryController : BaseController
 
     public ActionResult WardWindow(FilterWardViewModel model)
     {
-        return PartialView(model);
+        FilterWardViewModel wardViewModel =
+            (model.Id != null)
+                ? new FilterWardViewModel() { Id = model.Id }
+                : new FilterWardViewModel();
+        return PartialView(wardViewModel);
     }
 
     [HttpPost]
@@ -265,6 +278,7 @@ public class LaboratoryController : BaseController
 
     public async Task<IActionResult> EquipmentWindow(FilterWardViewModel model)
     {
+        
         ViewData["EquipmentTypes"] =
             await _baseInfoService.GetAllEquipmentTypes((int)BaseTableTypeId.EquipmentType);
 
@@ -287,12 +301,13 @@ public class LaboratoryController : BaseController
             await _baseInfoService.GetAllUsageTypes((int)BaseTableTypeId.UsageType);
 
         return PartialView(new RegisterLaboratory_EquipmentViewModel()
-        { Id = model.Id, LaboratoryId = model.LaboratoryId });
+            { Id = model.Id, LaboratoryId = model.LaboratoryId });
     }
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> SaveEquipment(RegisterLaboratory_EquipmentViewModel model, IFormFile attachmentFile)
+    public async Task<IActionResult> SaveEquipment(RegisterLaboratory_EquipmentViewModel model,
+        IFormFile attachmentFile)
     {
         if (model.EquipmentImage == null) model.EquipmentImage = PathTools.DefaultLabPath;
 
@@ -301,30 +316,40 @@ public class LaboratoryController : BaseController
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
         #region Create Attachment
-        byte[] bytes;
-        AttachmentViewModel am = new AttachmentViewModel()
-        {
-            EntityName = "Equipment", 
-            FileName = attachmentFile.FileName,
-            FileType = attachmentFile.ContentType,
-            FileSize = attachmentFile.Length.ToString(),
-            Description = "",
-            RegisterTime = DateTime.Now,
-            UniqueId = CodeGenerator.CreateId()
-        };
 
-        using (var ms = new MemoryStream())
+        AttachmentViewModel am = null;
+        byte[] bytes = new byte[] { };
+
+        if (attachmentFile != null)
         {
-            ms.Position = 0;
-            attachmentFile.CopyTo(ms);
-            bytes = ms.ToArray();
+            am = new AttachmentViewModel()
+            {
+                EntityName = "Equipment",
+                FileName = attachmentFile.FileName,
+                FileType = attachmentFile.ContentType,
+                FileSize = attachmentFile.Length.ToString(),
+                Description = "",
+                RegisterTime = DateTime.Now,
+                UniqueId = CodeGenerator.CreateId()
+            };
+
+            using (var ms = new MemoryStream())
+            {
+                ms.Position = 0;
+                attachmentFile.CopyTo(ms);
+                bytes = ms.ToArray();
+            }
         }
 
         #endregion
 
         var result = await _registerLaboratoryService.RegisterEquipment(model);
-        am.EntityRecordId = model.Id.ToString();
-        await _attachmentService.AddAttachment(am, bytes);
+
+        if (attachmentFile != null)
+        {
+            am.EntityRecordId = model.Id.ToString();
+            await _attachmentService.AddAttachment(am, bytes);
+        }
 
         switch (result)
         {
@@ -367,7 +392,6 @@ public class LaboratoryController : BaseController
 
         ViewData["AbilityTitles"] =
             await _baseInfoService.GetAllAbilityTitles((int)BaseTableTypeId.AbilityTitle);
-
 
 
         return PartialView(model);

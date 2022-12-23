@@ -8,10 +8,10 @@
     var standardStatus = ViewData["StandardStatus"] as List<SelectListViewModel>;
 }
 
-<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
-<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
-<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css" />
-<link href="/common/custom/custom.css" rel="stylesheet" type="text/css" />
+<link href="/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css"/>
+<link href="/css/style.bundle.rtl.css" rel="stylesheet" type="text/css"/>
+<link href="/common/kamadatepicker/kamadatepicker.min.css" rel="stylesheet" type="text/css"/>
+<link href="/common/custom/custom.css" rel="stylesheet" type="text/css"/>
 
 <form asp-action="MainPartial"
       asp-controller="Laboratory"
@@ -19,11 +19,11 @@
       class="w-100 pt-1 px-1 pb-1 fv-plugins-bootstrap5 fv-plugins-framework"
       novalidate="novalidate" id="kt_create_laboratory_main_form">
 
-    <input asp-for="Id" type="hidden" />
+    <input asp-for="Id" type="hidden"/>
     <div class="row mb-12">
         <div class="col-md-6 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">عنوان آزمایشگاه</label>
-            <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid" />
+            <input asp-for="LaboratoryTitle" name="LaboratoryTitle" class="form-control form-control-lg form-control-solid"/>
         </div>
         <div class="col-md-6 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">پدافند غیرعامل</label>
@@ -99,12 +99,12 @@
         <div class="col-md-6 fv-row">
             <label class="required fs-6 fw-bold mb-2">لطفا فایل مورد نظر را انتخاب نمایید</label>
             <div class="">
-                <input type="file" id="AttachmentFile" name="AttachmentFile" />
+                <input type="file" id="AttachmentFile" name="AttachmentFile"/>
             </div>
         </div>
         <div class="col-md-6 fv-row">
             <label class="required fs-6 fw-bold form-label mb-2">شماره تماس <span style="font-size: 9px"> (لطفا شماره تماس را با پیش شماره وارد کنید) </span></label>
-            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid" />
+            <input asp-for="PhoneNumber" dir="ltr" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg form-control-solid"/>
         </div>
     </div>
 
@@ -129,10 +129,10 @@
         </span>
         </div>
         </div>*@
-
-@*        <label class="required fs-6 fw-bold form-label mb-2">آدرس</label>
-        <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>*@
-
+        <div class="col-md-12 fv-row">
+            <label class="required fs-6 fw-bold form-label mb-2">آدرس</label>
+            <textarea asp-for="Address" name="Address" class="form-control form-control-lg form-control-solid" rows="5"></textarea>
+        </div>
     </div>
     <div class="row mb-12">
         <div class="col-md-12 fv-row">
@@ -143,8 +143,8 @@
 </form>
 
 
-@*<script src="/js/widgets.bundle.js"></script>
+<script src="/js/widgets.bundle.js"></script>
 <script src="/js/custom/widgets.js"></script>
-<script src="/js/custom/apps/ecommerce/settings/settings.js"></script>*@
-@*<script src="/js/custom/apps/file-manager/list.js"></script>*@
-@* <script src="/common/custom/custom.js"></script> *@
+<script src="/js/custom/apps/ecommerce/settings/settings.js"></script>
+<script src="/js/custom/apps/file-manager/list.js"></script>
+<script src="/common/custom/custom.js"></script>

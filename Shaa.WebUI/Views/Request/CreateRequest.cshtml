@@ -209,12 +209,15 @@
         var create_request_Validation = FormValidation.formValidation(create_request_form, {
             fields: {
                 UserName: { validators: { notEmpty: { message: "لطفا عنوان بخش را وارد کنید" } } },
-                laboratoryId: { validators: { notEmpty: { message: "لطفا آزمایشگاه را وارد کنید" } } },
+                LaboratoryId: { validators: { notEmpty: { message: "لطفا آزمایشگاه را وارد کنید" } } },
                 IndicatorNo: { validators: { notEmpty: { message: "لطفا شماره نامه وارد کنید" } } },
                 RequestDate: { validators: { notEmpty: { message: "لطفا تاریخ نامه وارد کنید" } } },
                 Title: { validators: { notEmpty: { message: "لطفا تاریخ نامه وارد کنید" } } },
                 Description: { validators: { notEmpty: { message: "لطفا شرح نامه را وارد کنید" } } },
-                RequestType: { validators: { notEmpty: { message: "لطفا نوع درخواست را وارد کنید" } } },
+                RequestTypeId: { validators: { notEmpty: { message: "لطفا نوع درخواست را وارد کنید" } } },
+                // ProjectSelection:  { validators: { notEmpty: { message: "لطفا پروژه را انتخاب کنید" } } },
+                // ProjectTitle:  { validators: { notEmpty: { message: "لطفا پروژه را انتخاب کنید" } } }, 
+                // ProjectCode:  { validators: { notEmpty: { message: "لطفا پروژه را انتخاب کنید" } } },
             },
             plugins: {
                 trigger: new FormValidation.plugins.Trigger,

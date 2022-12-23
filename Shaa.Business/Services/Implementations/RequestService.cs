@@ -128,7 +128,11 @@ public class RequestService : IRequestService
             await _requestRepository.AddAsync(request);
             await _requestRepository.Save();
 
-            attachment.EntityRecordId = request.Id.ToString();
+            if (attachment != null)
+            {
+                attachment.EntityRecordId = request.Id.ToString();
+            }
+
             var requestIndicator = new RequestIndicator()
             {
                 RequestId = request.Id,

@@ -1,5 +1,6 @@
 ﻿using Shaa.Business.Security;
 using Shaa.Business.Services.Interfaces;
+using Shaa.Domain.Entities;
 using Shaa.Domain.Repositories;
 using Shaa.Domain.ViewModels.BasicInfo;
 
@@ -42,4 +43,11 @@ public class WardService : IWardService
         await filter.SetPaging(result);
         return filter;
     }
+
+    public async Task<Ward> GetWardById(Guid id)
+    {
+        var result = await _wardRepository.GetByIdAsync(id);
+        return result;
+    }
+
 }
