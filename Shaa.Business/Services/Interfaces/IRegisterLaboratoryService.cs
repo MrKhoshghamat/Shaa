@@ -9,6 +9,7 @@ public interface IRegisterLaboratoryService
     Task<RegisterMainResult> RegisterMainInfo(RegisterLaboratory_MainViewModel model);
     Task<RegisterMainResult> UpdateMainInfo(RegisterLaboratory_MainViewModel model);
     Task<RegisterWardResult> RegisterWard(RegisterLaboratory_WardViewModel model);
+    Task<RegisterWardResult> SaveWard(RegisterLaboratory_WardViewModel model);
     Task<RegisterEquipmentResult> RegisterEquipment(RegisterLaboratory_EquipmentViewModel model);
     Task<RegisterAbilityResult> RegisterAbility(RegisterLaboratory_AbilityViewModel model);
     Task<FilterLaboratoryViewModel> FilterLaboratory(FilterLaboratoryViewModel filter);

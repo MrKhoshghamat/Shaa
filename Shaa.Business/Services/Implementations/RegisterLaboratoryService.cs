@@ -148,7 +148,7 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
     #endregion
 
     #region Ward
-
+ 
     public async Task<RegisterWardResult> RegisterWard(RegisterLaboratory_WardViewModel model)
     {
         if (await _wardRepository.IsExistWardByTitle(model.WardTitle!, model.LaboratoryId)) return RegisterWardResult.WardExists;
@@ -165,6 +165,18 @@ public class RegisterLaboratoryService : IRegisterLaboratoryService
 
         model.Id = ward.Id;
 
+        return RegisterWardResult.Success;
+    }
+
+    public async Task<RegisterWardResult> SaveWard(RegisterLaboratory_WardViewModel model)
+    {
+        var dbModel = await _wardRepository.GetByIdAsync((Guid)model.Id);
+
+        dbModel.Title = model.WardTitle;
+ 
+        await _wardRepository.UpdateAsync(dbModel);
+        await _wardRepository.Save();
+ 
         return RegisterWardResult.Success;
     }
 

@@ -303,7 +303,7 @@ KTUtil.onDOMContentLoaded((function () {
     KTCreateLaboratory.init();
 }));
 
-function OpenWardWindow(modelId, laboratoryId, ) {
+function OpenWardWindow(modelId, laboratoryId) {
     openDialog("Ward-dialog", 'بخش', '/Laboratory/WardWindow', {
         Id: modelId,
         LaboratoryId: laboratoryId

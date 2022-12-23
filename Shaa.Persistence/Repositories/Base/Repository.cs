@@ -39,7 +39,7 @@ public class Repository<T, E> : IRepository<T, E> where T : class, IIdentityObje
 
     public async Task<T> GetByIdAsync(E id)
     {
-        return await _dbSet.FirstOrDefaultAsync(s => s.Equals(id));
+        return await _dbSet.FindAsync(id);
     }
 
     public async Task<T> AddAsync(T entity)

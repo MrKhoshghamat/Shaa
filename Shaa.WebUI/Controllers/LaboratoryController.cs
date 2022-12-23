@@ -224,12 +224,18 @@ public class LaboratoryController : BaseController
     }
 
 
-    public ActionResult WardWindow(FilterWardViewModel model)
+    public async Task<ActionResult> WardWindow(FilterWardViewModel model)
     {
-        FilterWardViewModel wardViewModel =
-            (model.Id != null)
-                ? new FilterWardViewModel() { Id = model.Id }
-                : new FilterWardViewModel();
+        FilterWardViewModel wardViewModel = new FilterWardViewModel();
+
+        if (model.Id != null)
+        {
+            var dbModel = await _wardService.GetWardById((Guid)model.Id);
+
+            wardViewModel.Id = dbModel.Id;
+            wardViewModel.WardTitle = dbModel.Title;
+        }
+
         return PartialView(wardViewModel);
     }
 
@@ -241,7 +247,16 @@ public class LaboratoryController : BaseController
             return Ok(new HassError() { Data = model }
                 .AddError(new ModelError("*", "در روند عملیات مشکلی رخ داده است")));
 
-        var result = await _registerLaboratoryService.RegisterWard(model);
+        RegisterWardResult result = new RegisterWardResult();
+ 
+        if (model.Id != null)
+        {
+            result = await _registerLaboratoryService.SaveWard(model);
+        }
+        else
+        {
+            result = await _registerLaboratoryService.RegisterWard(model);
+        }
 
         switch (result)
         {
@@ -278,7 +293,7 @@ public class LaboratoryController : BaseController
 
     public async Task<IActionResult> EquipmentWindow(FilterWardViewModel model)
     {
-        
+
         ViewData["EquipmentTypes"] =
             await _baseInfoService.GetAllEquipmentTypes((int)BaseTableTypeId.EquipmentType);
 
@@ -301,7 +316,7 @@ public class LaboratoryController : BaseController
             await _baseInfoService.GetAllUsageTypes((int)BaseTableTypeId.UsageType);
 
         return PartialView(new RegisterLaboratory_EquipmentViewModel()
-            { Id = model.Id, LaboratoryId = model.LaboratoryId });
+        { Id = model.Id, LaboratoryId = model.LaboratoryId });
     }
 
     [HttpPost]
